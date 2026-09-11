@@ -1,6 +1,3 @@
-I can't fetch that GitHub URL directly, but based on the structure of your **README.txt** (from Clement Modebe's repository) that you shared earlier, I understand the format you want. Below is your **Lab 3 report** restructured in that professional GitHub style — with **Executive Summary**, **Lab Objectives**, and **Tools and Resources Used** added, and everything ready to copy-paste.
-
----
 
 # 🧪 Lab 3 — SYN Flood Pattern Investigation Using TShark
 
@@ -11,7 +8,7 @@ I can't fetch that GitHub URL directly, but based on the structure of your **REA
 
 ## 👤 Author
 
-| Field | Value |
+| Field | Details |
 |-------|-------|
 | **Student Name** | Ibrahim Ishaku |
 | **Student ID** | 2025/FWSD/11334 |
