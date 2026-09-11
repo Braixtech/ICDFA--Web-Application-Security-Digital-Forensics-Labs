@@ -7,7 +7,7 @@
 
 ## 👤 Student Information
 
-| Field | Value |
+| Field | Information |
 |-------|-------|
 | **Full Name** | Ibrahim Ishaku |
 | **Registration Number** | 2025/FWSD/11334 |
