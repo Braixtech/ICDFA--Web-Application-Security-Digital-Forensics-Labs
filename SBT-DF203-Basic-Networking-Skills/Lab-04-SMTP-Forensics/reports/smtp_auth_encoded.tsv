@@ -1,0 +1,4 @@
+7	EHLO	GP
+10	AUTH	LOGIN
+16	MAIL	FROM: <gurpartap@patriots.in>
+18	RCPT	TO: <raj_deol2002in@yahoo.co.in>
