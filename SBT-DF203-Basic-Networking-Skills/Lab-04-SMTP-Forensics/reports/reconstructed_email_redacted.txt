@@ -1,0 +1,26 @@
+=== SMTP Envelope ===
+MAIL FROM: <gurpartap@patriots.in>
+RCPT TO:   <raj_deol2002in@yahoo.co.in>
+
+=== RFC 5322 Message Headers ===
+Date: Mon, 5 Oct 2009 11:36:07 +0530
+From: "Gurpartap Singh" <gurpartap@patriots.in>
+To: <raj_deol2002in@yahoo.co.in>
+Subject: SMTP
+Message-ID: <000301ca4581e5f9e57f0c5edb07d0@in>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="----=_NextPart_000_0004_01CA4580.095693F0"
+X-Mailer: Microsoft Office Outlook 12.0
+Content-Language: en-us
+
+=== Message Body (text/plain) ===
+Hello,
+
+I send u smtp pcap file
+
+Find the attachment
+
+GPS
+
+=== Attachment ===
+Filename: NEWS.txt (text/plain)
