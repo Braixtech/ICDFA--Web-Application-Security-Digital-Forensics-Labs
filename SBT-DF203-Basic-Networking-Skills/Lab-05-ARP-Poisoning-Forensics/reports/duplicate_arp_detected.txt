@@ -1,0 +1,12 @@
+7	136.160.215.1 is at 00:1b:17:00:0a:30
+9	136.160.215.1 is at 00:1b:17:00:0a:30
+10	136.160.215.194 is at 00:50:56:86:cb:fc (duplicate use of 136.160.215.1 detected!)
+11	Gratuitous ARP for 136.160.215.1 (Request) (duplicate use of 136.160.215.1 detected!)
+16	136.160.215.1 is at 00:1b:17:00:0a:30
+17	136.160.215.194 is at 00:50:56:86:cb:fc (duplicate use of 136.160.215.1 detected!)
+22	136.160.215.1 is at 00:1b:17:00:0a:30
+23	136.160.215.194 is at 00:50:56:86:cb:fc (duplicate use of 136.160.215.1 detected!)
+27	136.160.215.1 is at 00:1b:17:00:0a:30
+28	136.160.215.1 is at 00:1b:17:00:0a:30
+30	136.160.215.1 is at 00:1b:17:00:0a:30
+33	136.160.215.194 is at 00:50:56:86:02:65 (duplicate use of 136.160.215.1 detected!)
