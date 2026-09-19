@@ -1,0 +1,26 @@
+*   Trying 192.168.18.17:80...
+* Established connection to 192.168.18.17 (192.168.18.17 port 80) from 192.168.18.17 port 37824 
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+  0      0   0      0   0      0      0      0                              0* using HTTP/1.x
+> GET /firewall_lab.html HTTP/1.1
+> Host: 192.168.18.17
+> User-Agent: curl/8.21.0
+> Accept: */*
+> 
+* Request completely sent off
+< HTTP/1.1 200 OK
+< Date: Fri, 18 Sep 2026 23:40:42 GMT
+< Server: Apache/2.4.68 (Debian)
+< Last-Modified: Fri, 18 Sep 2026 23:33:47 GMT
+< ETag: "93-65bca54f5afbd"
+< Accept-Ranges: bytes
+< Content-Length: 147
+< Vary: Accept-Encoding
+< Content-Type: text/html
+< 
+{ [147 bytes data]
+100    147 100    147   0      0   5905      0                              0100    147 100    147   0      0   5849      0                              0100    147 100    147   0      0   5838      0                              0
+* Connection #0 to host 192.168.18.17:80 left intact
+<!DOCTYPE html>
+<html><body><h1>ICDFA Network Forensics Firewall Lab</h1><p>Server: Ibrahim Ishaku</p><p>Reg No: 2025/FWSD/11334</p></body></html>
