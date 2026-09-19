@@ -1,200 +1,235 @@
-🧪 Lab 7 — DNS Introduction and Traffic Analysis
-International Cybersecurity and Digital Forensics Academy (ICDFA)
+# 🧪 Lab 7 — DNS Introduction and Traffic Analysis
+
+**International Cybersecurity and Digital Forensics Academy (ICDFA)**
 School of Basic Vocational Training (SVT)
 
-https://img.shields.io/badge/Course-SBT--DF203-blue
-https://img.shields.io/badge/Lab-07%20DNS%20Forensics-green
-https://img.shields.io/badge/Student-2025%2FFWSD%2F11334-informational
-https://img.shields.io/badge/Status-Complete-brightgreen
-https://img.shields.io/badge/Tools-dig%20%7C%20TShark%20%7C%20Wireshark-informational
+[![Course](https://img.shields.io/badge/Course-SBT--DF203-blue)](https://icdfa.edu.ng)
+[![Lab](https://img.shields.io/badge/Lab-07%20DNS%20Forensics-green)](.)
+[![Student](https://img.shields.io/badge/Student-2025%2FFWSD%2F11334-informational)](.)
+[![Status](https://img.shields.io/badge/Status-Complete-brightgreen)](.)
+[![Tools](https://img.shields.io/badge/Tools-dig%20%7C%20TShark%20%7C%20Wireshark-informational)](.)
 
-👤 Author
-Field	Details
-Student Name	Ibrahim Ishaku
-Student ID	2025/FWSD/11334
-Programme	Fellowship in Web Application Security & Digital Forensics
-Course	SBT-DF203 — Basic Networking Skills for Digital Forensics
-Lab Title	DNS Introduction and Traffic Analysis
-Instructor	Aminu Idris, AMCPN
-Date	22nd September, 2026
-📌 Executive Summary
-This lab investigates DNS (Domain Name System) traffic — the foundational protocol that maps human-readable domain names to IP addresses. The analysis covers:
+---
 
-Baseline resolution — identifying the configured resolver and its role in the network.
+## 👤 Author
 
-dig queries — querying A, AAAA, MX, and NS records with interpretation of status, flags, answer counts, and TTL.
+| Field | Details |
+|-------|---------|
+| **Student Name** | Ibrahim Ishaku |
+| **Student ID** | 2025/FWSD/11334 |
+| **Programme** | Fellowship in Web Application Security & Digital Forensics |
+| **Course** | SBT-DF203 — Basic Networking Skills for Digital Forensics |
+| **Lab Title** | DNS Introduction and Traffic Analysis |
+| **Instructor** | Aminu Idris, AMCPN |
+| **Date** | 22nd September, 2026 |
 
-Packet-level analysis — capturing fresh DNS traffic with TShark and extracting transaction IDs, query names, types, response codes, and answer IPs.
+---
 
-Query-response correlation — matching queries to responses by transaction ID and endpoint tuple.
+## 📌 Executive Summary
 
-Browser DNS inventory — capturing multi-domain DNS activity including browser telemetry.
+This lab investigates **DNS (Domain Name System)** traffic — the foundational protocol that maps human-readable domain names to IP addresses. The analysis covers:
 
-DNS-to-TCP correlation — analysing the relationship between DNS answers and subsequent connections.
+1. **Baseline resolution** — identifying the configured resolver and its role in the network.
+2. **dig queries** — querying A, AAAA, MX, and NS records with interpretation of status, flags, answer counts, and TTL.
+3. **Packet-level analysis** — capturing fresh DNS traffic with TShark and extracting transaction IDs, query names, types, response codes, and answer IPs.
+4. **Query-response correlation** — matching queries to responses by transaction ID and endpoint tuple.
+5. **Browser DNS inventory** — capturing multi-domain DNS activity including browser telemetry.
+6. **DNS-to-TCP correlation** — analysing the relationship between DNS answers and subsequent connections.
+7. **Optional SMTP-DNS correlation** — using Lab 4 evidence to demonstrate the full DNS-to-mail-server resolution chain.
 
-Optional SMTP-DNS correlation — using Lab 4 evidence to demonstrate the full DNS-to-mail-server resolution chain.
+> **Key finding:** The configured gateway resolver (`192.168.18.1`) blocks forwarded DNS queries from LAN clients, so all `dig` queries were redirected to **Google Public DNS (`8.8.8.8`)**. A fresh 6-packet capture confirmed 3 DNS queries and 3 responses. A browser-style multi-domain capture yielded **9 unique query names** including telemetry (`push.services.mozilla.com`). The optional SMTP correlation from Lab 4 confirmed the full chain: `mail.patriots.in` → CNAME `patriots.in` → A `74.53.140.153` → TCP handshake on port 25.
 
-Key finding: The configured gateway resolver (192.168.18.1) blocks forwarded DNS queries from LAN clients, so all dig queries were redirected to Google Public DNS (8.8.8.8). A fresh 6-packet capture confirmed 3 DNS queries and 3 responses. A browser-style multi-domain capture yielded 9 unique query names including telemetry (push.services.mozilla.com). The optional SMTP correlation from Lab 4 confirmed the full chain: mail.patriots.in → CNAME patriots.in → A 74.53.140.153 → TCP handshake on port 25.
+---
 
-📑 Table of Contents
-Lab Objectives
+## 📑 Table of Contents
 
-Tools and Environment
+- [Lab Objectives](#-lab-objectives)
+- [Tools and Environment](#️-tools-and-environment)
+- [1. Introduction](#1-introduction)
+- [2. Lab Folder Structure and Evidence Preparation](#2-lab-folder-structure-and-evidence-preparation)
+- [3. Part A — Query DNS Records with dig](#3-part-a--query-dns-records-with-dig)
+- [4. Part B — Capture a Fresh DNS Query](#4-part-b--capture-a-fresh-dns-query)
+- [5. Part C — Extract DNS Query and Response Fields](#5-part-c--extract-dns-query-and-response-fields)
+- [6. Part D — Match Queries to Responses](#6-part-d--match-queries-to-responses)
+- [7. Part E — Analyze DNS Generated by a Browser](#7-part-e--analyze-dns-generated-by-a-browser)
+- [8. Part F — Correlate DNS with Subsequent Connections](#8-part-f--correlate-dns-with-subsequent-connections)
+- [9. Part G — Optional SMTP-DNS Correlation](#9-part-g--optional-smtp-dns-correlation)
+- [10. Required Forensic Findings](#10-required-forensic-findings)
+- [11. Conclusion](#11-conclusion)
+- [12. References](#12-references)
+- [13. Appendix — Screenshot Reference List](#13-appendix--screenshot-reference-list)
 
-1. Introduction
+---
 
-2. Lab Folder Structure and Evidence Preparation
+## 🎯 Lab Objectives
 
-3. Part A — Query DNS Records with dig
+- **Explain DNS resolution** — recursive and iterative processes.
+- **Query A, AAAA, MX, and NS records** — using `dig`.
+- **Capture DNS traffic** — with TShark and Wireshark.
+- **Extract DNS fields** — transaction ID, query name, type, response code, answer IPs, TTL.
+- **Correlate DNS answers with subsequent connections** — matching answers to TCP destinations.
+- **Recognise normal variations** — multiple answers, CNAME chains, cached responses, IPv6 fallback.
 
-4. Part B — Capture a Fresh DNS Query
+---
 
-5. Part C — Extract DNS Query and Response Fields
+## 🛠️ Tools and Environment
 
-6. Part D — Match Queries to Responses
+| Category | Tool / Resource | Purpose |
+|----------|-----------------|---------|
+| **Operating System** | Kali Linux | Analysis VM |
+| **DNS Utility** | `dig` (dnsutils 9.20.27) | Perform controlled DNS queries |
+| **Capture (CLI)** | TShark 4.6.6 | Scriptable capture + field extraction |
+| **Analysis (GUI)** | Wireshark 4.6.6 | Visual packet review, Follow UDP Stream, Expert Info |
+| **Hasher** | `sha256sum` | Evidence integrity |
+| **Resolver Config** | `/etc/resolv.conf` | Identify configured DNS service |
+| **Browser** | Firefox (private mode) | Generate browser DNS activity |
 
-7. Part E — Analyze DNS Generated by a Browser
+**Lab Network:**
 
-8. Part F — Correlate DNS with Subsequent Connections
+| Role | Device | IP |
+|------|--------|-----|
+| **Analysis VM** | Kali Linux | `192.168.18.17/24` |
+| **Gateway** | Router | `192.168.18.1` |
+| **Effective resolver** | Google Public DNS | `8.8.8.8` |
 
-9. Part G — Optional SMTP-DNS Correlation
+---
 
-10. Required Forensic Findings
+## 1. Introduction
 
-11. Conclusion
+Network forensics involves capturing, recording, and analyzing network traffic to investigate security incidents and gather digital evidence. This lab focuses on **DNS (Domain Name System)** traffic.
 
-12. References
+### Key Concepts Covered
 
-13. Appendix — Screenshot Reference List
+| Concept | Description |
+|---------|-------------|
+| **DNS Resolution** | Recursive and iterative processes mapping domain names to IPs |
+| **DNS Record Types** | A (IPv4), AAAA (IPv6), MX (mail), NS (nameserver), CNAME (alias) |
+| **DNS Transactions** | Query/response pairs matched by transaction ID |
+| **TTL (Time To Live)** | Cache lifetime — not a creation date |
+| **Connection Correlation** | Matching DNS answers to subsequent TCP connections |
+| **Normal Variations** | Multiple answers, CNAME chains, cached responses, IPv6 fallback |
 
-🎯 Lab Objectives
-Explain DNS resolution — recursive and iterative processes.
+---
 
-Query A, AAAA, MX, and NS records — using dig.
+## 2. Lab Folder Structure and Evidence Preparation
 
-Capture DNS traffic — with TShark and Wireshark.
+### 2.1 Create the Lab Folder Structure
 
-Extract DNS fields — transaction ID, query name, type, response code, answer IPs, TTL.
-
-Correlate DNS answers with subsequent connections — matching answers to TCP destinations.
-
-Recognise normal variations — multiple answers, CNAME chains, cached responses, IPv6 fallback.
-
-🛠️ Tools and Environment
-Category	Tool / Resource	Purpose
-Operating System	Kali Linux	Analysis VM
-DNS Utility	dig (dnsutils 9.20.27)	Perform controlled DNS queries
-Capture (CLI)	TShark 4.6.6	Scriptable capture + field extraction
-Analysis (GUI)	Wireshark 4.6.6	Visual packet review, Follow UDP Stream, Expert Info
-Hasher	sha256sum	Evidence integrity
-Resolver Config	/etc/resolv.conf	Identify configured DNS service
-Browser	Firefox (private mode)	Generate browser DNS activity
-Lab Network:
-
-Role	Device	IP
-Analysis VM	Kali Linux	192.168.18.17/24
-Gateway	Router	192.168.18.1
-Effective resolver	Google Public DNS	8.8.8.8
-1. Introduction
-Network forensics involves capturing, recording, and analyzing network traffic to investigate security incidents and gather digital evidence. This lab focuses on DNS (Domain Name System) traffic.
-
-Key Concepts Covered
-Concept	Description
-DNS Resolution	Recursive and iterative processes mapping domain names to IPs
-DNS Record Types	A (IPv4), AAAA (IPv6), MX (mail), NS (nameserver), CNAME (alias)
-DNS Transactions	Query/response pairs matched by transaction ID
-TTL (Time To Live)	Cache lifetime — not a creation date
-Connection Correlation	Matching DNS answers to subsequent TCP connections
-Normal Variations	Multiple answers, CNAME chains, cached responses, IPv6 fallback
-2. Lab Folder Structure and Evidence Preparation
-2.1 Create the Lab Folder Structure
-bash
+```bash
 mkdir -p ~/SBT-DF203-Lab7/{evidence,working,exported,reports,screenshots,scripts}
 cd ~/SBT-DF203-Lab7
 pwd
 find . -maxdepth 1 -type d -print
-Figure 1.1 — Lab folder structure
+```
 
-https://screenshots/figure_1_1_folder_structure.png
+![Figure 1.1 — Lab folder structure](screenshots/figure_1_1_folder_structure.png)
 
-Figure 1.1: Lab folder structure created successfully
+*Figure 1.1: Lab folder structure created successfully*
 
-Directory Structure:
+**Directory Structure:**
 
-Directory	Purpose
-evidence/	Original dig_dns.pcap + fresh captures
-working/	Verified working copies
-exported/	Exported objects
-reports/	Analysis outputs (TSV, TXT)
-screenshots/	Lab evidence screenshots
-scripts/	Helper scripts
-2.2 Install Required Tools
-bash
+| Directory | Purpose |
+|-----------|---------|
+| `evidence/` | Original `dig_dns.pcap` + fresh captures |
+| `working/` | Verified working copies |
+| `exported/` | Exported objects |
+| `reports/` | Analysis outputs (TSV, TXT) |
+| `screenshots/` | Lab evidence screenshots |
+| `scripts/` | Helper scripts |
+
+### 2.2 Install Required Tools
+
+```bash
 sudo apt update
 sudo apt install -y dnsutils tshark wireshark
-Interpretation: Both TShark and Wireshark are required. TShark provides scriptable capture and field extraction; Wireshark provides visual packet tree inspection.
+```
 
-2.3 Identify the Configured Resolver
-bash
+**Interpretation:** Both TShark and Wireshark are required. TShark provides scriptable capture and field extraction; Wireshark provides visual packet tree inspection.
+
+### 2.3 Identify the Configured Resolver
+
+```bash
 cat /etc/resolv.conf | tee reports/resolv_conf.txt
 resolvconf status 2>/dev/null | tee reports/resolvconf_status.txt || true
-Output:
+```
 
-text
+**Output:**
+
+```
 # Generated by NetworkManager
 nameserver 192.168.18.1
-Analysis:
+```
 
-Aspect	Observation
-Configured resolver	192.168.18.1 (gateway router, via NetworkManager)
-Reachability	Port 53 open but non-responsive to forwarded queries
-Effective resolver used	8.8.8.8 (Google Public DNS, queried directly)
-2.4 Download and Preserve the Supplied Capture
-bash
+**Analysis:**
+
+| Aspect | Observation |
+|--------|-------------|
+| Configured resolver | `192.168.18.1` (gateway router, via NetworkManager) |
+| Reachability | Port 53 open but **non-responsive** to forwarded queries |
+| Effective resolver used | `8.8.8.8` (Google Public DNS, queried directly) |
+
+### 2.4 Download and Preserve the Supplied Capture
+
+```bash
 wget -O evidence/dig_dns.pcap \
   'https://raw.githubusercontent.com/frankxwu/digital-forensics-lab/main/Networking_Forensics/lab_files/dns/dig_dns.pcap'
-Output:
+```
 
-text
+**Output:**
+
+```
 Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.110.133, ...
 HTTP request sent, awaiting response... 404 Not Found
 2026-09-19 03:10:33 ERROR 404: Not Found.
-Root Cause: The GitHub URL returned 404 Not Found — the file was moved or removed. The dig_dns.pcap file was manually downloaded from the ICDFA OneDrive resource folder.
+```
 
-bash
+**Root Cause:** The GitHub URL returned **404 Not Found** — the file was moved or removed. The `dig_dns.pcap` file was **manually downloaded** from the ICDFA OneDrive resource folder.
+
+```bash
 cp --preserve=timestamps evidence/dig_dns.pcap working/dig_dns_working.pcap
 sha256sum evidence/dig_dns.pcap working/dig_dns_working.pcap | tee reports/dns_capture_hashes.txt
-Figure 1.2 — Resolver info and evidence hashes
+```
 
-https://screenshots/figure_1_2_hashes.png
+![Figure 1.2 — Resolver info and evidence hashes](screenshots/figure_1_2_hashes.png)
 
-Figure 1.2: Resolver info and evidence hashes
+*Figure 1.2: Resolver info and evidence hashes*
 
-Capture File Details:
+**Capture File Details:**
 
-Property	Value
-Filename	dig_dns.pcap
-Source	ICDFA OneDrive resource (manual download)
-File Size	1.8 MB (1,804 kB)
-Format	pcapng version 1.0
-Number of packets	562
-Capture duration	4.009 seconds
-SHA-256 Hash:
+| Property | Value |
+|----------|-------|
+| Filename | `dig_dns.pcap` |
+| Source | ICDFA OneDrive resource (manual download) |
+| File Size | 1.8 MB (1,804 kB) |
+| Format | pcapng version 1.0 |
+| Number of packets | 562 |
+| Capture duration | 4.009 seconds |
 
-File	SHA-256 Hash
-evidence/dig_dns.pcap	9a7c1b95aa6d60f8ac0ee9a79e06ae51145bb7768974526546316cd3dc91375d
-working/dig_dns_working.pcap	9a7c1b95aa6d60f8ac0ee9a79e06ae51145bb7768974526546316cd3dc91375d
-2.5 Mini Chain-of-Custody / Evidence Worksheet
-Field	Value
-Case/Lab Identifier	SBT-DF203-Lab7-Ibrahim-Ishaku
-Trainee Name	Ibrahim Ishaku
-Date and Time Started	19th September, 2026
-Evidence File Name(s)	dig_dns.pcap, fresh_dig_dns.pcapng, browser_dns.pcapng
-Source	Supplied ICDFA training capture + locally generated captures
-Original SHA-256 (dig_dns.pcap)	9a7c1b95aa6d60f8ac0ee9a79e06ae51145bb7768974526546316cd3dc91375d
-3. Part A — Query DNS Records with dig
-3.1 Run dig Queries
-bash
+**SHA-256 Hash:**
+
+| File | SHA-256 Hash |
+|------|--------------|
+| `evidence/dig_dns.pcap` | `9a7c1b95aa6d60f8ac0ee9a79e06ae51145bb7768974526546316cd3dc91375d` |
+| `working/dig_dns_working.pcap` | `9a7c1b95aa6d60f8ac0ee9a79e06ae51145bb7768974526546316cd3dc91375d` |
+
+### 2.5 Mini Chain-of-Custody / Evidence Worksheet
+
+| Field | Value |
+|-------|-------|
+| **Case/Lab Identifier** | SBT-DF203-Lab7-Ibrahim-Ishaku |
+| **Trainee Name** | Ibrahim Ishaku |
+| **Date and Time Started** | 19th September, 2026 |
+| **Evidence File Name(s)** | dig_dns.pcap, fresh_dig_dns.pcapng, browser_dns.pcapng |
+| **Source** | Supplied ICDFA training capture + locally generated captures |
+| **Original SHA-256 (dig_dns.pcap)** | `9a7c1b95aa6d60f8ac0ee9a79e06ae51145bb7768974526546316cd3dc91375d` |
+
+---
+
+## 3. Part A — Query DNS Records with dig
+
+### 3.1 Run dig Queries
+
+```bash
 cd ~/SBT-DF203-Lab7
 
 # Note: The gateway resolver (192.168.18.1) blocked forwarded queries, so all
@@ -205,78 +240,95 @@ dig @8.8.8.8 example.com AAAA | tee reports/dig_example_AAAA.txt
 dig @8.8.8.8 example.com MX | tee reports/dig_example_MX.txt
 dig @8.8.8.8 example.com NS | tee reports/dig_example_NS.txt
 dig @8.8.8.8 +short example.com A | tee reports/dig_example_short.txt
-Figure 2.1 — dig A record output
+```
 
-https://screenshots/figure_2_1_dig_a.png
+![Figure 2.1 — dig A record output](screenshots/figure_2_1_dig_a.png)
 
-Figure 2.1: dig A record output
+*Figure 2.1: dig A record output*
 
-Figure 2.2 — dig AAAA / MX / NS output
+![Figure 2.2 — dig AAAA / MX / NS output](screenshots/figure_2_2_dig_aaaa_mx_ns.png)
 
-https://screenshots/figure_2_2_dig_aaaa_mx_ns.png
+*Figure 2.2: dig AAAA / MX / NS output*
 
-Figure 2.2: dig AAAA / MX / NS output
+**A Record Output:**
 
-A Record Output:
-
-text
+```
 ;; ANSWER SECTION:
 example.com.            255     IN      A       104.20.23.154
 example.com.            255     IN      A       172.66.147.243
 
 ;; SERVER: 8.8.8.8#53(8.8.8.8) (UDP)
-AAAA Record Output:
+```
 
-text
+**AAAA Record Output:**
+
+```
 ;; ANSWER SECTION:
 example.com.            300     IN      AAAA    2606:4700:10::ac42:93f3
 example.com.            300     IN      AAAA    2606:4700:10::6814:179a
-MX Record Output:
+```
 
-text
+**MX Record Output:**
+
+```
 ;; ANSWER SECTION:
 example.com.            287     IN      MX      0 .
-NS Record Output:
+```
 
-text
+**NS Record Output:**
+
+```
 ;; ANSWER SECTION:
 example.com.            21600   IN      NS      hera.ns.cloudflare.com.
 example.com.            21600   IN      NS      elliott.ns.cloudflare.com.
-Analysis of dig Output:
+```
 
-Field	Value	Interpretation
-Status	NOERROR	Query succeeded
-Flags	qr rd ra ad	Response, recursion desired/available, authenticated data
-Answer Count	2 (A), 2 (AAAA), 1 (MX), 2 (NS)	Multiple answers where applicable
-TTL (A)	255 seconds	~4.25 minutes
-TTL (AAAA)	300 seconds	5 minutes
-TTL (MX)	287 seconds	~4.8 minutes
-TTL (NS)	21600 seconds	6 hours
-SERVER	8.8.8.8#53	Google Public DNS
-3.2 Record Type Explanations
-Record	Purpose	Observed Value
-A	IPv4 host address	104.20.23.154, 172.66.147.243
-AAAA	IPv6 host address	2606:4700:10::ac42:93f3, 2606:4700:10::6814:179a
-MX	Mail exchange	0 . (null MX — domain does not accept mail)
-NS	Authoritative nameservers	hera.ns.cloudflare.com, elliott.ns.cloudflare.com
-CNAME	Alias	Not observed in these queries
-3.3 TTL Interpretation
-Important: TTL is a cache lifetime, not a creation date.
+**Analysis of dig Output:**
 
-Record	TTL	Cache Duration
-A	255 s	~4.25 minutes
-AAAA	300 s	5 minutes
-MX	287 s	~4.78 minutes
-NS	21600 s	6 hours
-Interpretation:
+| Field | Value | Interpretation |
+|-------|-------|----------------|
+| Status | `NOERROR` | Query succeeded |
+| Flags | `qr rd ra ad` | Response, recursion desired/available, authenticated data |
+| Answer Count | 2 (A), 2 (AAAA), 1 (MX), 2 (NS) | Multiple answers where applicable |
+| TTL (A) | 255 seconds | ~4.25 minutes |
+| TTL (AAAA) | 300 seconds | 5 minutes |
+| TTL (MX) | 287 seconds | ~4.8 minutes |
+| TTL (NS) | 21600 seconds | 6 hours |
+| SERVER | `8.8.8.8#53` | Google Public DNS |
 
-Short TTLs (A, AAAA, MX) mean resolvers re-query frequently — typical for services behind CDNs (Cloudflare).
+### 3.2 Record Type Explanations
 
-Long TTLs (NS) mean nameserver records are stable.
+| Record | Purpose | Observed Value |
+|--------|---------|----------------|
+| **A** | IPv4 host address | `104.20.23.154`, `172.66.147.243` |
+| **AAAA** | IPv6 host address | `2606:4700:10::ac42:93f3`, `2606:4700:10::6814:179a` |
+| **MX** | Mail exchange | `0 .` (null MX — domain does not accept mail) |
+| **NS** | Authoritative nameservers | `hera.ns.cloudflare.com`, `elliott.ns.cloudflare.com` |
+| **CNAME** | Alias | Not observed in these queries |
 
-4. Part B — Capture a Fresh DNS Query
-4.1 Start Capture and Generate Query
-bash
+### 3.3 TTL Interpretation
+
+**Important:** TTL is a **cache lifetime**, not a creation date.
+
+| Record | TTL | Cache Duration |
+|--------|-----|----------------|
+| A | 255 s | ~4.25 minutes |
+| AAAA | 300 s | 5 minutes |
+| MX | 287 s | ~4.78 minutes |
+| NS | 21600 s | **6 hours** |
+
+**Interpretation:**
+
+- **Short TTLs** (A, AAAA, MX) mean resolvers re-query frequently — typical for services behind CDNs (Cloudflare).
+- **Long TTLs** (NS) mean nameserver records are stable.
+
+---
+
+## 4. Part B — Capture a Fresh DNS Query
+
+### 4.1 Start Capture and Generate Query
+
+```bash
 IFACE=eth0
 
 sudo tshark -i "$IFACE" -f 'port 53' -a duration:25 -w evidence/fresh_dig_dns.pcapng &
@@ -290,56 +342,65 @@ wait
 
 sudo chown ibrahim:ibrahim evidence/fresh_dig_dns.pcapng
 sha256sum evidence/fresh_dig_dns.pcapng | tee reports/fresh_dns_sha256.txt
-Figure 3.1 — Fresh DNS capture hash
+```
 
-https://screenshots/figure_3_1_fresh_hash.png
+![Figure 3.1 — Fresh DNS capture hash](screenshots/figure_3_1_fresh_hash.png)
 
-Figure 3.1: Fresh DNS capture hash
+*Figure 3.1: Fresh DNS capture hash*
 
-SHA-256 Hash:
+**SHA-256 Hash:**
 
-File	SHA-256 Hash
-evidence/fresh_dig_dns.pcapng	299c5794fec669862420e2e6c58b7f036f426317e4d2881553cd1e84c4ca5b53
-Capture Details:
+| File | SHA-256 Hash |
+|------|--------------|
+| `evidence/fresh_dig_dns.pcapng` | `299c5794fec669862420e2e6c58b7f036f426317e4d2881553cd1e84c4ca5b53` |
 
-Property	Value
-Number of packets	6
-File size	1,176 bytes (1.2 KB)
-Capture duration	0.654 seconds
-Interface	eth0
-Content	3 DNS queries + 3 DNS responses
-4.2 Interface Note
-On systems using systemd-resolved (127.0.0.53), DNS packets may appear on the loopback interface (lo) instead of eth0.
+**Capture Details:**
 
-In this lab environment:
+| Property | Value |
+|----------|-------|
+| Number of packets | 6 |
+| File size | 1,176 bytes (1.2 KB) |
+| Capture duration | 0.654 seconds |
+| Interface | `eth0` |
+| Content | 3 DNS queries + 3 DNS responses |
 
-Aspect	Observation
-Configured resolver	192.168.18.1 (blocks forwarded DNS)
-Effective resolver	8.8.8.8 (Google Public DNS)
-Interface captured	eth0
-Loopback needed?	No
-4.3 Visual Verification with Wireshark
-bash
+### 4.2 Interface Note
+
+On systems using `systemd-resolved` (`127.0.0.53`), DNS packets may appear on the **loopback interface (`lo`)** instead of `eth0`.
+
+**In this lab environment:**
+
+| Aspect | Observation |
+|--------|-------------|
+| Configured resolver | `192.168.18.1` (blocks forwarded DNS) |
+| Effective resolver | `8.8.8.8` (Google Public DNS) |
+| Interface captured | `eth0` |
+| Loopback needed? | No |
+
+### 4.3 Visual Verification with Wireshark
+
+```bash
 wireshark evidence/fresh_dig_dns.pcapng &
-In Wireshark:
+```
 
-Apply display filter: dns
+**In Wireshark:**
 
-Click any DNS query → expand Domain Name System → note Transaction ID, Query Name, Type
+1. Apply display filter: `dns`
+2. Click any DNS query → expand **Domain Name System** → note Transaction ID, Query Name, Type
+3. Click DNS response → expand → note Answer IPs, TTL, Response Code
+4. Right-click → **Follow → UDP Stream** to verify payload
 
-Click DNS response → expand → note Answer IPs, TTL, Response Code
+![Figure 3.2 — Wireshark DNS query/response tree view](screenshots/figure_3_2_wireshark_tree.png)
 
-Right-click → Follow → UDP Stream to verify payload
+*Figure 3.2: Wireshark DNS query/response tree view*
 
-Figure 3.2 — Wireshark DNS query/response tree view
+---
 
-https://screenshots/figure_3_2_wireshark_tree.png
+## 5. Part C — Extract DNS Query and Response Fields
 
-Figure 3.2: Wireshark DNS query/response tree view
+### 5.1 Extract Query Fields with TShark
 
-5. Part C — Extract DNS Query and Response Fields
-5.1 Extract Query Fields with TShark
-bash
+```bash
 cd ~/SBT-DF203-Lab7
 PCAP=evidence/fresh_dig_dns.pcapng
 
@@ -349,67 +410,87 @@ tshark -r "$PCAP" -Y 'dns.flags.response == 0' -T fields \
   | tee reports/dns_queries.tsv
 
 cat reports/dns_queries.tsv
-Figure 4.1 — DNS query fields
+```
 
-https://screenshots/figure_4_1_query_fields.png
+![Figure 4.1 — DNS query fields](screenshots/figure_4_1_query_fields.png)
 
-Figure 4.1: DNS query fields
+*Figure 4.1: DNS query fields*
 
-Output:
+**Output:**
 
-Frame	Time	Src Port	Dest	ID	Query Name	Type
-1	0.000000	ephemeral	8.8.8.8	0x41a4	example.com	1 (A)
-4	6.104916	ephemeral	8.8.8.8	0xba6d	example.com	28 (AAAA)
-7	11.273691	ephemeral	8.8.8.8	0xe608	google.com	1 (A)
-5.2 Extract Response Fields with TShark
-bash
+| Frame | Time | Src Port | Dest | ID | Query Name | Type |
+|-------|------|----------|------|-----|-----------|------|
+| 1 | 0.000000 | ephemeral | 8.8.8.8 | 0x41a4 | example.com | 1 (A) |
+| 4 | 6.104916 | ephemeral | 8.8.8.8 | 0xba6d | example.com | 28 (AAAA) |
+| 7 | 11.273691 | ephemeral | 8.8.8.8 | 0xe608 | google.com | 1 (A) |
+
+### 5.2 Extract Response Fields with TShark
+
+```bash
 tshark -r "$PCAP" -Y 'dns.flags.response == 1' -T fields \
   -e frame.number -e frame.time -e ip.src -e udp.srcport -e ip.dst -e udp.dstport \
   -e dns.id -e dns.flags.rcode -e dns.count.answers -e dns.a -e dns.aaaa -e dns.resp.ttl \
   | tee reports/dns_responses.tsv
 
 cat reports/dns_responses.tsv
-Figure 4.2 — DNS response fields
+```
 
-https://screenshots/figure_4_2_response_fields.png
+![Figure 4.2 — DNS response fields](screenshots/figure_4_2_response_fields.png)
 
-Figure 4.2: DNS response fields
+*Figure 4.2: DNS response fields*
 
-Output:
+**Output:**
 
-Frame	Src	ID	Rcode	Answers	Answer IP(s)	TTL
-3	8.8.8.8	0x41a4	0	2	172.66.147.243, 104.20.23.154	87, 87
-6	8.8.8.8	0xba6d	0	2	2606:4700:10::ac42:93f3, 2606:4700:10::6814:179a	300, 300
-8	8.8.8.8	0xe608	0	1	142.251.208.142	209
-5.3 Visual Verification with Wireshark — Follow UDP Stream
-bash
+| Frame | Src | ID | Rcode | Answers | Answer IP(s) | TTL |
+|-------|-----|-----|-------|---------|--------------|-----|
+| 3 | 8.8.8.8 | 0x41a4 | 0 | 2 | 172.66.147.243, 104.20.23.154 | 87, 87 |
+| 6 | 8.8.8.8 | 0xba6d | 0 | 2 | 2606:4700:10::ac42:93f3, 2606:4700:10::6814:179a | 300, 300 |
+| 8 | 8.8.8.8 | 0xe608 | 0 | 1 | 142.251.208.142 | 209 |
+
+### 5.3 Visual Verification with Wireshark — Follow UDP Stream
+
+```bash
 wireshark evidence/fresh_dig_dns.pcapng &
-Right-click any DNS packet → Follow → UDP Stream → verify payload.
+```
 
-Figure 4.3 — Wireshark Follow UDP Stream view
+Right-click any DNS packet → **Follow → UDP Stream** → verify payload.
 
-https://screenshots/figure_4_3_follow_udp.png
+![Figure 4.3 — Wireshark Follow UDP Stream view](screenshots/figure_4_3_follow_udp.png)
 
-Figure 4.3: Wireshark Follow UDP Stream view
+*Figure 4.3: Wireshark Follow UDP Stream view*
 
-6. Part D — Match Queries to Responses
-6.1 Correlation Table
-Transaction ID	Query Name	Type	Client IP	Resolver IP	Rcode	Answer(s)	TTL	Delta (ms)
-0x41a4	example.com	A	192.168.18.17	8.8.8.8	0	172.66.147.243, 104.20.23.154	87	1,075
-0xba6d	example.com	AAAA	192.168.18.17	8.8.8.8	0	2606:4700:10::ac42:93f3, 2606:4700:10::6814:179a	300	131
-0xe608	google.com	A	192.168.18.17	8.8.8.8	0	142.251.208.142	209	53
-6.2 Verification Steps
-#	Verification	Result
-1	Match dns.id	All matched
-2	Endpoint tuple reversed	192.168.18.17 ↔ 8.8.8.8
-3	Response from queried resolver	All from 8.8.8.8:53
-4	Time delta from frame.time	53–1,075 ms
-6.3 CNAME Chain Observation
-No CNAME chains were observed in these captures. Each query returned direct A/AAAA records.
+---
 
-7. Part E — Analyze DNS Generated by a Browser
-7.1 Capture Browser DNS
-bash
+## 6. Part D — Match Queries to Responses
+
+### 6.1 Correlation Table
+
+| Transaction ID | Query Name | Type | Client IP | Resolver IP | Rcode | Answer(s) | TTL | Delta (ms) |
+|----------------|-----------|------|-----------|-------------|-------|-----------|-----|------------|
+| `0x41a4` | example.com | A | 192.168.18.17 | 8.8.8.8 | 0 | 172.66.147.243, 104.20.23.154 | 87 | 1,075 |
+| `0xba6d` | example.com | AAAA | 192.168.18.17 | 8.8.8.8 | 0 | 2606:4700:10::ac42:93f3, 2606:4700:10::6814:179a | 300 | 131 |
+| `0xe608` | google.com | A | 192.168.18.17 | 8.8.8.8 | 0 | 142.251.208.142 | 209 | 53 |
+
+### 6.2 Verification Steps
+
+| # | Verification | Result |
+|---|--------------|--------|
+| 1 | Match `dns.id` | All matched |
+| 2 | Endpoint tuple reversed | 192.168.18.17 ↔ 8.8.8.8 |
+| 3 | Response from queried resolver | All from `8.8.8.8:53` |
+| 4 | Time delta from frame.time | 53–1,075 ms |
+
+### 6.3 CNAME Chain Observation
+
+**No CNAME chains** were observed in these captures. Each query returned direct A/AAAA records.
+
+---
+
+## 7. Part E — Analyze DNS Generated by a Browser
+
+### 7.1 Capture Browser DNS
+
+```bash
 cd ~/SBT-DF203-Lab7
 IFACE=eth0
 
@@ -426,106 +507,133 @@ dig @8.8.8.8 cloudflare.com A
 dig @8.8.8.8 www.cloudflare.com A
 
 wait
-7.2 Inventory Query Names
-bash
+```
+
+### 7.2 Inventory Query Names
+
+```bash
 tshark -r evidence/browser_dns.pcapng -Y 'dns.flags.response==0' -T fields \
   -e dns.qry.name -e dns.qry.type \
   | sort | uniq -c | sort -nr | tee reports/browser_dns_inventory.txt
 
 cat reports/browser_dns_inventory.txt
-Figure 5.1 — Browser DNS inventory
+```
 
-https://screenshots/figure_5_1_browser_inventory.png
+![Figure 5.1 — Browser DNS inventory](screenshots/figure_5_1_browser_inventory.png)
 
-Figure 5.1: Browser DNS inventory
+*Figure 5.1: Browser DNS inventory*
 
-Output (9 unique query names):
+**Output (9 unique query names):**
 
-Count	Query Name	Type
-1	www.cloudflare.com	1 (A)
-1	wikipedia.org	28 (AAAA)
-1	wikipedia.org	1 (A)
-1	push.services.mozilla.com	28 (AAAA)
-1	push.services.mozilla.com	1 (A)
-1	github.com	28 (AAAA)
-1	github.com	1 (A)
-1	en.wikipedia.org	1 (A)
-1	cloudflare.com	1 (A)
-Capture Details:
+| Count | Query Name | Type |
+|-------|-----------|------|
+| 1 | `www.cloudflare.com` | 1 (A) |
+| 1 | `wikipedia.org` | 28 (AAAA) |
+| 1 | `wikipedia.org` | 1 (A) |
+| 1 | `push.services.mozilla.com` | 28 (AAAA) |
+| 1 | `push.services.mozilla.com` | 1 (A) |
+| 1 | `github.com` | 28 (AAAA) |
+| 1 | `github.com` | 1 (A) |
+| 1 | `en.wikipedia.org` | 1 (A) |
+| 1 | `cloudflare.com` | 1 (A) |
 
-Property	Value
-File size	2,908 bytes (2.9 KB)
-Number of packets	18
-Capture duration	15.710 seconds
-SHA-256 Hash	214e181e4f08f076ac9114cad8487e66a1710a0cad1817d6c5d557fce25c6abf
-Observation: A single page view typically generates many DNS queries — for the page, stylesheets, fonts, images, analytics, and telemetry. The presence of push.services.mozilla.com demonstrates that browsers generate background DNS traffic.
+**Capture Details:**
 
-7.3 Visual Verification with Wireshark
-bash
+| Property | Value |
+|----------|-------|
+| File size | 2,908 bytes (2.9 KB) |
+| Number of packets | 18 |
+| Capture duration | 15.710 seconds |
+| SHA-256 Hash | `214e181e4f08f076ac9114cad8487e66a1710a0cad1817d6c5d557fce25c6abf` |
+
+**Observation:** A single page view typically generates **many DNS queries** — for the page, stylesheets, fonts, images, analytics, and telemetry. The presence of `push.services.mozilla.com` demonstrates that browsers generate background DNS traffic.
+
+### 7.3 Visual Verification with Wireshark
+
+```bash
 wireshark evidence/browser_dns.pcapng &
-Filter dns, then take screenshot of the multiple query/response pairs.
+```
 
-Figure 5.2 — Wireshark browser DNS traffic
+Filter `dns`, then take screenshot of the multiple query/response pairs.
 
-https://screenshots/figure_5_2_wireshark_browser.png
+![Figure 5.2 — Wireshark browser DNS traffic](screenshots/figure_5_2_wireshark_browser.png)
 
-Figure 5.2: Wireshark browser DNS traffic — multiple query/response pairs
+*Figure 5.2: Wireshark browser DNS traffic — multiple query/response pairs*
 
-8. Part F — Correlate DNS with Subsequent Connections
-8.1 Extract DNS A Answers
-bash
+---
+
+## 8. Part F — Correlate DNS with Subsequent Connections
+
+### 8.1 Extract DNS A Answers
+
+```bash
 tshark -r evidence/browser_dns.pcapng -Y 'dns.a' -T fields \
   -e frame.time_epoch -e dns.qry.name -e dns.a \
   | tee reports/dns_A_answers.tsv
 
 cat reports/dns_A_answers.tsv
-Output:
+```
 
-Time (Epoch)	Query Name	Answer IP(s)
-1789809917.161705663	wikipedia.org	185.15.58.224
-1789809917.538014721	en.wikipedia.org	185.15.58.224
-1789809917.681586697	github.com	140.82.121.4
-1789809917.875951721	cloudflare.com	104.16.132.229, 104.16.133.229
-1789809918.013730556	www.cloudflare.com	104.16.123.96, 104.16.124.96
-1789809932.771801761	push.services.mozilla.com	34.107.243.93
-8.2 Extract Subsequent TCP Destinations
-bash
+**Output:**
+
+| Time (Epoch) | Query Name | Answer IP(s) |
+|--------------|-----------|--------------|
+| 1789809917.161705663 | wikipedia.org | 185.15.58.224 |
+| 1789809917.538014721 | en.wikipedia.org | 185.15.58.224 |
+| 1789809917.681586697 | github.com | 140.82.121.4 |
+| 1789809917.875951721 | cloudflare.com | 104.16.132.229, 104.16.133.229 |
+| 1789809918.013730556 | www.cloudflare.com | 104.16.123.96, 104.16.124.96 |
+| 1789809932.771801761 | push.services.mozilla.com | 34.107.243.93 |
+
+### 8.2 Extract Subsequent TCP Destinations
+
+```bash
 tshark -r evidence/browser_dns.pcapng -Y 'tcp.flags.syn==1 && tcp.flags.ack==0' -T fields \
   -e frame.time_epoch -e ip.dst -e tcp.dstport \
   | tee reports/subsequent_tcp_destinations.tsv
 
 cat reports/subsequent_tcp_destinations.tsv
-Output: (empty — no TCP SYN packets captured)
+```
 
-Figure 6.1 — DNS-answer-to-TCP correlation
+**Output:** *(empty — no TCP SYN packets captured)*
 
-https://screenshots/figure_6_1_correlation.png
+![Figure 6.1 — DNS-answer-to-TCP correlation](screenshots/figure_6_1_correlation.png)
 
-Figure 6.1: DNS-answer-to-TCP correlation
+*Figure 6.1: DNS-answer-to-TCP correlation*
 
-8.3 Correlation Table
-DNS Query	Answer IP	TTL	Subsequent SYN?	Delta
-wikipedia.org	185.15.58.224	173	No	—
-en.wikipedia.org	185.15.58.224	150	No	—
-github.com	140.82.121.4	60	No	—
-cloudflare.com	104.16.132.229, 104.16.133.229	300	No	—
-www.cloudflare.com	104.16.123.96, 104.16.124.96	300	No	—
-push.services.mozilla.com	34.107.243.93	[from capture]	No	—
-8.4 Mismatch Explanations
-All DNS answers were returned, but no subsequent TCP connections appeared because:
+### 8.3 Correlation Table
 
-Reason	Explanation
-No browser HTTP activity	The dig queries were run from the command line
-No subsequent TCP handshake	dig only performs DNS lookups
-Browser pre-resolution	Firefox used its DNS cache
-Capture window	TCP connections require an actual HTTP request
-Forensic interpretation: DNS resolution alone does not create TCP connections. A subsequent TCP handshake would only appear if the client acted on the DNS answer.
+| DNS Query | Answer IP | TTL | Subsequent SYN? | Delta |
+|-----------|-----------|-----|-----------------|-------|
+| wikipedia.org | 185.15.58.224 | 173 | No | — |
+| en.wikipedia.org | 185.15.58.224 | 150 | No | — |
+| github.com | 140.82.121.4 | 60 | No | — |
+| cloudflare.com | 104.16.132.229, 104.16.133.229 | 300 | No | — |
+| www.cloudflare.com | 104.16.123.96, 104.16.124.96 | 300 | No | — |
+| push.services.mozilla.com | 34.107.243.93 | [from capture] | No | — |
 
-9. Part G — Optional SMTP-DNS Correlation
-Status: Performed — Lab 4 SMTP evidence available and analysed.
+### 8.4 Mismatch Explanations
 
-9.1 Command Used
-bash
+All DNS answers were returned, but **no subsequent TCP connections** appeared because:
+
+| Reason | Explanation |
+|--------|-------------|
+| **No browser HTTP activity** | The `dig` queries were run from the command line |
+| **No subsequent TCP handshake** | `dig` only performs DNS lookups |
+| **Browser pre-resolution** | Firefox used its DNS cache |
+| **Capture window** | TCP connections require an actual HTTP request |
+
+**Forensic interpretation:** DNS resolution alone does not create TCP connections. A subsequent TCP handshake would only appear if the client acted on the DNS answer.
+
+---
+
+## 9. Part G — Optional SMTP-DNS Correlation
+
+> **Status:** Performed — Lab 4 SMTP evidence available and analysed.
+
+### 9.1 Command Used
+
+```bash
 cd ~/SBT-DF203-Lab7
 
 tshark -r ../SBT-DF203-Lab4/working/smtp_working.pcap -Y 'dns' -T fields \
@@ -533,125 +641,80 @@ tshark -r ../SBT-DF203-Lab4/working/smtp_working.pcap -Y 'dns' -T fields \
   | tee reports/smtp_dns_correlation.tsv
 
 cat reports/smtp_dns_correlation.tsv
-Figure 7.1 — SMTP DNS correlation
+```
 
-https://screenshots/figure_7_1_smtp_dns_correlation.png
+![Figure 7.1 — SMTP DNS correlation](screenshots/figure_7_1_smtp_dns_correlation.png)
 
-Figure 7.1: SMTP DNS correlation (Lab 4 evidence)
+*Figure 7.1: SMTP DNS correlation (Lab 4 evidence)*
 
-9.2 Output
-Frame	Time	Query Name	Type	Answer IP	Response Names	TTLs
-1	2009-10-05T02:06:07.492060-0400	mail.patriots.in	1 (A)	—	—	—
-2	2009-10-05T02:06:07.526085-0400	mail.patriots.in	1 (A)	74.53.140.153	mail.patriots.in, patriots.in, patriots.in, patriots.in	10827, 10828, 82828, 82828
-9.3 Analysis
-DNS query (Frame 1): Client queried mail.patriots.in for an A record.
+### 9.2 Output
 
-DNS response (Frame 2): Resolver returned 74.53.140.153 via CNAME chain mail.patriots.in → patriots.in.
+| Frame | Time | Query Name | Type | Answer IP | Response Names | TTLs |
+|-------|------|-----------|------|-----------|----------------|------|
+| 1 | 2009-10-05T02:06:07.492060-0400 | mail.patriots.in | 1 (A) | — | — | — |
+| 2 | 2009-10-05T02:06:07.526085-0400 | mail.patriots.in | 1 (A) | 74.53.140.153 | mail.patriots.in, patriots.in, patriots.in, patriots.in | 10827, 10828, 82828, 82828 |
 
-Subsequent SMTP connection: The client immediately initiated TCP to 74.53.140.153:25 (SMTP port).
+### 9.3 Analysis
 
-9.4 Key Observations
-#	Observation	Technical Implication
-i.	mail.patriots.in resolved via CNAME chain	Alias to patriots.in
-ii.	A record = 74.53.140.153	Exact IP used for SMTP connection
-iii.	TTL of authoritative A = 10,828 s (~3 hrs)	Long cache lifetime for mail server
-iv.	TCP connection to 74.53.140.153:25 confirmed	DNS-to-connection chain verified
-9.5 DNS-to-SMTP Correlation
-Step	Evidence
-1. DNS Query	Frame 1: mail.patriots.in → resolver
-2. DNS Response	Frame 2: A 74.53.140.153 (via CNAME)
-3. TCP Handshake	Frames 3–5: SYN → SYN-ACK → ACK to port 25
-4. SMTP Session	Frames 6+: SMTP banner over the resolved IP
-This is a textbook example of DNS resolution enabling a subsequent application-layer connection.
+**DNS query (Frame 1):** Client queried `mail.patriots.in` for an A record.
 
-10. Required Forensic Findings
-Question	Finding
-Configured resolver IP	192.168.18.1 (gateway router — blocked forwarded DNS queries)
-Effective resolver used	8.8.8.8 (Google Public DNS)
-Client source port	Ephemeral (OS-assigned)
-Resolver destination port	53
-Transaction IDs	0x41a4, 0xba6d, 0xe608
-Query names/types	example.com/A, example.com/AAAA, google.com/A
-Response code	0 (NOERROR)
-Answer IPs	172.66.147.243, 104.20.23.154, 142.251.208.142
-TTL values	87, 300, 209 seconds
-Query-response time delta	53–1,075 ms
-Subsequent connection	DNS answers extracted; no subsequent TCP (dig doesn't connect)
-SMTP DNS correlation	mail.patriots.in → CNAME patriots.in → A 74.53.140.153 → TCP port 25
-Normal variations	Multiple A answers, CNAME chain, null MX record, AAAA queries, cached responses
-11. Conclusion
-This lab provided practical experience in DNS traffic analysis using dig, TShark, and Wireshark. I successfully:
+**DNS response (Frame 2):** Resolver returned **`74.53.140.153`** via **CNAME chain** `mail.patriots.in → patriots.in`.
 
-Created the lab folder structure and preserved the supplied dig_dns.pcap with a verified working copy and matching SHA-256 hashes.
+**Subsequent SMTP connection:** The client immediately initiated TCP to `74.53.140.153:25` (SMTP port).
 
-Identified the configured resolver (192.168.18.1 — gateway router, with 8.8.8.8 used as the effective resolver).
+### 9.4 Key Observations
 
-Queried A, AAAA, MX, and NS records using dig, interpreting status, flags, answer counts, and TTL values.
+| # | Observation | Technical Implication |
+|---|-------------|----------------------|
+| i. | `mail.patriots.in` resolved via CNAME chain | Alias to `patriots.in` |
+| ii. | A record = `74.53.140.153` | Exact IP used for SMTP connection |
+| iii. | TTL of authoritative A = 10,828 s (~3 hrs) | Long cache lifetime for mail server |
+| iv. | TCP connection to `74.53.140.153:25` confirmed | DNS-to-connection chain verified |
 
-Captured fresh DNS traffic using TShark and extracted query fields.
+### 9.5 DNS-to-SMTP Correlation
 
-Extracted response fields (transaction ID, response code, answer count, answer IPs, TTL).
+| Step | Evidence |
+|------|----------|
+| **1. DNS Query** | Frame 1: `mail.patriots.in` → resolver |
+| **2. DNS Response** | Frame 2: A `74.53.140.153` (via CNAME) |
+| **3. TCP Handshake** | Frames 3–5: SYN → SYN-ACK → ACK to port 25 |
+| **4. SMTP Session** | Frames 6+: SMTP banner over the resolved IP |
 
-Correlated queries and responses using transaction ID and endpoint tuple.
+This is a **textbook example of DNS resolution enabling a subsequent application-layer connection**.
 
-Visualized the DNS query/response tree in Wireshark and used Follow UDP Stream.
+---
 
-Captured browser-generated DNS activity and inventoried 9 unique query names.
+## 10. Required Forensic Findings
 
-Correlated DNS answers with subsequent TCP connections — documenting that dig alone does not initiate TCP connections.
+| Question | Finding |
+|----------|---------|
+| **Configured resolver IP** | `192.168.18.1` (gateway router — blocked forwarded DNS queries) |
+| **Effective resolver used** | `8.8.8.8` (Google Public DNS) |
+| **Client source port** | Ephemeral (OS-assigned) |
+| **Resolver destination port** | 53 |
+| **Transaction IDs** | `0x41a4`, `0xba6d`, `0xe608` |
+| **Query names/types** | `example.com`/A, `example.com`/AAAA, `google.com`/A |
+| **Response code** | 0 (NOERROR) |
+| **Answer IPs** | `172.66.147.243`, `104.20.23.154`, `142.251.208.142` |
+| **TTL values** | 87, 300, 209 seconds |
+| **Query-response time delta** | 53–1,075 ms |
+| **Subsequent connection** | DNS answers extracted; no subsequent TCP (dig doesn't connect) |
+| **SMTP DNS correlation** | `mail.patriots.in` → CNAME `patriots.in` → A `74.53.140.153` → TCP port 25 |
+| **Normal variations** | Multiple A answers, CNAME chain, null MX record, AAAA queries, cached responses |
 
-Performed the optional SMTP-DNS correlation using Lab 4 evidence: mail.patriots.in resolved via CNAME chain to 74.53.140.153, followed by a TCP connection to port 25.
+---
 
-Documented normal variations: multiple A answers, CNAME chains, null MX records, IPv6 AAAA queries, cached responses.
+## 11. Conclusion
 
-These skills are essential for any digital forensics professional, as DNS analysis is a foundational step in network incident investigation, malware C2 detection, and evidence documentation.
+This lab provided practical experience in DNS traffic analysis using `dig`, TShark, and Wireshark. I successfully:
 
-12. References
-ICDFA. (2026). SBT-DF203 — Module 6: DNS Traffic Analysis and Forensics — Course Materials.
-
-ICDFA. (2026). SBT-DF203 Lab 7 — DNS Introduction and Traffic Analysis — Official Lab Manual.
-
-Internet Systems Consortium. (2026). dig Manual. https://bind9.readthedocs.io/en/latest/manpages.html#dig
-
-Wireshark Documentation. (2026). Wireshark User Guide. https://www.wireshark.org/docs/
-
-TShark Documentation. (2026). TShark — Terminal-based Wireshark. https://www.wireshark.org/docs/man-pages/tshark.html
-
-RFC 1035. (1987). Domain Names — Implementation and Specification. https://tools.ietf.org/html/rfc1035
-
-RFC 3596. (2003). DNS Extensions to Support IP Version 6. https://tools.ietf.org/html/rfc3596
-
-13. Appendix — Screenshot Reference List
-Figure	Description
-Figure 1.1	Lab folder structure created successfully
-Figure 1.2	Resolver info and evidence hashes
-Figure 2.1	dig A record output
-Figure 2.2	dig AAAA / MX / NS output
-Figure 3.1	Fresh DNS capture hash
-Figure 3.2	Wireshark DNS query/response tree view
-Figure 4.1	DNS query fields (TShark)
-Figure 4.2	DNS response fields (TShark)
-Figure 4.3	Wireshark Follow UDP Stream view
-Figure 5.1	Browser DNS inventory (TShark)
-Figure 5.2	Wireshark browser DNS traffic
-Figure 6.1	DNS-answer-to-TCP correlation
-Figure 7.1	SMTP DNS correlation (Lab 4 evidence)
-Declaration
-I, Ibrahim Ishaku, confirm that this lab report is based on my own practical work conducted in the ICDFA lab environment. All packet captures, DNS analysis, transaction correlation, and interpretation tasks are my own original work. The original packet capture was preserved and all analysis was performed on verified working copies with cryptographic hashes.
-
-Signature: ______________________
-Date: 22nd September, 2026
-
-Academic Notice
-This lab was completed as part of the Fellowship in Web Application Security & Digital Forensics at the International Cybersecurity and Digital Forensics Academy (ICDFA).
-
-All work is the author's original submission for academic purposes.
-
-Content is shared for educational and portfolio use only.
-
-All labs were performed in controlled environments using test data and virtual machines.
-
-License
-This project is licensed under the MIT License — see the LICENSE file for details.
-
-End of Lab Report
+1. Created the lab folder structure and preserved the supplied `dig_dns.pcap` with a verified working copy and matching SHA-256 hashes.
+2. Identified the configured resolver (`192.168.18.1` — gateway router, with `8.8.8.8` used as the effective resolver).
+3. Queried A, AAAA, MX, and NS records using `dig`, interpreting status, flags, answer counts, and TTL values.
+4. Captured fresh DNS traffic using TShark and extracted query fields.
+5. Extracted response fields (transaction ID, response code, answer count, answer IPs, TTL).
+6. Correlated queries and responses using transaction ID and endpoint tuple.
+7. Visualized the DNS query/response tree in Wireshark and used Follow UDP Stream.
+8. Captured browser-generated DNS activity and inventoried **9 unique query names**.
+9. Correlated DNS answers with subsequent TCP connections — documenting that `dig` alone does not initiate TCP connections.
+10. Performed the **optional SMTP-DNS correlation** using Lab 4 evidence: `mail.patriots.in` resolved via CNAME chain
