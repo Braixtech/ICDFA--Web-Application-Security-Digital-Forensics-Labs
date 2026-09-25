@@ -1,0 +1,3 @@
+  6044727  12540 -rw-rw-r--   1 ibrahim  ibrahim  12837660 Sep 25 05:56 working/file_working.xz
+  6044728  13904 -rw-rw-r--   1 ibrahim  ibrahim  14234002 Sep 25 04:50 working/file_working
+  6044517  12488 -rw-rw-r--   1 ibrahim  ibrahim  12784501 Sep 25 06:09 working/file_working-dec
