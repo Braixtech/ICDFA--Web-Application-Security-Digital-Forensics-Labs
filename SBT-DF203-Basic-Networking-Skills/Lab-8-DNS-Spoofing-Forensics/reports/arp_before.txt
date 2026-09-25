@@ -1,0 +1,3 @@
+192.168.56.20 dev veth-kali lladdr 7a:9f:80:5e:8b:22 STALE 
+192.168.56.1 dev eth0 lladdr 3a:f9:d3:ab:c8:64 REACHABLE 
+fe80::38f9:d3ff:feab:c864 dev eth0 lladdr 3a:f9:d3:ab:c8:64 REACHABLE 
