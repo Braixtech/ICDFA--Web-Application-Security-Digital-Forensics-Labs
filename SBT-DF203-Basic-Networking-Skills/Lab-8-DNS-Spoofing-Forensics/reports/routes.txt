@@ -1,0 +1,2 @@
+192.168.56.0/24 dev veth-kali proto kernel scope link src 192.168.56.10 
+192.168.56.0/24 dev eth0 proto kernel scope link src 192.168.56.2 metric 100 

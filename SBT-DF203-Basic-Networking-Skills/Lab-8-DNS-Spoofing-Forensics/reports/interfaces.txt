@@ -1,0 +1,3 @@
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+eth0             UP             192.168.56.2/24 fe80::687a:90ff:fef8:cde8/64 
+veth-kali@if3    UP             192.168.56.10/24 fe80::b8e7:64ff:feae:3972/64 
