@@ -29,7 +29,7 @@ School of Basic Vocational Training (SVT)
 | # | Module | Status | Deadline | Report |
 | --- | --- | --- | --- | --- |
 | 01 | Investigating Harassment Email Traffic With Wireshark | ✅ Complete | 05 Oct 2026, 11:59 PM WAT | [View](Module-01-Investigating-Harassment-Email-Traffic-With-Wireshark/README.md) |
-| 02 | Reconstructing Chrome Web History | ⏳ Pending | 12 Oct 2026, 4:24 PM WAT | — |
+| 02 | Reconstructing Chrome Web History | ✅ Complete | 12 Oct 2026, 4:24 PM WAT | [View](Module-02-Reconstructing-Chrome-Web-History/README.md) |
 | 03 | Investigating Memory Evidence | ⏳ Pending | 19 Oct 2026, 11:59 PM WAT | — |
 | 04 | Investigating Rhion Possession Evidence | ⏳ Pending | 26 Oct 2026, 11:59 PM WAT | — |
 | 05 | Investigating DJI Mavic Air Flight Evidence | ⏳ Pending | 02 Nov 2026, 11:59 PM WAT | — |
