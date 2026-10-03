@@ -1108,3 +1108,99 @@ This project is licensed under the MIT License — see the [LICENSE](../../LICEN
 ---
 
 **End of Case Study Report**
+
+---
+
+## Appendix E — Rendered Figures (Inline Screenshots)
+
+This appendix renders all 11 screenshots inline for examiner convenience. Each figure is also referenced at its corresponding section in the body of the report.
+
+### Figure A0 — Evidence Integrity Verification
+
+![Figure A0](screenshots/figure_A0_evidence_hash.png)
+
+*Figure A0: SHA-256 hash verification of the original History database and its working copy. Both hashes match: `b991b0fa69662c44caf599e468c8088576ebd9cebbf46d02c89cf51bcde3fd19`.*
+
+---
+
+### Figure B1 — Database Structure (17 Tables)
+
+![Figure B1](screenshots/figure_B1_database_structure.png)
+
+*Figure B1: Chrome History database structure showing all 17 tables, including the four material tables (`urls`, `visits`, `downloads`, `downloads_url_chains`).*
+
+---
+
+### Figure B2 — urls Table Sample
+
+![Figure B2](screenshots/figure_B2_urls_table.png)
+
+*Figure B2: `urls` table — first rows showing the initial Craigslist and Google search entries.*
+
+---
+
+### Figure B3 — visits Table with Transition Column
+
+![Figure B3](screenshots/figure_B3_visits_table.png)
+
+*Figure B3: `visits` table showing the raw WebKit timestamps and `transition` values for each navigation event.*
+
+---
+
+### Figure B4 — downloads Table Row
+
+![Figure B4](screenshots/figure_B4_downloads_table.png)
+
+*Figure B4: `downloads` table showing the single row for `proof_of_payment.png` saved to `C:\Users\FSCS_User\Desktop\`.*
+
+---
+
+### Figure B5 — Master Timeline SQL Result
+
+![Figure B5](screenshots/figure_B5_master_timeline.png)
+
+*Figure B5: SQL query result joining `visits` and `urls` to produce the master timeline with UTC timestamps.*
+
+---
+
+### Figure B6 — Craigslist Posting Workflow
+
+![Figure B6](screenshots/figure_B6_craigslist_workflow.png)
+
+*Figure B6: SQL query result showing the Craigslist posting workflow (21 rows) with `transition & 0xFF = 7` indicating form submissions.*
+
+---
+
+### Figure B7 — Gmail Activity
+
+![Figure B7](screenshots/figure_B7_gmail_activity.png)
+
+*Figure B7: SQL query result showing Gmail activity (30 rows), including the "order" message and the "txid" message.*
+
+---
+
+### Figure B8 — Crypto Activity
+
+![Figure B8](screenshots/figure_B8_crypto_activity.png)
+
+*Figure B8: SQL query result showing Imgur, Blockchain.com, Kraken, and mempool.space activity (23 rows).*
+
+---
+
+### Figure B9 — Downloads Query Result
+
+![Figure B9](screenshots/figure_B9_downloads_query.png)
+
+*Figure B9: SQL query result with WebKit timestamps converted to UTC for the single download record.*
+
+---
+
+### Figure B10 — downloads_url_chains Table
+
+![Figure B10](screenshots/figure_B10_download_url_chains.png)
+
+*Figure B10: `downloads_url_chains` table showing the Imgur PNG URL from which `proof_of_payment.png` was retrieved.*
+
+---
+
+**End of Appendix E**
