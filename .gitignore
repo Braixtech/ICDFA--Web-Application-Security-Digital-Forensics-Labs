@@ -1,0 +1,14 @@
+# Large evidence files
+*.pcap
+*.pcapng
+
+# Temporary files
+*.tmp
+*.log
+~$*
+.DS_Store
+Thumbs.db
+
+# Python cache
+__pycache__/
+*.pyc
