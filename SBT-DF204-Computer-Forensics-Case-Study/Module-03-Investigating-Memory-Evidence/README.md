@@ -1050,7 +1050,7 @@ This forensic investigation reconstructed a coherent, evidence-based sequence fr
 
 1. **A USB mass-storage device** (`Disk&Ven_General&Prod_UDisk&Rev_5.00`, instance `661bec0f48605_60`) was enumerated at **15:02:54 UTC** and mounted as DOS drive **F:** — as recorded in the `USBSTOR`, `DeviceClasses`, and `MountedDevices` registry keys.
 2. **The `Downloads` folder** of the active user profile `IEUser` (`C:\Users\IEUser\Downloads`) was viewed in File Explorer at **14:49:40 UTC** and revisited at **15:04:40 UTC** — between the USB mount and the subsequent command.
-3. **A command prompt** (`cmd.exe` PID 3996, spawned from `explorer.exe` PID 2524 and hosted by `conhost.exe` PID 3988) was started at **15:06:11 UTC** and executed the sequence **`ipconfig` → `cd Downloads` → **`copy secret_file.docx F:`**.
+3. **A command prompt** (`cmd.exe` PID 3996, spawned from `explorer.exe` PID 2524 and hosted by `conhost.exe` PID 3988) was started at **15:06:11 UTC** and executed the sequence **`ipconfig` → `cd Downloads` → `copy secret_file.docx F:`**.
 4. **The console screen buffer** preserved in the memory image records the shell output **`1 file(s) copied.`**, confirming the copy operation **completed**.
 
 **Personal attribution remains moderate.** The memory image preserves profile activity, not physical presence. The presence of an `sshd.exe` service listening on TCP port 22 and an SSH service-account profile (`sshd_server`) means that remote access via SSH is a plausible alternative vector for the activity, independent of the person physically at the keyboard.
