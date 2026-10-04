@@ -6,7 +6,7 @@ School of Basic Vocational Training (SVT)
 ![Course](https://img.shields.io/badge/Course-SBT--DF204-blue)
 ![Cohort](https://img.shields.io/badge/Cohort-BATCH--B2025%20%C2%B7%20L1%2FS2-informational)
 ![Credit](https://img.shields.io/badge/Credit%20Units-5-brightgreen)
-![Status](https://img.shields.io/badge/Status-In%20Progress-yellow)
+![Status](https://img.shields.io/badge/Status-Complete-brightgreen)
 
 ---
 
