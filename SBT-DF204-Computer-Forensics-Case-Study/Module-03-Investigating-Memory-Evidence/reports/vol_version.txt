@@ -1,0 +1,40 @@
+
+
+Profiles
+--------
+VistaSP0x64           - A Profile for Windows Vista SP0 x64
+VistaSP0x86           - A Profile for Windows Vista SP0 x86
+VistaSP1x64           - A Profile for Windows Vista SP1 x64
+VistaSP1x86           - A Profile for Windows Vista SP1 x86
+VistaSP2x64           - A Profile for Windows Vista SP2 x64
+VistaSP2x86           - A Profile for Windows Vista SP2 x86
+Win10x64              - A Profile for Windows 10 x64
+Win10x64_10240_17770  - A Profile for Windows 10 x64 (10.0.10240.17770 / 2018-02-10)
+Win10x64_10586        - A Profile for Windows 10 x64 (10.0.10586.306 / 2016-04-23)
+Win10x64_14393        - A Profile for Windows 10 x64 (10.0.14393.0 / 2016-07-16)
+Win10x64_15063        - A Profile for Windows 10 x64 (10.0.15063.0 / 2017-04-04)
+Win10x64_16299        - A Profile for Windows 10 x64 (10.0.16299.0 / 2017-09-22)
+Win10x64_17134        - A Profile for Windows 10 x64 (10.0.17134.1 / 2018-04-11)
+Win10x64_17763        - A Profile for Windows 10 x64 (10.0.17763.0 / 2018-10-12)
+Win10x64_18362        - A Profile for Windows 10 x64 (10.0.18362.0 / 2019-04-23)
+Win10x64_19041        - A Profile for Windows 10 x64 (10.0.19041.0 / 2020-04-17)
+Win10x86              - A Profile for Windows 10 x86
+Win10x86_10240_17770  - A Profile for Windows 10 x86 (10.0.10240.17770 / 2018-02-10)
+Win10x86_10586        - A Profile for Windows 10 x86 (10.0.10586.420 / 2016-05-28)
+Win10x86_14393        - A Profile for Windows 10 x86 (10.0.14393.0 / 2016-07-16)
+Win10x86_15063        - A Profile for Windows 10 x86 (10.0.15063.0 / 2017-04-04)
+Win10x86_16299        - A Profile for Windows 10 x86 (10.0.16299.15 / 2017-09-29)
+Win10x86_17134        - A Profile for Windows 10 x86 (10.0.17134.1 / 2018-04-11)
+Win10x86_17763        - A Profile for Windows 10 x86 (10.0.17763.0 / 2018-10-12)
+Win10x86_18362        - A Profile for Windows 10 x86 (10.0.18362.0 / 2019-04-23)
+Win10x86_19041        - A Profile for Windows 10 x86 (10.0.19041.0 / 2020-04-17)
+Win2003SP0x86         - A Profile for Windows 2003 SP0 x86
+Win2003SP1x64         - A Profile for Windows 2003 SP1 x64
+Win2003SP1x86         - A Profile for Windows 2003 SP1 x86
+Win2003SP2x64         - A Profile for Windows 2003 SP2 x64
+Win2003SP2x86         - A Profile for Windows 2003 SP2 x86
+Win2008R2SP0x64       - A Profile for Windows 2008 R2 SP0 x64
+Win2008R2SP1x64       - A Profile for Windows 2008 R2 SP1 x64
+Win2008R2SP1x64_23418 - A Profile for Windows 2008 R2 SP1 x64 (6.1.7601.23418 / 2016-04-09)
+Win2008R2SP1x64_24000 - A Profile for Windows 2008 R2 SP1 x64 (6.1.7601.24000 / 2016-04-09)
+Win2008SP1x64         - A Profile for Windows 2008 SP1 x64
