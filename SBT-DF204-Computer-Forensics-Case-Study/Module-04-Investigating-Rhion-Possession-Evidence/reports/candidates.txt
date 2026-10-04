@@ -1,0 +1,8 @@
+=========== Candidates for steg analysis ===========
+-rw-rw-r-- 1 ibrahim ibrahim  95814 Oct  4 08:28 steg/f0104057.jpg
+-rw-rw-r-- 1 ibrahim ibrahim 415534 Oct  4 08:28 steg/f0104249.jpg
+-rw-rw-r-- 1 ibrahim ibrahim 411361 Oct  4 08:28 steg/f0105065.jpg
+-rw-rw-r-- 1 ibrahim ibrahim 264600 Oct  4 08:28 steg/f0105873.jpg
+-rw-rw-r-- 1 ibrahim ibrahim   6809 Oct  4 08:28 steg/f0106393.jpg
+-rw-rw-r-- 1 ibrahim ibrahim 230665 Oct  4 08:28 steg/f0106409.jpg
+-rw-rw-r-- 1 ibrahim ibrahim 264600 Oct  4 08:28 steg/f0335081.jpg
