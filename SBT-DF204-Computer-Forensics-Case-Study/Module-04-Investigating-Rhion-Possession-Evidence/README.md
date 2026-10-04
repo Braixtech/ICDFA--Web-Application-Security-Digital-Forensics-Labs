@@ -37,7 +37,7 @@ This case study examines the evidence package supplied for the *Rhion Possession
 **Additional findings:**
 
 - The USB image is a **FAT16 volume of 259,506,176 bytes** containing only two allocated files (`gumbo1.txt`, `gumbo2.txt`) — the rhino images are entirely in unallocated space.
-- **Two JPEG files** (`f0104249.jpg`, `f0105065.jpg`) contain steganographic jphide payloads. Passwords were recovered from `rockyou.txt` via `stegbreak`: `gator` and `gumbo`. Payload extraction was blocked by a version mismatch between the available `jpseek 0.3` and the `jphide v5` payload format, documented in Section 3.4 and Question 4.
+- **Two JPEG files** (`f0104249.jpg`, `f0105065.jpg`) contain steganographic jphide payloads. Passwords were recovered from `rockyou.txt` via `stegbreak`: `gator` and `gumbo`. Payload extraction was blocked by a version mismatch between the available `jpseek 0.3` and the `jphide v5` payload format, documented in Section 3.3 and Question 4.
 - The FTP capture records **three authenticated sessions** using credentials `gnome` / `gnome123`, uploading `rhino1.jpg`, `rhino3.jpg`, and `contraband.zip`. The ZIP archive was cracked (`monkey`) and yielded `rhino2.jpg`.
 - The HTTP captures record direct downloads of `rhino4.jpg` (153,191 bytes), `rhino5.gif` (85,137 bytes), and `rhino.exe` (145,920 bytes). The MD5 of `rhino.exe` (`d62d9989535c4c8db14e50b58c9f25a0`) matches Microsoft's `diskpart.exe` — a legitimate Windows system binary, not malware.
 
@@ -87,7 +87,7 @@ The four supplied artifacts — a USB disk image and three network captures — 
 The investigation directly establishes:
 
 - **Four rhino images recovered by carving** from the unallocated space of `RHINOUSB.dd`: `f0106393.jpg` (small rhino icon), `f0106409.jpg` (mother + baby), `f0106865.gif` (cartoon rhino), `f0106889.gif` (blue cartoon rhino). Each hashed with SHA-256.
-- **Two JPEG files contain jphide steganographic payloads** (`f0104249.jpg`, `f0105065.jpg`). `stegdetect` detected the payloads and `stegbreak` recovered passwords `gator` and `gumbo` from `rockyou.txt`. Extraction was blocked by a version mismatch between the available `jpseek 0.3` and the `jphide v5` payload format (Section 3.4).
+- **Two JPEG files contain jphide steganographic payloads** (`f0104249.jpg`, `f0105065.jpg`). `stegdetect` detected the payloads and `stegbreak` recovered passwords `gator` and `gumbo` from `rockyou.txt`. Extraction was blocked by a version mismatch between the available `jpseek 0.3` and the `jphide v5` payload format (Section 3.3).
 - **Three FTP sessions** authenticated as `gnome` / `gnome123`, uploading `rhino1.jpg`, `rhino3.jpg`, and `contraband.zip`. The ZIP archive was cracked (`monkey`) and yielded `rhino2.jpg` — a byte-identical match to `f0106409.jpg` recovered independently by PhotoRec.
 - **Three HTTP objects** were downloaded from `www.cs.uno.edu` — `rhino4.jpg` (153,191 bytes), `rhino5.gif` (85,137 bytes), and `rhino.exe` (145,920 bytes). The MD5 of `rhino.exe` matches Microsoft's `diskpart.exe`.
 
@@ -152,7 +152,7 @@ WORK=$(awk '{print $1}' reports/working_copy_sha256.txt)
 | `rhino2.log` | `cd21eaf4acfb50f71ffff857d7968341` |
 | `rhino3.log` | `7e29f9d67346df25faaf18efcd95fc30` |
 
-**Integrity Status:** ✅ **Verified** — Working copy of `RHINOUSB.dd` is byte-for-byte identical. Originals preserved untouched. No writes were made to the original case materials.
+**Integrity Status:** ✅ **Verified** — Working copy of `RHINOUSB.dd` is byte-for-byte identical. Originals preserved untouched.
 
 **Figure B1 — Disk layout (`fdisk -l`, `parted print`)**
 
@@ -173,29 +173,29 @@ WORK=$(awk '{print $1}' reports/working_copy_sha256.txt)
 | **Sleuth Kit (`fdisk`, `parted`, `fsstat`, `fls`)** | system default | Disk-image layout, filesystem metadata, allocated-file review |
 | **PhotoRec** | 7.2 (Feb 2024) | Deleted-file carving |
 | **Stegdetect / Stegbreak** | 0.6 | jphide payload detection and password cracking |
-| **jpseek** | 0.3 | jphide extraction (version limitation — Section 3.4) |
+| **jpseek** | 0.3 | jphide extraction (version limitation — Section 3.3) |
 | **Tshark / Wireshark** | system default | FTP and HTTP packet analysis |
 | **fcrackzip** | 1.0 | ZIP archive password cracking |
 | **Kali Linux** | Rolling release | Analysis environment |
 
 ### 2.5 Access Controls and Precautions
 
-- Original evidence files (`RHINOUSB.dd`, `rhino.log`, `rhino2.log`, `rhino3.log`) preserved read-only in `~/rhion/`.
+- Original evidence files preserved read-only in `~/rhion/`.
 - Analysis performed only on the working copy `working/RHINOUSB_working.dd`.
-- The recovered `rhino.exe` binary was **not executed** at any time. Its MD5 (`d62d9989535c4c8db14e50b58c9f25a0`) was matched to Microsoft's `diskpart.exe` — no dynamic analysis was performed.
-- Password cracking was performed only against the supplied `contraband.zip` using `rockyou.txt` inside the lab environment.
-- FTP credentials recovered from the traffic are documented as evidence and were not reused.
+- The recovered `rhino.exe` binary was **not executed** at any time.
+- Password cracking was performed only against the supplied `contraband.zip`.
+- FTP credentials documented as evidence and not reused.
 - No remote host, IP, account, or service named in the evidence was contacted.
 
 ---
 
 ## 3. Method
 
-Four independent forensic techniques were applied to the supplied artifacts. This section documents the method for each, including the tools used, the commands run, and the workflow. Selected tool output is preserved in Appendix C.
+Four independent forensic techniques were applied to the supplied artifacts. This section documents the method for each. Selected tool output is preserved in Appendix C.
 
 ### 3.1 Disk-Image and File-System Examination
 
-The USB disk image was examined first with `fdisk -l` and `parted print` to determine partition layout, then with `fsstat` to determine the filesystem. Allocated files were listed with `fls -r -p`.
+The USB disk image was examined first with `fdisk -l` and `parted print`, then with `fsstat`, and allocated files listed with `fls -r -p`.
 
 **Commands:**
 
@@ -206,7 +206,7 @@ fsstat -o 0 RHINOUSB.dd
 fls -o 0 -r -p RHINOUSB.dd
 ```
 
-**Observation:** The image is a single-partition FAT16 volume. `fsstat` reports:
+**Observation:** Single-partition FAT16 volume. `fsstat` reports:
 
 - Filesystem type: **FAT16**
 - OEM name: `mkdosfs`
@@ -214,131 +214,67 @@ fls -o 0 -r -p RHINOUSB.dd
 - Sector size: 512 bytes
 - Cluster size: 4096 bytes (8 sectors)
 - Total clusters: 63,290
-- Boot sector at sector 0
+- Boot sector: sector 0
 - FAT 0: sectors 1–248
 - FAT 1: sectors 249–496
 - Root directory: sectors 497–528
 - Data area: sectors 497–506,847
 
-`fls` lists only two allocated files:
-
-```
-r/r 4:  gumbo1.txt
-r/r 6:  gumbo2.txt
-v/v 8101619:    $MBR
-v/v 8101620:    $FAT1
-v/v 8101621:    $FAT2
-V/V 8101622:    $OrphanFiles
-```
-
-No rhino images are present in allocated space. Any rhino content must reside in unallocated clusters.
+`fls` lists only two allocated files: `gumbo1.txt`, `gumbo2.txt`. No rhino images are present in allocated space.
 
 ### 3.2 Deleted-File Recovery — PhotoRec Carving
 
-The working copy of the USB image was carved with PhotoRec 7.2. Analysis was restricted to unallocated space.
-
-**Command and menu choices:**
+The working copy was carved with PhotoRec 7.2, restricted to unallocated space.
 
 ```bash
 cd ~/rhion
 photorec RHINOUSB.dd
 ```
 
-Menu sequence:
-
 | Screen | Selection |
 | --- | --- |
 | Media | `RHINOUSB.dd` |
 | Partition table | (none) |
 | Filesystem type | `Other` → `FAT/NTFS/HFS+/ReiserFS` |
-| Analysis scope | `Free` (unallocated space only) |
+| Analysis scope | `Free` |
 | Destination | `/home/ibrahim/rhion/recovered` |
 
-**Result:** 132 files recovered. Of these, 9 are image files — the rest are small text fragments and PhotoRec session metadata. Every recovered image was hashed with SHA-256. Duplicates were identified by matching hashes.
-
-**Validation of recovered objects:**
-
-```bash
-file recovered/recup_dir.1/*.jpg recovered/recup_dir.1/*.gif
-sha256sum recovered/recup_dir.1/*.jpg recovered/recup_dir.1/*.gif
-```
-
-All recovered files were confirmed by `file` magic-number detection.
+**Result:** 132 files recovered. Of these, 9 are image files. Every recovered image hashed with SHA-256. Duplicates identified by matching hashes.
 
 ### 3.3 Steganography Detection, Password Recovery, and Extraction Attempt
 
-All 7 recovered JPEGs were copied to `~/rhion/steg/` and tested for steganographic content.
+All 7 recovered JPEGs tested.
 
-**Metadata review (`exiftool`):**
+**Metadata review:** `exiftool steg/*.jpg` — no suspicious metadata.
 
-```bash
-exiftool steg/*.jpg
-```
+**Detection:** `stegdetect *.jpg` — jphide payloads in `f0104249.jpg` and (via crack confirmation) `f0105065.jpg`.
 
-No suspicious metadata found in any image.
+**Password cracking:** `stegbreak -f rockyou.txt *.jpg` — recovered passwords `gator` and `gumbo` from the standard wordlist.
 
-**Detection (`stegdetect`):**
+**Extraction attempts:**
 
-```bash
-cd ~/rhion/steg
-stegdetect *.jpg
-```
+1. **`jpseek 0.3`** — returned `File not completely recovered` on both images. Version incompatibility with jphide v5.
+2. **`jpseek.exe`** under Wine — required `wine32:i386`, which cannot be installed on this Kali Rolling release without breaking XFCE desktop packages.
 
-**Password cracking (`stegbreak`):**
-
-```bash
-stegbreak -f rockyou.txt *.jpg
-```
-
-The attack used the standard `rockyou.txt` wordlist (14,344,392 entries) inside the lab environment.
-
-**Extraction attempt (`jpseek`):**
-
-Two extraction tools were attempted:
-
-1. **`jpseek 0.3`** (Kali package). Both images returned `File not completely recovered`. This is a version incompatibility — `jpseek 0.3` cannot parse `jphide v5` payloads.
-2. **`jpseek.exe`** (Windows v5 binary from `jphs_05.zip`) under Wine. Wine required `wine32:i386`, which cannot be installed on this Kali Rolling release without breaking XFCE desktop dependency chains.
-
-**Methodological outcome:** Detection and password recovery succeeded. Extraction failed at the tooling layer. Both `.txt` outputs are preserved as evidence; the failed extraction is documented as a limitation.
+**Outcome:** Detection and password recovery succeeded. Extraction failed at the tooling layer. Documented as a limitation.
 
 ### 3.4 FTP Session Reconstruction
 
-FTP traffic in `rhino.log` was analysed with `tshark` (CLI Wireshark). Credentials were extracted from the FTP control channel. FTP data objects were exported to disk.
-
-**Commands:**
+FTP traffic in `rhino.log` was analysed with `tshark`.
 
 ```bash
-tshark -r rhino.log \
-  -Y 'ftp.request.command == "USER" || ftp.request.command == "PASS"' \
+tshark -r rhino.log -Y 'ftp.request.command == "USER" || ftp.request.command == "PASS"' \
   -T fields -e frame.number -e ftp.request.command -e ftp.request.arg
 
-tshark -r rhino.log \
-  -Y 'ftp.request.command == "STOR" || ftp.request.command == "RETR"' \
+tshark -r rhino.log -Y 'ftp.request.command == "STOR" || ftp.request.command == "RETR"' \
   -T fields -e frame.number -e tcp.stream -e ftp.request.command -e ftp.request.arg
 
 tshark -r rhino.log --export-objects ftp-data,ftp/objects -q
 ```
 
-**Reconstructed objects** (all files hashed with SHA-256):
-
-- `rhino1.jpg` — from TCP stream 69
-- `rhino3.jpg` — from TCP stream 72 (with a duplicate `rhino3(1).jpg` from the ASCII retry)
-- `contraband.zip` — from TCP stream 305
-
-**Object validation:**
-
-```bash
-file ftp/objects/*
-sha256sum ftp/objects/*
-```
-
-All objects confirmed by magic-number check.
+**Reconstructed objects:** `rhino1.jpg` (stream 69), `rhino3.jpg` + `rhino3(1).jpg` (stream 72), `contraband.zip` (stream 305). All hashed.
 
 ### 3.5 Protected-Archive Analysis
-
-The reconstructed `contraband.zip` was tested for encryption with `unzip -l`, then cracked with `fcrackzip` against `rockyou.txt`.
-
-**Commands:**
 
 ```bash
 cd ~/rhion/ftp/objects
@@ -348,22 +284,16 @@ unzip -o -P <recovered-password> contraband.zip
 sha256sum rhino2.jpg
 ```
 
-The recovered content was compared against other rhino images by SHA-256 to establish cross-technique validation.
+Cross-validated against other rhino images by SHA-256.
 
 ### 3.6 HTTP Object Extraction
 
-HTTP traffic in `rhino2.log` and `rhino3.log` was analysed with `tshark`. Requests, responses, and objects were extracted.
-
-**Commands:**
+HTTP traffic analysed with `tshark`.
 
 ```bash
 tshark -r rhino2.log -Y 'http.request' \
   -T fields -e frame.number -e tcp.stream -e ip.src -e ip.dst \
   -e http.request.method -e http.host -e http.request.uri
-
-tshark -r rhino2.log -Y 'http.response' \
-  -T fields -e frame.number -e tcp.stream -e ip.src -e ip.dst \
-  -e http.response.code -e http.content_type -e http.content_length
 
 tshark -r rhino3.log -Y 'http.request' \
   -T fields -e frame.number -e tcp.stream -e ip.src -e ip.dst \
@@ -373,11 +303,13 @@ tshark -r rhino2.log --export-objects http,http/objects -q
 tshark -r rhino3.log --export-objects http,http/objects -q
 ```
 
-**Validation:** All extracted HTTP objects were confirmed by `file` magic-number check, then hashed with SHA-256 and MD5.
+All extracted HTTP objects confirmed by `file`, then hashed with SHA-256 and MD5.
 
 ### 3.7 Time Normalisation
 
-All timestamps in this report are expressed in **UTC**. The network captures from 2004 use UTC timestamps in `tshark` output by default. No local-time conversion was applied to preserve the original evidence timestamps.
+All timestamps in **UTC**. Network captures from 2004 use UTC by default in `tshark` output. No local-time conversion applied.
+
+---
 
 ---
 
@@ -400,7 +332,7 @@ Four evidence files were supplied and preserved:
 
 **Tool versions:** Sleuth Kit (system default), PhotoRec 7.2, Stegdetect/Stegbreak 0.6, Tshark (system default), fcrackzip 1.0, Kali Linux Rolling.
 
-**File-access precautions:** Original files preserved read-only. Analysis performed only on the working copy. Recovered binaries (`rhino.exe`) not executed. FTP credentials documented but not reused.
+**File-access precautions:** Original files preserved read-only. Analysis performed only on the working copy. Recovered binaries not executed. FTP credentials documented but not reused.
 
 **Evidence Log ID:** E01, E02 (see Appendix A).
 
@@ -431,13 +363,17 @@ The USB disk image `RHINOUSB.dd` is a **single-partition FAT16 filesystem of 259
 
 - `gumbo1.txt` (inode 4)
 - `gumbo2.txt` (inode 6)
-- `$MBR`, `$FAT1`, `$FAT2`, `$OrphanFiles` — Sleuth Kit virtual records, not real files
+- `$MBR`, `$FAT1`, `$FAT2`, `$OrphanFiles` — Sleuth Kit virtual records
 
-**Limits of filesystem metadata:** FAT16 records only the two allocated files. Any rhino content in the image must be in unallocated clusters. The filesystem does not record deleted filenames or ownership for unallocated clusters.
+**Limits of filesystem metadata:** FAT16 records only two allocated files. Any rhino content must be in unallocated clusters. The filesystem does not record deleted filenames or ownership for unallocated clusters.
+
+**Figure B4 — Allocated files listing (`fls -r -p`)**
+
+![Figure B4: fls -r -p showing only two allocated files.](screenshots/figure_B4_fls_allocated.png)
+
+*Figure B4: `fls` output — only `gumbo1.txt` and `gumbo2.txt` are allocated on the FAT16 volume.*
 
 **Evidence Log ID:** E02.
-
-**Screenshots:** Figure B1 (fdisk/parted), Figure B2 (fsstat), Figure B4 (fls).
 
 ---
 
@@ -445,7 +381,13 @@ The USB disk image `RHINOUSB.dd` is a **single-partition FAT16 filesystem of 259
 
 Deleted-file recovery was performed with **PhotoRec 7.2**. Scope was restricted to `Free` (unallocated clusters). Output folder: `recovered/recup_dir.1/`. PhotoRec reported **132 files saved**.
 
-Of these, **9 are image files** — the material recoveries:
+**Figure B3 — PhotoRec destination selection**
+
+![Figure B3: PhotoRec destination selection screen.](screenshots/figure_B3_photorec_destination.png)
+
+*Figure B3: PhotoRec destination selection — scope `Free`, destination `/home/ibrahim/rhion/recovered`.*
+
+Of the 132 files recovered, **9 are image files** — the material recoveries:
 
 | # | File | Type | Size (bytes) | SHA-256 | Content |
 | --- | --- | --- | --- | --- | --- |
@@ -459,15 +401,25 @@ Of these, **9 are image files** — the material recoveries:
 | 8 | `f0106865.gif` | GIF 290×246 | 11,407 | `8a67d406ed130c9b…` | **Cartoon rhino** |
 | 9 | `f0106889.gif` | GIF 150×87 | 4,105 | `71e9f6b94e0496cc…` | **Blue cartoon rhino** |
 
-**Duplicates identified:** `f0105873.jpg` and `f0335081.jpg` share SHA-256 `f92654d9ee17ab6b…` and are byte-identical. One unique file.
+**Figure B5 — Recovered images sorted by size**
+
+![Figure B5: Recovered images sorted by size.](screenshots/figure_B5_recovered_by_size.png)
+
+*Figure B5: Recovered images sorted by size — the largest files are candidate rhino content.*
+
+**Figure B6 — SHA-256 hashes of every recovered image**
+
+![Figure B6: SHA-256 hashes of every recovered image.](screenshots/figure_B6_recovered_hashes.png)
+
+*Figure B6: SHA-256 hashes of every recovered image.*
+
+**Duplicates identified:** `f0105873.jpg` and `f0335081.jpg` share SHA-256 `f92654d9ee17ab6b…` — byte-identical. One unique file.
 
 **Rhino images recovered:** 4 of 9.
 
-**Visual/metadata checks:** Every recovered image was verified by `file` magic-number detection. Every rhino image was opened with ImageMagick for visual confirmation.
+**Visual/metadata checks:** Every recovered image verified by `file` magic-number detection. Every rhino image opened with ImageMagick for visual confirmation.
 
 **Evidence Log IDs:** E03 (PhotoRec output), E04 (recovered images + hashes).
-
-**Screenshots:** Figure B3 (PhotoRec destination), Figure B5 (recovered by size), Figure B6 (recovered hashes).
 
 ---
 
@@ -475,9 +427,7 @@ Of these, **9 are image files** — the material recoveries:
 
 **Yes — detection and password recovery succeeded. Extraction failed at the tooling layer.**
 
-**4.1 Metadata review (`exiftool`)**
-
-All 7 JPEGs were reviewed. No suspicious metadata was found in any image. Common fields (JFIF version, resolution, dimensions) were normal.
+**4.1 Metadata review (`exiftool`)** — All 7 JPEGs reviewed. No suspicious metadata. Common fields (JFIF version, resolution, dimensions) were normal.
 
 **4.2 Steganography detection (`stegdetect`)**
 
@@ -501,14 +451,12 @@ f0105065.jpg : jphide[v5](gator)
 f0104249.jpg : jphide[v5](gumbo)
 ```
 
-Two passwords recovered: **`gator`** (`f0105065.jpg`) and **`gumbo`** (`f0104249.jpg`). `stegbreak` only succeeds against a real jphide payload — random bytes cannot produce a wordlist match. This confirms the payloads are genuine despite the `stegdetect` heuristic miss on `f0105065.jpg`.
+Two passwords recovered: **`gator`** (`f0105065.jpg`) and **`gumbo`** (`f0104249.jpg`). `stegbreak` only succeeds against a real jphide payload — random bytes cannot produce a wordlist match. This confirms the payloads are genuine.
 
 **4.4 Extraction attempt (documented as limitation)**
 
-Two extraction tools were tried:
-
-- **`jpseek 0.3`** (Kali package) — returned `File not completely recovered` on both images. Version mismatch with jphide v5.
-- **`jpseek.exe`** (Windows v5 binary under Wine) — Wine required `wine32:i386`, which cannot be installed on this Kali Rolling release without breaking XFCE desktop packages.
+- **`jpseek 0.3`** — returned `File not completely recovered` on both images. Version mismatch with jphide v5.
+- **`jpseek.exe`** (Windows v5 under Wine) — Wine required `wine32:i386`, which cannot be installed on this Kali Rolling release without breaking XFCE desktop packages.
 
 **4.5 Interpretation**
 
@@ -520,7 +468,7 @@ Two extraction tools were tried:
 | `jpseek 0.3` returns partial extraction | Neutral — tool version incompatibility |
 | Wine blocked by Kali 32-bit dependencies | Neutral — environment limitation |
 
-**Conclusion for Question 4:** Evidence strongly supports a hiding interpretation. Two of the seven recovered JPEGs contain jphide payloads whose passwords are crackable with a standard wordlist. Full extraction is deferred as a documented environment limitation.
+**Conclusion:** Evidence strongly supports a hiding interpretation. Two of the seven recovered JPEGs contain jphide payloads whose passwords are crackable with a standard wordlist. Full extraction is deferred as a documented environment limitation.
 
 **Evidence Log IDs:** E05 (exiftool), E06 (stegdetect + stegbreak), E07 (extraction attempt).
 
@@ -541,18 +489,18 @@ Three FTP sessions were recorded in `rhino.log`, all from client `137.30.122.253
 | 5633 | `USER` | `gnome` |
 | 5637 | `PASS` | `gnome123` |
 
-Credentials transmitted in plaintext (FTP is unencrypted). Documented as evidence, not reused.
+Credentials transmitted in plaintext (FTP unencrypted). Documented as evidence, not reused.
 
-**5.2 Transfers (all uploads from client to server)**
+**5.2 Transfers (all uploads client → server)**
 
 | Frame | TCP Stream | Command | File | Server response |
 | --- | --- | --- | --- | --- |
 | 1546 | 69 | STOR | `rhino1.jpg` | 150 Opening BINARY |
-| 1649 | 72 | STOR | `rhino3.jpg` | 150 Opening ASCII (warning: bare linefeeds) |
-| 1763 | 72 | STOR | `rhino3.jpg` (binary retry) | 150 Opening BINARY |
+| 1649 | 72 | STOR | `rhino3.jpg` | 150 Opening ASCII (warning) |
+| 1763 | 72 | STOR | `rhino3.jpg` (retry) | 150 Opening BINARY |
 | 5647 | 305 | STOR | `contraband.zip` | 150 Opening BINARY |
 
-All transfers completed with `226 Transfer complete`.
+All completed with `226 Transfer complete`.
 
 **5.3 Reconstructed objects**
 
@@ -563,9 +511,7 @@ All transfers completed with `226 Transfer complete`.
 | `rhino3(1).jpg` | 96,899 | (identical to `rhino3.jpg`) |
 | `contraband.zip` | 230,566 | `b7091a0b4295a561…` |
 
-**5.4 Object validation**
-
-All reconstructed files confirmed by `file` magic-number detection:
+**5.4 Object validation** — all confirmed by `file` magic-number detection:
 
 ```text
 rhino1.jpg: JPEG image data, 501x360
@@ -573,34 +519,41 @@ rhino3.jpg: JPEG image data, 720x597
 contraband.zip: Zip archive, deflate
 ```
 
-**5.5 Timestamps**
+**5.5 Timestamps** — Full session timelines in Section 5. All transfers occurred 2004-04-26 between 22:21 and 22:26 UTC.
 
-Full session timelines preserved in Section 5. All transfers occurred on 2004-04-26 between 22:21 and 22:26 UTC.
+**Figure D3_01 — `rhino1.jpg` from FTP stream 69**
+
+![Figure D3_01: rhino1.jpg extracted from FTP stream 69.](screenshots/figure_D3_01_rhino1_from_FTP.png)
+
+*Figure D3_01: `rhino1.jpg` — rhino image uploaded to the FTP server (stream 69).*
+
+**Figure D3_03 — `rhino3.jpg` from FTP stream 72**
+
+![Figure D3_03: rhino3.jpg extracted from FTP stream 72.](screenshots/figure_D3_03_rhino3_from_FTP.png)
+
+*Figure D3_03: `rhino3.jpg` — rhino mother and baby, uploaded in binary retry (stream 72).*
+
+**Figure D3_04 — FTP credentials and session events**
+
+![Figure D3_04: FTP credentials and session events showing USER gnome, PASS gnome123, and STOR commands.](screenshots/figure_D3_04_ftp_credentials.png)
+
+*Figure D3_04: FTP credentials (`gnome` / `gnome123`) and three sessions of `STOR` uploads.*
+
+**Figure D3_05 — FTP objects and SHA-256 hashes**
+
+![Figure D3_05: FTP-extracted objects with SHA-256 hashes.](screenshots/figure_D3_05_ftp_objects_hashes.png)
+
+*Figure D3_05: Reconstructed FTP objects (`rhino1.jpg`, `rhino3.jpg`, `contraband.zip`) with SHA-256 hashes.*
 
 **Evidence Log ID:** E07 (FTP session), E08 (FTP objects).
-
-**Screenshots:** Figure D3_04 (credentials), Figure D3_05 (objects + hashes).
 
 ---
 
 ### Question 6: What does the protected archive analysis establish?
 
-**6.1 Archive completeness**
+**6.1 Archive completeness** — `contraband.zip` was reconstructed intact from FTP stream 305. `unzip -l` confirmed a single member `rhino2.jpg` (230,665 bytes uncompressed).
 
-`contraband.zip` was reconstructed intact from FTP stream 305. `unzip -l` confirmed:
-
-```text
-Archive:  objects/contraband.zip
-  Length      Date    Time    Name
----------  ---------- -----   ----
-   230665  2004-04-26 17:00   rhino2.jpg
----------                     -------
-   230665                     1 file
-```
-
-**6.2 Evidence of encryption**
-
-`unzip -l` succeeded (listing files without extracting), but `unzip` (without a password) prompted for a password — confirming AES/ZipCrypto encryption on the single member `rhino2.jpg`.
+**6.2 Evidence of encryption** — `unzip -l` listed files without a password, but a plain `unzip` prompted for a password — confirming ZipCrypto encryption on `rhino2.jpg`.
 
 **6.3 Password recovery**
 
@@ -628,15 +581,29 @@ sha256sum rhino2.jpg
 # b4f6bbb8d846d6505c9b5b67f115656fdf980a484aa441078a838a3ffc2ac705
 ```
 
-**6.5 Cross-technique validation**
+**6.5 Cross-technique validation** — The SHA-256 of `rhino2.jpg` (`b4f6bbb8d846d650…`) matches **`f0106409.jpg`** recovered by PhotoRec from the USB image — byte-for-byte identical.
 
-The SHA-256 of `rhino2.jpg` (`b4f6bbb8d846d650…`) matches **`f0106409.jpg`** recovered by PhotoRec from the USB image — byte-for-byte identical.
+**Interpretation:** Two independent techniques (carving and archive cracking) recovered the same file from different sources. This strongly establishes the artifact's authenticity.
 
-**Interpretation:** Two independent techniques (carving and archive cracking) recovered the same file from different sources. This strongly establishes the artifact's authenticity and confirms both extraction workflows are correct.
+**Figure D3_02 — `rhino2.jpg` extracted from the cracked ZIP**
+
+![Figure D3_02: rhino2.jpg extracted from the cracked ZIP archive.](screenshots/figure_D3_02_rhino2_from_ZIP.png)
+
+*Figure D3_02: `rhino2.jpg` — rhino mother and baby at a water hole, extracted from `contraband.zip`.*
+
+**Figure D3_06 — ZIP password cracked with fcrackzip**
+
+![Figure D3_06: fcrackzip recovering the ZIP password monkey.](screenshots/figure_D3_06_zip_password_cracked.png)
+
+*Figure D3_06: `fcrackzip` recovering the ZIP password `monkey` from `rockyou.txt`.*
+
+**Figure D3_07 — `rhino2.jpg` extraction verified**
+
+![Figure D3_07: rhino2.jpg extraction from contraband.zip verified by file and sha256sum.](screenshots/figure_D3_07_rhino2_extraction.png)
+
+*Figure D3_07: `rhino2.jpg` extraction — `file` reports JPEG 1024×685; SHA-256 `b4f6bbb8d846d650…`.*
 
 **Evidence Log ID:** E09 (archive cracking), E10 (extracted rhino2.jpg).
-
-**Screenshots:** Figure D3_02 (`rhino2.jpg`), Figure D3_06 (password cracked), Figure D3_07 (extraction).
 
 ---
 
@@ -658,8 +625,6 @@ The SHA-256 of `rhino2.jpg` (`b4f6bbb8d846d650…`) matches **`f0106409.jpg`** r
 | 10 | 0 | GET | `www.google.com/search?...q=rhino.exe` | 200, `text/html` |
 | 110 | 3 | GET | `www.cs.uno.edu/~gnome/rhino.exe` | 200, `application/octet-stream`, 145,920 bytes |
 
-**Endpoints:** Client `137.30.123.234`, server `137.30.120.37` for the `.exe`; `64.233.167.99` for the Google search.
-
 **7.3 Extracted HTTP objects**
 
 | File | Size (bytes) | Type | SHA-256 | MD5 |
@@ -668,13 +633,33 @@ The SHA-256 of `rhino2.jpg` (`b4f6bbb8d846d650…`) matches **`f0106409.jpg`** r
 | `rhino5.gif` | 85,137 | GIF 400×275 | `f36ecc12967d5622…` | — |
 | `rhino.exe` | 145,920 | PE32 executable | `93e70049b60bf569…` | `d62d9989535c4c8db14e50b58c9f25a0` |
 
-**7.4 `rhino.exe` classification**
+**7.4 `rhino.exe` classification** — The MD5 matches **Microsoft Disk Partitioning Utility (`diskpart.exe`)** — a legitimate Windows system binary. Not executed at any time. Not a rhino-related artifact.
 
-The MD5 of `rhino.exe` matches **Microsoft Disk Partitioning Utility (`diskpart.exe`)** — a legitimate Windows system binary. The recovered executable was **not executed** at any time. It is not a rhino-related artifact.
+**Figure D4_01 — `rhino4.jpg` from HTTP stream 1**
+
+![Figure D4_01: rhino4.jpg downloaded over HTTP stream 1.](screenshots/figure_D4_01_rhino4_from_HTTP.png)
+
+*Figure D4_01: `rhino4.jpg` — the downloaded rhino image, viewed in ImageMagick.*
+
+**Figure D4_02 — `rhino5.gif` from HTTP stream 2**
+
+![Figure D4_02: rhino5.gif downloaded over HTTP stream 2.](screenshots/figure_D4_02_rhino5_from_HTTP.png)
+
+*Figure D4_02: `rhino5.gif` — the downloaded rhino GIF.*
+
+**Figure D4_03 — HTTP objects and hashes**
+
+![Figure D4_03: HTTP objects with file types and hashes.](screenshots/figure_D4_03_http_objects_hashes.png)
+
+*Figure D4_03: HTTP objects — file types and SHA-256/MD5 hashes (`rhino4.jpg`, `rhino5.gif`, `rhino.exe`).*
+
+**Figure D4_04 — `rhino.exe` HTTP request in rhino3.log**
+
+![Figure D4_04: rhino.exe HTTP request captured in rhino3.log.](screenshots/figure_D4_04_rhinoexe_request.png)
+
+*Figure D4_04: `rhino.exe` HTTP request in `rhino3.log` (frame 110) — Google search and subsequent download.*
 
 **Evidence Log ID:** E11 (HTTP requests + objects), E12 (rhino.exe classification).
-
-**Screenshots:** Figure D4_01 (`rhino4.jpg`), Figure D4_02 (`rhino5.gif`), Figure D4_03 (objects + hashes), Figure D4_04 (`rhino.exe` request).
 
 ---
 
@@ -682,7 +667,7 @@ The MD5 of `rhino.exe` matches **Microsoft Disk Partitioning Utility (`diskpart.
 
 **Supported Conclusion:**
 
-Across four independent forensic techniques applied to the supplied artifacts, **nine unique rhinoceros images** were recovered and hashed:
+Across four independent forensic techniques, **nine unique rhinoceros images** were recovered and hashed:
 
 1. **Carving:** `f0106393.jpg`, `f0106409.jpg`, `f0106865.gif`, `f0106889.gif` — 4 rhinos.
 2. **Steganography:** 2 hidden payloads detected in `f0104249.jpg` and `f0105065.jpg` with passwords `gator` and `gumbo` recovered. Extraction blocked by tooling (documented).
@@ -698,19 +683,15 @@ Across four independent forensic techniques applied to the supplied artifacts, *
 | Artifact authenticity | **High (95%)** | All SHA-256 verified; duplicates detected; one cross-technique match (rhino2 = f0106409) |
 | Possession threshold | **High (90%)** | Nine unique rhinos hashed, mixed formats (JPEG + GIF) |
 | Network attribution | **Moderate (70-80%)** | IPs and credentials recorded; IP ≠ person |
-| Personal attribution | **Moderate (60-70%)** | No user-identity evidence linking IP or credentials to a named individual |
+| Personal attribution | **Moderate (60-70%)** | No user-identity evidence |
 
-**At least three limitations and alternative explanations:**
+**At least three limitations:**
 
-1. **Steganographic extraction incomplete.** The two hidden images in `f0104249.jpg` and `f0105065.jpg` were detected and their passwords recovered, but extraction failed on this Kali image due to tooling incompatibilities. If those two images were also rhinos, the total could be 11. The 9 unique extracted is a conservative count.
-
-2. **No user-identity evidence.** The FTP and HTTP traffic is attributed to IPs `137.30.122.253` and `137.30.123.234` with credentials `gnome`. No artifact links those to a named individual. Multiple users can share an IP or a shared account.
-
-3. **Traffic capture timestamps are from 2004.** The network activities occurred on 2004-04-26 (FTP) and 2004-04-28 (HTTP) — more than 20 years before the current analysis. Timestamps in the captures may reflect the capture system's clock, which is not independently verified.
-
-4. **Carved filenames are synthetic.** `f0*.jpg` are PhotoRec sequence numbers, not original filenames. Attribution to a specific user requires server-side correlation.
-
-5. **`rhino.exe` provenance is unrelated.** The `diskpart.exe` MD5 match means this is a legitimate Microsoft utility, not a case-specific artifact. Its presence in the capture is coincidental to the rhino investigation.
+1. **Steganographic extraction incomplete.** Two hidden images detected, passwords cracked, but extraction failed at the tooling layer. If those are also rhinos, the total could be 11. Nine is a conservative count.
+2. **No user-identity evidence.** Traffic attributed to IPs and one shared credential. No artifact links to a named person.
+3. **Timestamps from 2004.** Capture system clocks not independently verified.
+4. **Carved filenames are synthetic.** `f0*.jpg` are PhotoRec sequence numbers, not original filenames.
+5. **`rhino.exe` provenance is unrelated.** Matches Microsoft `diskpart.exe`.
 
 **Evidence Log ID:** E13 (synthesis).
 
@@ -933,15 +914,15 @@ Seventeen (17) screenshots are provided. All are stored under `screenshots/` and
 | **B4** | `screenshots/figure_B4_fls_allocated.png` | `fls -r -p` — two allocated files (`gumbo1.txt`, `gumbo2.txt`) | Section 4 Q2, Q3 |
 | **B5** | `screenshots/figure_B5_recovered_by_size.png` | Recovered images sorted by size | Section 4 Q3 |
 | **B6** | `screenshots/figure_B6_recovered_hashes.png` | SHA-256 hashes of every recovered image | Section 4 Q3 |
-| **D3_01** | `screenshots/figure_D3_01_rhino1_from_FTP.png` | `rhino1.jpg` — ImageMagick window, from FTP stream 69 | Section 4 Q5 |
-| **D3_02** | `screenshots/figure_D3_02_rhino2_from_ZIP.png` | `rhino2.jpg` — ImageMagick window, extracted from cracked ZIP | Section 4 Q6 |
-| **D3_03** | `screenshots/figure_D3_03_rhino3_from_FTP.png` | `rhino3.jpg` — ImageMagick window, from FTP stream 72 | Section 4 Q5 |
+| **D3_01** | `screenshots/figure_D3_01_rhino1_from_FTP.png` | `rhino1.jpg` — from FTP stream 69 | Section 4 Q5 |
+| **D3_02** | `screenshots/figure_D3_02_rhino2_from_ZIP.png` | `rhino2.jpg` — extracted from cracked ZIP | Section 4 Q6 |
+| **D3_03** | `screenshots/figure_D3_03_rhino3_from_FTP.png` | `rhino3.jpg` — from FTP stream 72 | Section 4 Q5 |
 | **D3_04** | `screenshots/figure_D3_04_ftp_credentials.png` | FTP credentials and session events (USER/PASS/STOR) | Section 4 Q5 |
 | **D3_05** | `screenshots/figure_D3_05_ftp_objects_hashes.png` | FTP-extracted objects with SHA-256 hashes | Section 4 Q5 |
 | **D3_06** | `screenshots/figure_D3_06_zip_password_cracked.png` | `fcrackzip` — password `monkey` recovered | Section 4 Q6 |
 | **D3_07** | `screenshots/figure_D3_07_rhino2_extraction.png` | `rhino2.jpg` extraction from `contraband.zip` | Section 4 Q6 |
-| **D4_01** | `screenshots/figure_D4_01_rhino4_from_HTTP.png` | `rhino4.jpg` — ImageMagick window, from HTTP stream 1 | Section 4 Q7 |
-| **D4_02** | `screenshots/figure_D4_02_rhino5_from_HTTP.png` | `rhino5.gif` — ImageMagick window, from HTTP stream 2 | Section 4 Q7 |
+| **D4_01** | `screenshots/figure_D4_01_rhino4_from_HTTP.png` | `rhino4.jpg` — from HTTP stream 1 | Section 4 Q7 |
+| **D4_02** | `screenshots/figure_D4_02_rhino5_from_HTTP.png` | `rhino5.gif` — from HTTP stream 2 | Section 4 Q7 |
 | **D4_03** | `screenshots/figure_D4_03_http_objects_hashes.png` | HTTP objects with file-type and SHA-256/MD5 hashes | Section 4 Q7 |
 | **D4_04** | `screenshots/figure_D4_04_rhinoexe_request.png` | `rhino.exe` HTTP request in `rhino3.log` (frame 110) | Section 4 Q7 |
 
