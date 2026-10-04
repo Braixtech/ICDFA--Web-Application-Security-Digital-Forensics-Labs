@@ -95,8 +95,8 @@ The two supplementary sources — raw microSD image (`df048_internal_microSD.001
 | --- | --- | --- | --- | --- |
 | Android logical extraction (extracted tree) | `Android_Logical/` | 406 MB · 375 files | Directory tree | ✅ Present |
 | Android logical extraction (archive) | `Android_Logical.zip` | — | ZIP archive | ⚠️ Not present in working environment at time of hashing |
-| Raw microSD image | `df048_internal_microSD.001` | ~8.6 GB (expected) | Raw image | ❌ Not available — see §4.7 |
-| EWF image | `DF048.E01` | ~8.6 GB (expected) | Expert Witness Format | ❌ Not available — see §4.8 |
+| Raw microSD image | `df048_internal_microSD.001` | ~8.6 GB (expected) | Raw image | ❌ Not available — see Section 4.7 |
+| EWF image | `DF048.E01` | ~8.6 GB (expected) | Expert Witness Format | ❌ Not available — see Section 4.8 |
 
 ### 2.2 Working Copy Creation
 
@@ -182,23 +182,23 @@ The TXT and DAT records were examined with `strings` (minimum length 4–8 chara
 
 ### 3.4 Raw microSD image method — described, not performed
 
-The approved raw-microSD method, per the teaching deck (`01_DJI_Mavic_Air_microSD_raw.pptx`): verify image file type with `file`; attach read-only with `losetup --partscan --find --show --read-only`; verify partition view with `lsblk -f`; mount the FAT32 volume read-only; enumerate `DCIM/100MEDIA/`, `MISC/THM/100/`, and `System Volume Information/IndexerVolumeGuid`; record listings, types, hashes; extract the microSD identifier from `IndexerVolumeGuid`.
+The approved raw-microSD method, per the teaching deck: verify image file type with `file`; attach read-only with `losetup --partscan --find --show --read-only`; verify partition view with `lsblk -f`; mount FAT32 volume read-only; enumerate `DCIM/100MEDIA/`, `MISC/THM/100/`, and `System Volume Information/IndexerVolumeGuid`; record listings, types, hashes; extract microSD identifier from `IndexerVolumeGuid`.
 
-**Performed:** No. See §4.7 for the non-performance record and §6.3 for its limitation impact.
+**Performed:** No. See Section 4.7 and Section 6.3.
 
 ### 3.5 EWF image method — described, not performed
 
-The approved EWF method, per the teaching deck (`02_DJI_Mavic_Air_microSD_encase.pptx`): verify header with `ewfinfo`; verify integrity with `ewfverify`; mount read-only with `ewfmount DF048.E01 ext_sd`; inspect exposed `ewf1` with `fsstat`/`fls`/`istat` via `-i raw`; compare EWF-extracted media hashes against the raw image and mobile extraction.
+The approved EWF method: verify header with `ewfinfo`; verify integrity with `ewfverify`; mount read-only with `ewfmount DF048.E01 ext_sd`; inspect exposed `ewf1` with `fsstat`/`fls`/`istat` via `-i raw`; compare EWF-extracted media hashes against the raw image and mobile extraction.
 
-**Performed:** No. See §4.8 for the non-performance record and §6.3 for its limitation impact.
+**Performed:** No. See Section 4.8 and Section 6.3.
 
 ### 3.6 Comparison method
 
-Cross-source comparison is defined: any two artefacts **corroborate** if their hashes are equal, their timestamps agree after UTC normalisation, and their file names/identifiers correspond. They **conflict** if any of those three disagree.
+Any two artefacts **corroborate** if their hashes are equal, their timestamps agree after UTC normalisation, and their file names/identifiers correspond. They **conflict** if any of those three disagree.
 
 ### 3.7 Time-normalisation method
 
-All timestamps reported in **UTC**. Filesystem timestamps (`-0400`) and `.info` sidecar headers (`EDT`) both convert at +4 hours. Filename timestamps are unverified and reported as-is. Where a filename timestamp conflicts with a filesystem or sidecar timestamp, both values are reported and the disagreement is stated as a finding.
+All timestamps reported in **UTC**. Filesystem timestamps (`-0400`) and `.info` sidecar headers (`EDT`) both convert at +4 hours. Filename timestamps are unverified and reported as-is.
 
 ### 3.8 Tools used
 
@@ -227,7 +227,7 @@ All timestamps reported in **UTC**. Filesystem timestamps (`-0400`) and `.info` 
 
 **Acquisition method:** The extracted tree was copied from the course-provided shared folder (`/media/sf_ICDFAKali/Android_Logical/`) into the working directory with `cp -r`. The original source was not modified.
 
-**Integrity values recorded:** see §2.3.
+**Integrity values recorded:** see Section 2.3.
 
 **Full manifest:** SHA-256 of all 375 extracted files at `~/Mavic_air/reports/android_tree_hashes.txt`.
 
@@ -235,7 +235,7 @@ All timestamps reported in **UTC**. Filesystem timestamps (`-0400`) and `.info` 
 
 **Access precautions:** No live system contacted. Files were read only. The `Android_Logical.zip` source archive was not present in the working environment at the time of hashing.
 
-**Sources not available for preservation:** `df048_internal_microSD.001` (raw microSD) and `DF048.E01` (EWF). Documented in the evidence log (E07, E08) and in §4.7, §4.8, and §6.3.
+**Sources not available for preservation:** `df048_internal_microSD.001` (raw microSD) and `DF048.E01` (EWF). Documented in the evidence log (E07, E08) and in Sections 4.7, 4.8, and 6.3.
 
 ---
 
@@ -479,9 +479,9 @@ The Android logical extraction contains DJI GO 4 application data for a flight o
 - **Inference:** that the aircraft was *flown* on 2018-06-19 — supported by the record set but not directly proven; the encrypted TXT would be required.
 - **Not established:** operator identity, flight route, take-off time, landing time, motor-on time, motor-off time.
 
-**Confidence level:** §6.2.
+**Confidence level:** Section 6.2.
 
-**Limitations:** §6.3.
+**Limitations:** Section 6.3.
 
 ---
 
@@ -537,7 +537,7 @@ All timestamps in UTC. Conversion points:
 
 ### 6.1 Supported Conclusion
 
-Five high-confidence findings (see §4.9) established from the Android logical extraction. What the evidence **cannot** establish: flight start time, operator identity, flight route, motor-on / motor-off / take-off / landing events.
+Five high-confidence findings (see Section 4.9) established from the Android logical extraction. What the evidence **cannot** establish: flight start time, operator identity, flight route, motor-on / motor-off / take-off / landing events.
 
 ### 6.2 Confidence Level
 
@@ -640,14 +640,14 @@ Column structure matches the CS5 assessment brief's template exactly.
 
 | Evidence ID | Tool and method | Source record, path, or image | Observed fact | Screenshot or appendix reference |
 | --- | --- | --- | --- | --- |
-| **E01** | `sha256sum`, `stat`, `strings` | `Android_Logical/sdcard/DJI/dji.go.v4/FlightRecord/DJIFlightRecord_2018-06-19_[14-50-34].txt` | SHA-256 `0a9f1816d52a98f840f6e67c08a14473ae5a0a2e75e9484d5de66368c4fd4c4a`, 555,776 bytes. Encrypted body; plaintext strings: `dronefo...-Mavic Air`, `0K1DF313BD4PR1`, `0K4AEBQA3400DT`, `43078fb4126ce729E`. mtime `2018-06-19 07:55:40 -0400` = `2018-06-19 11:55:40 UTC`. | Figure 03, Figure 04; §4.3 |
-| **E02** | `exiftool` 13.55, `mediainfo` 26.05, `xxd`, `tree --inodes`, `sha256sum` | `Android_Logical/sdcard/DJI/dji.go.v4/DJI_RECORD/2018_06_19_14_50_39.mp4` + `.info` sidecar | MP4 SHA-256 `2ae2a4f186803ec592b0af6284634e592c5079395e99f7df3edd583f8e72ab00`, 57,791,765 bytes, 1280×720, container duration 0:04:01. Container Create/Modify dates null. `.info` header `#Tue Jun 19 14:55:41 EDT 2018`, `EndTimeMsec=234833`, `StartTimeMsec=0`. Consecutive inodes 6051546 → 6051547. | Figure 05, Figure 06, Figure 07, Figure 08; §4.4 |
-| **E03** | `xxd`, `strings`, `stat`, `sha256sum` | `Android_Logical/sdcard/DJI/dji.go.v4/FlightRecord/MCDatFlightRecords/18-06-19-02-47-38_FLY057.DAT` and `18-06-19-02-59-05_FLY058.DAT` | Both `DJI_LOG_V3` format, `BUILD Apr 24 2018 18:39:53`. FLY057 mtime `2018-06-19 07:58:24 -0400`; FLY058 mtime `2018-06-19 08:02:12 -0400`. Interval 3 min 48 s. Bodies encrypted. | Figure 09, Figure 10; §4.5 |
-| **E04** | `ls --full-time`, `stat`, `file`, `sha256sum` | `Android_Logical/sdcard/DJI/dji.go.v4/CACHE_IMAGE/thumb_*.jpg` (6 files) | All valid JFIF baseline JPEGs, 160×90 or 160×128. mtimes all `2018-06-19 07:47:50/52 -0400`. Filename epoch values range 2018-04-13 to 2018-04-14. | Figure 11, Figure 12; §4.6 |
-| **E05** | `tree -L 1`, `cat` | `Android_Logical/sdcard/DJI/dji.go.v4/`; `Android_Logical/property/net.hostname`; `Android_Logical/property/ro.serialno` | 14 directories at depth 1. Device hostname `android-b09e783547b973fc`; device serial `5203fe1aeef77400`. | Figure 01, Figure 13, Figure 15; §2.3 |
-| **E06** | `find -exec sha256sum`, `wc -l`, `du -sh` | `~/Mavic_air/Android_Logical/` (whole tree) | 375 files hashed with SHA-256; total 406 MB. Manifest written to `~/Mavic_air/reports/android_tree_hashes.txt`. | Figure 02, Figure 14; §2.3 |
-| **E07** | `ls -la`, `file`, `md5sum` (attempted) | `~/Mavic_air/df048_internal_microSD.001` (attempted download) | Source not available. `wget` returned HTML landing pages (197 KB). No local copy located. | — ; §4.7, §6.3 |
-| **E08** | `ls -la`, `file`, `ewfinfo`, `ewfverify`, `ewfmount` (attempted) | `~/Mavic_air/DF048.E01` (attempted download) | Source not available. `wget` returned HTML landing pages (196 KB). `ewfverify` failed with `unsupported segment file signature` — consistent with HTML input. No local copy located. | — ; §4.8, §6.3 |
+| **E01** | `sha256sum`, `stat`, `strings` | `Android_Logical/sdcard/DJI/dji.go.v4/FlightRecord/DJIFlightRecord_2018-06-19_[14-50-34].txt` | SHA-256 `0a9f1816d52a98f840f6e67c08a14473ae5a0a2e75e9484d5de66368c4fd4c4a`, 555,776 bytes. Encrypted body; plaintext strings: `dronefo...-Mavic Air`, `0K1DF313BD4PR1`, `0K4AEBQA3400DT`, `43078fb4126ce729E`. mtime `2018-06-19 07:55:40 -0400` = `2018-06-19 11:55:40 UTC`. | Figure 03, Figure 04; Section 4.3 |
+| **E02** | `exiftool` 13.55, `mediainfo` 26.05, `xxd`, `tree --inodes`, `sha256sum` | `Android_Logical/sdcard/DJI/dji.go.v4/DJI_RECORD/2018_06_19_14_50_39.mp4` + `.info` sidecar | MP4 SHA-256 `2ae2a4f186803ec592b0af6284634e592c5079395e99f7df3edd583f8e72ab00`, 57,791,765 bytes, 1280×720, container duration 0:04:01. Container Create/Modify dates null. `.info` header `#Tue Jun 19 14:55:41 EDT 2018`, `EndTimeMsec=234833`, `StartTimeMsec=0`. Consecutive inodes 6051546 → 6051547. | Figure 05, Figure 06, Figure 07, Figure 08; Section 4.4 |
+| **E03** | `xxd`, `strings`, `stat`, `sha256sum` | `Android_Logical/sdcard/DJI/dji.go.v4/FlightRecord/MCDatFlightRecords/18-06-19-02-47-38_FLY057.DAT` and `18-06-19-02-59-05_FLY058.DAT` | Both `DJI_LOG_V3` format, `BUILD Apr 24 2018 18:39:53`. FLY057 mtime `2018-06-19 07:58:24 -0400`; FLY058 mtime `2018-06-19 08:02:12 -0400`. Interval 3 min 48 s. Bodies encrypted. | Figure 09, Figure 10; Section 4.5 |
+| **E04** | `ls --full-time`, `stat`, `file`, `sha256sum` | `Android_Logical/sdcard/DJI/dji.go.v4/CACHE_IMAGE/thumb_*.jpg` (6 files) | All valid JFIF baseline JPEGs, 160×90 or 160×128. mtimes all `2018-06-19 07:47:50/52 -0400`. Filename epoch values range 2018-04-13 to 2018-04-14. | Figure 11, Figure 12; Section 4.6 |
+| **E05** | `tree -L 1`, `cat` | `Android_Logical/sdcard/DJI/dji.go.v4/`; `Android_Logical/property/net.hostname`; `Android_Logical/property/ro.serialno` | 14 directories at depth 1. Device hostname `android-b09e783547b973fc`; device serial `5203fe1aeef77400`. | Figure 01, Figure 13, Figure 15; Section 2.3 |
+| **E06** | `find -exec sha256sum`, `wc -l`, `du -sh` | `~/Mavic_air/Android_Logical/` (whole tree) | 375 files hashed with SHA-256; total 406 MB. Manifest written to `~/Mavic_air/reports/android_tree_hashes.txt`. | Figure 02, Figure 14; Section 2.3 |
+| **E07** | `ls -la`, `file`, `md5sum` (attempted) | `~/Mavic_air/df048_internal_microSD.001` (attempted download) | Source not available. `wget` returned HTML landing pages (197 KB). No local copy located. | — ; Section 4.7, Section 6.3 |
+| **E08** | `ls -la`, `file`, `ewfinfo`, `ewfverify`, `ewfmount` (attempted) | `~/Mavic_air/DF048.E01` (attempted download) | Source not available. `wget` returned HTML landing pages (196 KB). `ewfverify` failed with `unsupported segment file signature` — consistent with HTML input. No local copy located. | — ; Section 4.8, Section 6.3 |
 
 ---
 
@@ -657,21 +657,21 @@ Fifteen (15) screenshots. All stored under `screenshots/` and referenced inline 
 
 | Figure | Filename | Caption | Cited In |
 | --- | --- | --- | --- |
-| **01** | `screenshots/figure_01_android_tree.png` | `tree -L 1 Android_Logical/` — top-level structure | §2.3 |
-| **02** | `screenshots/figure_02_extraction_hashes.png` | Head of `android_tree_hashes.txt` | §2.3 |
-| **03** | `screenshots/figure_03_txt_identity_strings.png` | `strings -n 8` tail of TXT record | §4.3 |
-| **04** | `screenshots/figure_04_txt_stat.png` | `stat` on TXT record — mtime `2018-06-19 07:55:40 -0400` | §4.3 |
-| **05** | `screenshots/figure_05_mp4_exiftool.png` | `exiftool` on MP4 — null container dates | §4.4 |
-| **06** | `screenshots/figure_06_mediainfo.png` | `mediainfo` on MP4 | §4.4 |
-| **07** | `screenshots/figure_07_info_sidecar.png` | `xxd` on `.info` sidecar — plaintext header | §4.4 |
-| **08** | `screenshots/figure_08_inode_consecutive.png` | `tree --inodes` on DJI_RECORD | §4.4 |
-| **09** | `screenshots/figure_09_dat_headers.png` | `xxd` on both DAT files | §4.5 |
-| **10** | `screenshots/figure_10_dat_stat.png` | `stat` on both DAT files | §4.5 |
-| **11** | `screenshots/figure_11_cache_ls.png` | `ls --full-time -tr` on CACHE_IMAGE | §4.6 |
-| **12** | `screenshots/figure_12_cache_stat.png` | `stat` on one cached thumbnail | §4.6 |
-| **13** | `screenshots/figure_13_device_identity.png` | `cat` on `net.hostname` and `ro.serialno` | §2.3 |
-| **14** | `screenshots/figure_14_artefact_families.png` | Four DJI GO 4 families enumerated | §2.3 |
-| **15** | `screenshots/figure_15_dji_go4_tree.png` | `tree -L 1 dji.go.v4/` — 14 top-level dirs | §2.3 |
+| **01** | `screenshots/figure_01_android_tree.png` | `tree -L 1 Android_Logical/` — top-level structure | Section 2.3 |
+| **02** | `screenshots/figure_02_extraction_hashes.png` | Head of `android_tree_hashes.txt` | Section 2.3 |
+| **03** | `screenshots/figure_03_txt_identity_strings.png` | `strings -n 8` tail of TXT record | Section 4.3 |
+| **04** | `screenshots/figure_04_txt_stat.png` | `stat` on TXT record — mtime `2018-06-19 07:55:40 -0400` | Section 4.3 |
+| **05** | `screenshots/figure_05_mp4_exiftool.png` | `exiftool` on MP4 — null container dates | Section 4.4 |
+| **06** | `screenshots/figure_06_mediainfo.png` | `mediainfo` on MP4 | Section 4.4 |
+| **07** | `screenshots/figure_07_info_sidecar.png` | `xxd` on `.info` sidecar — plaintext header | Section 4.4 |
+| **08** | `screenshots/figure_08_inode_consecutive.png` | `tree --inodes` on DJI_RECORD | Section 4.4 |
+| **09** | `screenshots/figure_09_dat_headers.png` | `xxd` on both DAT files | Section 4.5 |
+| **10** | `screenshots/figure_10_dat_stat.png` | `stat` on both DAT files | Section 4.5 |
+| **11** | `screenshots/figure_11_cache_ls.png` | `ls --full-time -tr` on CACHE_IMAGE | Section 4.6 |
+| **12** | `screenshots/figure_12_cache_stat.png` | `stat` on one cached thumbnail | Section 4.6 |
+| **13** | `screenshots/figure_13_device_identity.png` | `cat` on `net.hostname` and `ro.serialno` | Section 2.3 |
+| **14** | `screenshots/figure_14_artefact_families.png` | Four DJI GO 4 families enumerated | Section 2.3 |
+| **15** | `screenshots/figure_15_dji_go4_tree.png` | `tree -L 1 dji.go.v4/` — 14 top-level dirs | Section 2.3 |
 
 ---
 
@@ -682,18 +682,24 @@ Fifteen (15) screenshots. All stored under `screenshots/` and referenced inline 
 ```text
 android-b09e783547b973fc
 5203fe1aeef77400
+```
 
-C.2 — TXT Flight Record — Plaintext Strings
-text
+### C.2 — TXT Flight Record — Plaintext Strings
+
+```text
 Map Loading
 Map Loading
 43078fb4126ce729E
 dronefo...-Mavic Air
 0K1DF313BD4PR1
 0K4AEBQA3400DT
-Grep against 20[0-9]{2}|utc|gmt|edt|est|lat|lon|gps|alt|speed|home returned no matches.
-C.3 — TXT Flight Record — Filesystem Timestamp
-text
+```
+
+Grep against `20[0-9]{2}|utc|gmt|edt|est|lat|lon|gps|alt|speed|home` returned no matches.
+
+### C.3 — TXT Flight Record — Filesystem Timestamp
+
+```text
   File: Android_Logical/sdcard/DJI/dji.go.v4/FlightRecord/DJIFlightRecord_2018-06-19_[14-50-34].txt
   Size: 555776          Blocks: 1088       IO Block: 4096   regular file
   Device: 8,1     Inode: 6051617     Links: 1
@@ -702,8 +708,11 @@ text
   Modify: 2018-06-19 07:55:40.000000000 -0400
   Change: 2026-10-04 12:46:41.749001851 -0400
   Birth: 2026-10-04 12:46:41.729052218 -0400
-C.4 — MP4 Container Metadata (exiftool)
-text
+```
+
+### C.4 — MP4 Container Metadata (exiftool)
+
+```text
 ExifTool Version Number         : 13.55
 File Name                       : 2018_06_19_14_50_39.mp4
 File Size                       : 58 MB
@@ -721,8 +730,11 @@ Track Create Date               : 0000:00:00 00:00:00
 Media Create Date               : 0000:00:00 00:00:00
 Image Width                     : 1280
 Image Height                    : 720
-C.5 — MP4 — mediaInfo Confirmation
-text
+```
+
+### C.5 — MP4 — mediaInfo Confirmation
+
+```text
 Format                                   : MPEG-4
 Format profile                           : Base Media
 Codec ID                                 : isom (isom/iso2/avc1/mp41)
@@ -739,8 +751,11 @@ Duration                                 : 4 min 0 s
 Width                                    : 1 280 pixels
 Height                                   : 720 pixels
 Encoding settings                        : cabac=1 / ref=1 / bframes=0 / keyint=1 / crf=26.0
-C.6 — .info Sidecar — Header Line and Selected Fields
-text
+```
+
+### C.6 — `.info` Sidecar — Header Line and Selected Fields
+
+```text
 #Tue Jun 19 14:55:41 EDT 2018
 CameraType=23
 Source_File_Path=/storage/emulated/0/DJI/dji.go.v4/DJI_RECORD/2018_06_19_14_50_39.mp4
@@ -752,14 +767,21 @@ FolderID_Drone=100
 PixelXDimension_Drone=1920
 PixelYDimension_Local=720
 PixelXDimension_Local=1280
-C.7 — DAT Headers — FLY057 and FLY058
-text
+```
+
+### C.7 — DAT Headers — FLY057 and FLY058
+
+```text
 00000010: 4255 494c 4420 4170 7220 3234 2032 3031  BUILD Apr 24 201
 00000020: 3820 3138 3a33 393a 3533 0000 0000 0000  8 18:39:53......
 000000f0: 0000 444a 495f 4c4f 475f 5633 902d 53c8  ..DJI_LOG_V3.-S.
-Both FLY057 and FLY058 carry the same firmware build string and the DJI_LOG_V3 signature.
-C.8 — DAT Filesystem Timestamps
-text
+```
+
+Both FLY057 and FLY058 carry the same firmware build string and the `DJI_LOG_V3` signature.
+
+### C.8 — DAT Filesystem Timestamps
+
+```text
   File: .../MCDatFlightRecords/18-06-19-02-47-38_FLY057.DAT
   Size: 4002791         Blocks: 7824       IO Block: 4096   regular file
   Modify: 2018-06-19 07:58:24.000000000 -0400
@@ -767,24 +789,33 @@ text
   File: .../MCDatFlightRecords/18-06-19-02-59-05_FLY058.DAT
   Size: 1104150         Blocks: 2160       IO Block: 4096   regular file
   Modify: 2018-06-19 08:02:12.000000000 -0400
-C.9 — Cached Pictures — Full Listing
-text
+```
+
+### C.9 — Cached Pictures — Full Listing
+
+```text
 -rwxrwx--- 1 ibrahim ibrahim 19508 2018-06-19 07:47:50.000000000 -0400 thumb_7f92b744bbc53b3a_1523610992000.jpg
 -rwxrwx--- 1 ibrahim ibrahim 12755 2018-06-19 07:47:50.000000000 -0400 thumb_6d9f39f0ca9decc3_1523610988000.jpg
 -rwxrwx--- 1 ibrahim ibrahim 19191 2018-06-19 07:47:50.000000000 -0400 thumb_5be64acbef28816c_1523610990000.jpg
 -rwxrwx--- 1 ibrahim ibrahim 15631 2018-06-19 07:47:52.000000000 -0400 thumb_ed8c1a297e1061b4_1524152656000.jpg
 -rwxrwx--- 1 ibrahim ibrahim 13791 2018-06-19 07:47:52.000000000 -0400 thumb_dd609e61934788b3_1523611494000.jpg
 -rwxrwx--- 1 ibrahim ibrahim 14224 2018-06-19 07:47:52.000000000 -0400 thumb_33177fb665068406_1523611394000.jpg
-C.10 — DJI_RECORD Directory — Consecutive Inodes
-text
+```
+
+### C.10 — DJI_RECORD Directory — Consecutive Inodes
+
+```text
 [6051545]  Android_Logical/sdcard/DJI/dji.go.v4/DJI_RECORD/
 ├── [6051547]  2018_06_19_14_50_39.info
 ├── [6051546]  2018_06_19_14_50_39.mp4
 └── [6051548]  analytics
     ├── [6051549]  2018_06_19_14_50_39.map
     └── [6051550]  2018_06_19_14_50_39.tlv
-C.11 — Foreign Artefact — DJI Pilot .info (2017-10-10)
-text
+```
+
+### C.11 — Foreign Artefact — DJI Pilot `.info` (2017-10-10)
+
+```text
 #Tue Oct 10 10:08:17 MDT 2017
 CameraType=0
 Source_File_Path=/storage/emulated/0/DJI/dji.pilot/DJI_RECORD/2017_10_10_10_02_47.mp4
@@ -793,9 +824,13 @@ EndTimeMsec=311166
 LocalFileName=2017_10_10_10_02_47
 StartTimeMsec=0
 FolderID_Drone=100
-A second DJI app present in the extraction. Declares MDT (UTC-6), 2 hours offset from the 2018 EDT declaration.
-C.12 — Attempted microSD and EWF Downloads (Non-Availability Record)
-text
+```
+
+A second DJI app present in the extraction. Declares `MDT` (UTC-6), 2 hours offset from the 2018 `EDT` declaration.
+
+### C.12 — Attempted microSD and EWF Downloads (Non-Availability Record)
+
+```text
 $ wget -O df048_internal_microSD.001 "https://www.dropbox.com/s/6qghgnkhe7a8wga/df048_internal_microSD.001?dl=1"
 ...
 HTTP request sent, awaiting response... 200 OK
@@ -814,98 +849,73 @@ $ ewfverify DF048.E01
 ewfverify 20140816
 Unable to open EWF image file(s).
 libewf_segment_file_read_file_header: unsupported segment file signature.
+```
 
-Appendix D — Completed Timeline
+---
 
+## Appendix D — Completed Timeline
 
-Stage
-Event count
-Earliest UTC
-Latest UTC
-Device state and power or motor on
-6
-2018-06-19 11:47:50
-2018-06-19 12:02:12
-Take off or video start
-0 (not established)
-—
-—
-Main flight record event
-0 (not established)
-—
-—
-Landing or video end
-1
-2018-06-19 18:55:41
-2018-06-19 18:55:41
-Power off and correlation
-0 (not established)
-—
-—
-Total
-7
-—
-—
+| Stage | Event count | Earliest UTC | Latest UTC |
+| --- | --- | --- | --- |
+| Device state and power or motor on | 6 | 2018-06-19 11:47:50 | 2018-06-19 12:02:12 |
+| Take off or video start | 0 (not established) | — | — |
+| Main flight record event | 0 (not established) | — | — |
+| Landing or video end | 1 | 2018-06-19 18:55:41 | 2018-06-19 18:55:41 |
+| Power off and correlation | 0 (not established) | — | — |
+| **Total** | **7** | — | — |
+
 7 material events across four artefact families (main flight record, cached video, detailed flight records, cached pictures). Exceeds the brief's minimum of five across three.
 
-Appendix E — Chain of Custody Worksheet
+---
 
+## Appendix E — Chain of Custody Worksheet
 
-Field
-Value
-Case/Lab Identifier
-SBT-DF204-CaseStudy5-Ibrahim-Ishaku
-Trainee Name
-Ibrahim Ishaku
-Student ID
-2025/FWSD/11334
-Date and Time Acquired
-4 October, 2026 — 12:03 WAT
-Evidence File Names
-Android_Logical/ (extracted tree, 375 files)
-Source
-ICDFA SBT-DF204 Case Study 5 lab package — Android logical extraction
-Archive Containing Evidence
-Android_Logical.zip (not present in working environment at time of hashing)
-File Types
-Android logical extraction (directories + files)
-Extracted Size
-406 MB · 375 files
-Original SHA-256 (TXT)
-0a9f1816d52a98f840f6e67c08a14473ae5a0a2e75e9484d5de66368c4fd4c4a
-Original SHA-256 (MP4)
-2ae2a4f186803ec592b0af6284634e592c5079395e99f7df3edd583f8e72ab00
-Original SHA-256 (DAT FLY057)
-06130820a4a813bf21f7286150bd3c83084105fecc899bb4d8534895fa2df3a1
-Original SHA-256 (DAT FLY058)
-fdfccf0c5b1d90d189c19032bb34e151914f42fba42c7994d0492cf327ade07a
-Full Manifest
-~/Mavic_air/reports/android_tree_hashes.txt — SHA-256 of all 375 files
-Working Copy Location
-~/Mavic_air/Android_Logical/
-Original Preservation
-Source copy on sf_ICDFAKali share untouched; all analysis performed in ~/Mavic_air/
-Custodian
-Ibrahim Ishaku (Student, ICDFA)
-Handling Notes
-Originals preserved unmodified. Analysis performed on working copy only. No file was executed. No drone, controller, mobile account, cloud service, or external flight-analysis portal was contacted. Unrelated personal or location data redacted from screenshots. Missing evidence note: two source images (df048_internal_microSD.001 and DF048.E01) were not available. Attempted retrieval from supplied Dropbox URLs returned HTML; no local copy found in ~/Downloads, ~/Mavic_air, or sf_ICDFAKali. Questions 7 and 8 documented as not performed.
-Analysis Tools
-tree, stat, strings, xxd, exiftool 13.55, mediainfo 26.05, sha256sum, md5sum, ls --full-time, Kali Linux (rolling)
-Analysis Date
-4 October, 2026
+| Field | Value |
+| --- | --- |
+| **Case/Lab Identifier** | SBT-DF204-CaseStudy5-Ibrahim-Ishaku |
+| **Trainee Name** | Ibrahim Ishaku |
+| **Student ID** | 2025/FWSD/11334 |
+| **Date and Time Acquired** | 4 October, 2026 — 12:03 WAT |
+| **Evidence File Names** | `Android_Logical/` (extracted tree, 375 files) |
+| **Source** | ICDFA SBT-DF204 Case Study 5 lab package — Android logical extraction |
+| **Archive Containing Evidence** | `Android_Logical.zip` (not present in working environment at time of hashing) |
+| **File Types** | Android logical extraction (directories + files) |
+| **Extracted Size** | 406 MB · 375 files |
+| **Original SHA-256 (TXT)** | `0a9f1816d52a98f840f6e67c08a14473ae5a0a2e75e9484d5de66368c4fd4c4a` |
+| **Original SHA-256 (MP4)** | `2ae2a4f186803ec592b0af6284634e592c5079395e99f7df3edd583f8e72ab00` |
+| **Original SHA-256 (DAT FLY057)** | `06130820a4a813bf21f7286150bd3c83084105fecc899bb4d8534895fa2df3a1` |
+| **Original SHA-256 (DAT FLY058)** | `fdfccf0c5b1d90d189c19032bb34e151914f42fba42c7994d0492cf327ade07a` |
+| **Full Manifest** | `~/Mavic_air/reports/android_tree_hashes.txt` — SHA-256 of all 375 files |
+| **Working Copy Location** | `~/Mavic_air/Android_Logical/` |
+| **Original Preservation** | Source copy on `sf_ICDFAKali` share untouched; all analysis performed in `~/Mavic_air/` |
+| **Custodian** | Ibrahim Ishaku (Student, ICDFA) |
+| **Handling Notes** | Originals preserved unmodified. Analysis performed on working copy only. No file was executed. No drone, controller, mobile account, cloud service, or external flight-analysis portal was contacted. Unrelated personal or location data redacted from screenshots. **Missing evidence note:** two source images (`df048_internal_microSD.001` and `DF048.E01`) were not available. Attempted retrieval from supplied Dropbox URLs returned HTML; no local copy found in `~/Downloads`, `~/Mavic_air`, or `sf_ICDFAKali`. Questions 7 and 8 documented as not performed. |
+| **Analysis Tools** | `tree`, `stat`, `strings`, `xxd`, `exiftool` 13.55, `mediainfo` 26.05, `sha256sum`, `md5sum`, `ls --full-time`, Kali Linux (rolling) |
+| **Analysis Date** | 4 October, 2026 |
 
-📄 End of Report
-SBT-DF204 — Case Study 5: Investigating DJI Mavic Air Flight Evidence
-Submitted by: Ibrahim Ishaku | Student ID: 2025/FWSD/11334
-Date: 12 October, 2026
+---
 
-🎓 Academic Notice
-This case study was completed as part of the Fellowship in Web Application Security & Digital Forensics at the International Cybersecurity and Digital Forensics Academy (ICDFA).
-	•	All work is the author's original submission for academic purposes.
-	•	The evidence materials were used only for this authorised academic case study.
-	•	No live network, host, account, drone, controller, or cloud service was contacted.
-	•	No recovered file was executed.
-	•	Two source images (df048_internal_microSD.001 and DF048.E01) were not available; this is documented as a limitation.
-	•	Unrelated personal or location data has been redacted from screenshots.
+## 📄 End of Report
 
-End of Case Study Report
+**SBT-DF204 — Case Study 5: Investigating DJI Mavic Air Flight Evidence**
+
+**Submitted by:** Ibrahim Ishaku | **Student ID:** 2025/FWSD/11334
+
+**Date:** 12 October, 2026
+
+---
+
+## 🎓 Academic Notice
+
+This case study was completed as part of the **Fellowship in Web Application Security & Digital Forensics** at the **International Cybersecurity and Digital Forensics Academy (ICDFA)**.
+
+- All work is the author's original submission for academic purposes.
+- The evidence materials were used only for this authorised academic case study.
+- No live network, host, account, drone, controller, or cloud service was contacted.
+- No recovered file was executed.
+- Two source images (`df048_internal_microSD.001` and `DF048.E01`) were not available; this is documented as a limitation.
+- Unrelated personal or location data has been redacted from screenshots.
+
+---
+
+**End of Case Study Report**
