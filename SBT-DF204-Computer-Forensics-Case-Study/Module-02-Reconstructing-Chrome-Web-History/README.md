@@ -114,7 +114,6 @@ The database directly records:
 
 ### 2.2 Working Copy Creation
 
-```bash
 mkdir -p ~/SBT-DF204-CaseStudy2/{evidence,working,reports,screenshots,scripts}
 cd ~/SBT-DF204-CaseStudy2
 
@@ -129,15 +128,13 @@ cp --preserve=timestamps evidence/History_original working/History_working
 sha256sum working/History_working | tee reports/working_copy_sha256.txt
 
 diff reports/evidence_sha256.txt reports/working_copy_sha256.txt && echo "HASHES MATCH"
-```
 
 ### 2.3 Integrity Verification Output
 
-```text
+
 b991b0fa69662c44caf599e468c8088576ebd9cebbf46d02c89cf51bcde3fd19  evidence/History_original
 b991b0fa69662c44caf599e468c8088576ebd9cebbf46d02c89cf51bcde3fd19  working/History_working
 HASHES MATCH
-```
 
 **Integrity Status:** ✅ **Verified** — Working copy is an exact byte-for-byte duplicate of the original evidence. All analysis was performed on the working copy. The original was preserved untouched.
 
@@ -176,9 +173,9 @@ Other tables (`clusters`, `segments`, `keyword_search_terms`, `meta`, etc.) were
 
 Chrome stores timestamps as **microseconds since 1 January 1601 UTC**. The formula used throughout:
 
-```sql
+---
 datetime(visit_time/1000000 + strftime('%s','1601-01-01'), 'unixepoch')
-```
+---
 
 Example verification:
 
@@ -212,7 +209,7 @@ Qualifier bits observed:
 
 ### 3.5 Verification Queries
 
-```sql
+---
 -- Counts
 SELECT COUNT(*) AS urls_count FROM urls;
 SELECT COUNT(*) AS visits_count FROM visits;
@@ -232,7 +229,6 @@ SELECT
 FROM visits AS v
 JOIN urls AS u ON v.url = u.id
 ORDER BY v.visit_time;
-```
 
 ---
 
@@ -240,7 +236,6 @@ ORDER BY v.visit_time;
 
 ### Question 1: What evidence file did you acquire and how did you preserve it?
 
-**Answer:**
 
 The evidence file is a Chrome History SQLite database named `History`, supplied as part of the ICDFA SBT-DF204 Case Study 2 materials.
 
@@ -265,13 +260,10 @@ The evidence file is a Chrome History SQLite database named `History`, supplied 
 
 ### Question 2: What browser-history tables and fields are relevant?
 
-**Answer:**
-
 Four tables in this Chrome History database are directly relevant.
 
 #### 2.1 `urls` table — 57 rows
 
-```
 0|id|INTEGER|0||1
 1|url|LONGVARCHAR|0||0
 2|title|LONGVARCHAR|0||0
@@ -279,13 +271,11 @@ Four tables in this Chrome History database are directly relevant.
 4|typed_count|INTEGER|1|0|0
 5|last_visit_time|INTEGER|1||0
 6|hidden|INTEGER|1|0|0
-```
 
 Records every URL visited. Used to identify **what** the suspect visited, and joined with `visits` for **when** and **how**.
 
 #### 2.2 `visits` table — 74 rows
 
-```
 0|id|INTEGER|0||1
 1|url|INTEGER|1||0
 2|visit_time|INTEGER|1||0
@@ -295,31 +285,29 @@ Records every URL visited. Used to identify **what** the suspect visited, and jo
 6|visit_duration|INTEGER|1|0|0
 7|incremented_omnibox_typed_score|BOOLEAN|1|FALSE|0
 8|opener_visit|INTEGER|0||0
-```
+
 
 Records each individual navigation event. `from_visit` reconstructs the navigation chain; `transition` encodes how the page was reached.
 
 #### 2.3 `downloads` table — 1 row
 
-```
 0|id|INTEGER|0||1
 1|guid|VARCHAR|1||0
 2|current_path|LONGVARCHAR|1||0
 3|target_path|LONGVARCHAR|1||0
 4|start_time|INTEGER|1||0
-...
+
 24|mime_type|VARCHAR(255)|1||0
-```
+
 
 Records the downloaded `proof_of_payment.png` image.
 
 #### 2.4 `downloads_url_chains` table — 1 row
 
-```
+
 0|id|INTEGER|1||1
 1|chain_index|INTEGER|1||2
 2|url|LONGVARCHAR|1||0
-```
 
 The single row contains the URL `https://i.imgur.com/dTgrkP7.png` — confirming the downloaded file was retrieved from an Imgur-hosted PNG.
 
@@ -342,7 +330,6 @@ The relevant activity is concentrated on **Tuesday, 19 April 2022 (EDT, UTC-4)**
 
 **Timestamp conversion query:**
 
-```sql
 SELECT
     v.id AS visit_id,
     datetime(v.visit_time/1000000 + strftime('%s','1601-01-01'), 'unixepoch') AS visit_utc,
@@ -351,7 +338,6 @@ SELECT
 FROM visits AS v
 JOIN urls AS u ON v.url = u.id
 ORDER BY v.visit_time;
-```
 
 **Converted sample:**
 
@@ -376,7 +362,6 @@ ORDER BY v.visit_time;
 
 ### Question 4: How did the browser reach the material URLs?
 
-**Answer:**
 
 The `visits.from_visit` and `visits.transition` fields reveal the navigation method for each material URL.
 
@@ -445,8 +430,6 @@ The `visits.from_visit` and `visits.transition` fields reveal the navigation met
 
 ### Question 5: What web-history evidence relates to the suspected sale or posting?
 
-**Answer:**
-
 The database records a **complete Craigslist posting workflow** consistent with advertising an item.
 
 | Stage | Visit ID | UTC Timestamp | URL (short) | Title | Base |
@@ -487,7 +470,6 @@ The database records a **complete Craigslist posting workflow** consistent with 
 
 ### Question 6: What evidence relates to communications and payment activity?
 
-**Answer:**
 
 Four categories of evidence were found: **Gmail communications**, **Imgur receipt**, **Blockchain explorer lookups**, and **Kraken exchange activity**.
 
@@ -581,7 +563,6 @@ The image itself is not stored in the History database.
 
 ### Question 7: What is the reconstructed timeline?
 
-**Answer:**
 
 The table below separates **direct observations** (artifacts recorded in the database) from **interpretation** (analyst inference). Full UTC timeline with all 74 visits is in Section 5.
 
@@ -631,16 +612,14 @@ The table below separates **direct observations** (artifacts recorded in the dat
 
 ### Question 8: What conclusion can you defend?
 
-**Answer:**
-
 **Supported Conclusion:**
 
 The Chrome History database records a continuous **68-minute browser session** on **19 April 2022** during which the browser profile:
 
 1. **Advertised an item on Craigslist** — completed the posting workflow in the Baltimore *health and beauty — by owner* category and produced a live listing titled *"cheaper than Rx supplements"* (post ID **7473121658**).
 2. **Communicated via Gmail** — logged into **`unsub.fscs@gmail.com`**, read an *"order"* email (Visit 43), and read a second email whose subject line contains a Bitcoin transaction ID (**Visit 48**).
-3. **Viewed and downloaded a Bitcoin receipt** — reached an Imgur post via a `source=gmail` referrer and downloaded `proof_of_payment.png` to `C:\Users\FSCS_User\Desktop\`.
-4. **Verified the Bitcoin transaction** — looked up the same txid (`517b2156...`) on blockchain.com and the recipient address `38RcsURW...`.
+3. **Viewed and downloaded a Bitcoin receipt** — reached an Imgur post via a `source=gmail` referrer and downloaded proof_of_payment.png` to `C:\Users\FSCS_User\Desktop\.
+4. **Verified the Bitcoin transaction** — looked up the same txid (`517b2156...`) on blockchain.com and the recipient address 38RcsURW....
 5. **Logged into a Kraken exchange account** at Visit 63, verified device approval, and viewed the funding page at Visit 66.
 
 **Confidence Level:**
@@ -656,7 +635,7 @@ The Chrome History database records a continuous **68-minute browser session** o
 1. **Browser profile ≠ human identity.** Chrome stores data per profile. Anyone with access to that profile (owner, family member, colleague, or remote attacker) could produce the same records.
 2. **No page content is preserved.** Chrome History stores URLs, titles, and timestamps only. It does **not** preserve page body text, form input values, images, or chat content. The phrase *"cheaper than Rx supplements"* is a title string; the actual page content is unknown.
 3. **Shared-device scenario.** If the device was shared or the profile was synced via Chrome Sign-in, records could originate from another machine or another person.
-4. **Redirect and cache ambiguity.** Redirect chains and cached pages may have led to URLs the user never visibly interacted with. The `from_visit` chain helps but is not perfect.
+4. **Redirect and cache ambiguity.** Redirect chains and cached pages may have led to URLs the user never visibly interacted with. The from_visit chain helps but is not perfect.
 5. **Deleted or missing rows.** Chrome History is a normal database — records may be pruned by age or auto-purged. A single-session observation does not exclude earlier or later activity that has since been removed.
 6. **Download filename is descriptive, not conclusive.** The `target_path` `proof_of_payment.png` was recorded by Chrome, but the file's actual content is not stored in the History DB. Its consistency with the Imgur visit and the Kraken deposit strengthens the inference but does not prove the file's content.
 7. **Bitcoin transaction is observed, not initiated.** The History DB shows the *verification* of a Bitcoin transaction, not the creation or signing of one. The transaction may have been conducted by the counterparty (buyer), not the suspect.
@@ -957,8 +936,7 @@ All screenshots are stored in `screenshots/`.
 ---
 
 ## Appendix C — Key SQL Queries Used
-
-```sql
+---
 -- C1. List all tables
 SELECT name FROM sqlite_master WHERE type='table' ORDER BY name;
 
@@ -1052,7 +1030,7 @@ FROM visits AS v
 LEFT JOIN visits AS v2 ON v.from_visit = v2.id
 LEFT JOIN urls  AS u  ON v.url = u.id
 ORDER BY v.visit_time;
-```
+
 
 ---
 
