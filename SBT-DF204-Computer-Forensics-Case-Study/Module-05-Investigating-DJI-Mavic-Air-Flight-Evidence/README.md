@@ -106,11 +106,20 @@ The Android logical extraction was copied from the `sf_ICDFAKali` shared folder 
 
 ![Figure 01 — Android Logical top-level tree](screenshots/figure_01_android_tree.png)
 
+
+**Figure 01 — Android Logical top-level tree**
+
 ![Figure 02 — Extraction hashes](screenshots/figure_02_extraction_hashes.png)
+
+
+**Figure 02 — Extraction hashes**
 
 **Device identity (from extracted property files):**
 
 ![Figure 13 — Device identity](screenshots/figure_13_device_identity.png)
+
+
+**Figure 13 — Device identity**
 
 | Property | Value | Source file |
 | --- | --- | --- |
@@ -121,7 +130,13 @@ The Android logical extraction was copied from the `sf_ICDFAKali` shared folder 
 
 ![Figure 14 — Four artefact families](screenshots/figure_14_artefact_families.png)
 
+
+**Figure 14 — Four artefact families**
+
 ![Figure 15 — dji.go.v4 top-level tree](screenshots/figure_15_dji_go4_tree.png)
+
+
+**Figure 15 — dji.go.v4 top-level tree**
 
 **SHA-256 of the four primary artefact families:**
 
@@ -268,7 +283,13 @@ All timestamps reported in **UTC**. Filesystem timestamps (`-0400`) and `.info` 
 
 ![Figure 03 — TXT plaintext strings](screenshots/figure_03_txt_identity_strings.png)
 
+
+**Figure 03 — TXT plaintext strings**
+
 ![Figure 04 — TXT filesystem stat](screenshots/figure_04_txt_stat.png)
+
+
+**Figure 04 — TXT filesystem stat**
 
 **Record structure:** Binary, not CSV. `file` identifies it as `data`. Body is encrypted.
 
@@ -307,11 +328,23 @@ A follow-up `strings -n 4 ... | grep` against `20[0-9]{2}|utc|gmt|edt|est|lat|lo
 
 ![Figure 05 — MP4 exiftool](screenshots/figure_05_mp4_exiftool.png)
 
+
+**Figure 05 — MP4 exiftool**
+
 ![Figure 06 — MP4 mediainfo](screenshots/figure_06_mediainfo.png)
+
+
+**Figure 06 — MP4 mediainfo**
 
 ![Figure 07 — .info sidecar hexdump](screenshots/figure_07_info_sidecar.png)
 
+
+**Figure 07 — .info sidecar hexdump**
+
 ![Figure 08 — Consecutive inodes](screenshots/figure_08_inode_consecutive.png)
+
+
+**Figure 08 — Consecutive inodes**
 
 **MP4 container metadata:**
 
@@ -364,7 +397,13 @@ A follow-up `strings -n 4 ... | grep` against `20[0-9]{2}|utc|gmt|edt|est|lat|lo
 
 ![Figure 09 — DAT headers](screenshots/figure_09_dat_headers.png)
 
+
+**Figure 09 — DAT headers**
+
 ![Figure 10 — DAT filesystem stat](screenshots/figure_10_dat_stat.png)
+
+
+**Figure 10 — DAT filesystem stat**
 
 **Header structure (from `xxd`):** `BUILD Apr 24 2018 18:39:53`; format signature `DJI_LOG_V3` at offset 0xf8. Body encrypted.
 
@@ -389,7 +428,13 @@ Interval between mtimes: **3 min 48 s**.
 
 ![Figure 11 — Cache listing](screenshots/figure_11_cache_ls.png)
 
+
+**Figure 11 — Cache listing**
+
 ![Figure 12 — Cache stat](screenshots/figure_12_cache_stat.png)
+
+
+**Figure 12 — Cache stat**
 
 | Filename | Bytes | Dimensions | Filename epoch ms | Filename date (UTC) | Filesystem mtime (UTC) |
 | --- | --- | --- | --- | --- | --- |
