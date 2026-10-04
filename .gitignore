@@ -1,14 +1,24 @@
-# Large evidence files
-*.pcap
-*.pcapng
+# Large forensic artefacts — never commit
+*.mem
+*.raw
+*.dd
+*.img
+*.vmem
+*.vmsn
+*.vmdk
+*.vdi
+*.ova
+*.ovf
+*.qcow2
 
-# Temporary files
-*.tmp
-*.log
-~$*
+# Local analysis staging
+working/
+evidence/
+
+# OS / editor noise
 .DS_Store
 Thumbs.db
-
-# Python cache
-__pycache__/
-*.pyc
+*.swp
+*~
+.idea/
+.vscode/
