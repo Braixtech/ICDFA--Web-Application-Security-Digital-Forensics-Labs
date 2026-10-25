@@ -1,0 +1,3 @@
+Case_ID,Action,Date_Time_UTC,Examiner,Tool_Version,Notes
+SBT-DF205-C1,Receipt and Hash,2026-10-25 12:00,Ibrahim Ishaku,Sha256sum,"Original archive hashed."
+SBT-DF205-C1,Extraction,2026-10-25 12:05,Ibrahim Ishaku,Unzip,"Extracted to working directory."
