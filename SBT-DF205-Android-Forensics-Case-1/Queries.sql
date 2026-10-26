@@ -12,3 +12,12 @@ SELECT _id, contact_name, message_text, date FROM messages LIMIT 5;
 
 -- TARGET: data/data/com.google.android.apps.maps/databases/gmm_myplaces.db
 SELECT * FROM sync_item LIMIT 5;
+
+-- TARGET: data/data/com.android.providers.telephony/databases/mmssms.db
+-- PURPOSE: MMS Reconstruction
+SELECT _id, thread_id, date, msg_box, m_type FROM pdu LIMIT 3;
+SELECT _id, mid, seq, ct, text, fn FROM part LIMIT 3;
+
+-- TARGET: data/data/com.google.android.dialer/databases/annotated_call_log.db
+-- PURPOSE: Google Dialer Call Log
+SELECT timestamp, number, duration, call_type FROM AnnotatedCallLog ORDER BY timestamp DESC LIMIT 3;
