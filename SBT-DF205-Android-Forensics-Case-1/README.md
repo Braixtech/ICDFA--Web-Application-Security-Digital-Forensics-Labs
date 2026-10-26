@@ -74,7 +74,6 @@ The forensic examination of the Google Pixel 3 extraction successfully identifie
 
 ### 2.2 Integrity Verification
 
-text
 ca6918ef8b20486b6a5ded15609ac51318f377829480f93be3ba15364a8aa00a  working/Pixel 3.zip
 Integrity Status: ✅ Verified. The original archive was hashed upon receipt and never mounted directly. A working copy was extracted for analysis.
 
