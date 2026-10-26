@@ -1,5 +1,10 @@
 Evidence_ID,Source_Path,Record_Reference,File_Size_Bytes,SHA256
 E01,working/Pixel 3/system,build.prop,5240,ca6918ef8b20486b6a5ded15609ac51318f377829480f93be3ba15364a8aa00a
-E02,working/Pixel 3/data/system/users,userlist.xml,1024,
-E03,working/Pixel 3/data/system/users/0,settings_secure.xml,2048,
-E04,working/Pixel 3/data/data/com.android.providers.telephony/databases,mmssms.db,1048576,
+E02,working/Pixel 3/data/system/users,userlist.xml,1024,[Insert Hash]
+E03,working/Pixel 3/data/system/users/0,settings_secure.xml,2048,[Insert Hash]
+E04,working/Pixel 3/data/data/com.android.providers.telephony/databases,mmssms.db,1048576,[Insert Hash]
+E05,working/Pixel 3/data/data/com.android.providers.contacts/databases,calllog.db,524288,[Insert Hash]
+E06,working/Pixel 3/data/data/com.enflick.android.TextNow/databases,textnow_data.db,1048576,[Insert Hash]
+E07,working/Pixel 3/data/media/0/DCIM/Restored,IMG_20190917_082637.jpg,2458624,[Insert Hash]
+E08,working/Pixel 3/data/data/com.google.android.apps.maps/databases,gmm_myplaces.db,98304,[Insert Hash]
+E09,working/Pixel 3/data/data/com.google.android.dialer/databases,annotated_call_log.db,24576,[Insert Hash]
