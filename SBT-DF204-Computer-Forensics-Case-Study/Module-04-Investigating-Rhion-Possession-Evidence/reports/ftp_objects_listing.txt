@@ -1,0 +1,7 @@
+total 496
+drwxrwxr-x 2 ibrahim ibrahim   4096 Oct  4 09:37 .
+drwxrwxr-x 5 ibrahim ibrahim   4096 Oct  4 09:37 ..
+-rw-r--r-- 1 ibrahim ibrahim 230566 Oct  4 09:37 contraband.zip
+-rw-r--r-- 1 ibrahim ibrahim  65703 Oct  4 09:37 rhino1.jpg
+-rw-r--r-- 1 ibrahim ibrahim  96899 Oct  4 09:37 rhino3(1).jpg
+-rw-r--r-- 1 ibrahim ibrahim  96899 Oct  4 09:37 rhino3.jpg

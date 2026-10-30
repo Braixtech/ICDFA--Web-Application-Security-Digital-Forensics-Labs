@@ -1,0 +1,13 @@
+Timestamp_Raw_MS,Timestamp_UTC,Event_Description,Source_DB,Evidence_ID
+1581685743277,2020-02-14 15:49:03,SMS sent to Josh Hickman,mmssms.db,E04
+1581691278351,2020-02-14 15:49:18,Call to Josh Hickman (91s),calllog.db,E05
+1581192046000,2020-02-08 14:54:52,TextNow message received,textnow_data.db,E06
+1580570189000,2020-02-01 18:16:29,Photo captured (signal),gphotos-1.db,E07
+1581643824061,2020-02-14 02:50:24,Call to Josh Hickman,calllog.db,E05
+1580322045000,2020-01-29 18:20:45,SMS received (LINE code),mmssms.db,E04
+1580505944000,2020-01-31 21:25:44,Photo captured,DCIM,E07
+1581685557104,2020-02-14 15:45:57,Call received (86s),calllog.db,E05
+1581192087000,2020-02-08 14:55:27,TextNow message received,textnow_data.db,E06
+1581273702392,2020-02-09 13:21:42,SMS sent (coffee shop),mmssms.db,E04
+1581174000000,2020-02-08 14:20:00,TextNow message "Hi there!",textnow_data.db,E06
+1554470346040,2019-04-05 12:39:06,Maps saved place sync,gmm_myplaces.db,E08

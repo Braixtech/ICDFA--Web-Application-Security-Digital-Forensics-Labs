@@ -1,0 +1,16 @@
+Volatility Foundation Volatility Framework 2.6.1
+Legend: (S) = Stable   (V) = Volatile
+
+----------------------------
+Registry: \REGISTRY\MACHINE\SYSTEM
+Key name: {53f56307-b6bf-11d0-94f2-00a0c91efb8b} (S)
+Last updated: 2019-01-06 15:02:54 UTC+0000
+
+Subkeys:
+  (S) ##?#IDE#DiskVBOX_HARDDISK___________________________1.0_____#5&106af171&0&1.0.0#{53f56307-b6bf-11d0-94f2-00a0c91efb8b}
+  (S) ##?#IDE#DiskVirtual_HD______________________________1.1.0___#5&35dc7040&0&0.0.0#{53f56307-b6bf-11d0-94f2-00a0c91efb8b}
+  (S) ##?#IDE#DiskVMware_Virtual_IDE_Hard_Drive___________00000001#5&2eba49&0&0.0.0#{53f56307-b6bf-11d0-94f2-00a0c91efb8b}
+  (S) ##?#SCSI#Disk&Ven_Dell&Prod_VIRTUAL_DISK#6&17b13437&0&000000#{53f56307-b6bf-11d0-94f2-00a0c91efb8b}
+  (S) ##?#USBSTOR#Disk&Ven_General&Prod_UDisk&Rev_5.00#6&1bec0f48&0&_&0#{53f56307-b6bf-11d0-94f2-00a0c91efb8b}
+
+Values:
