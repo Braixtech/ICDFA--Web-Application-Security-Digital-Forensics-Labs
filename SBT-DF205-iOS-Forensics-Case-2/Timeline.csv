@@ -1,0 +1,6 @@
+Evidence_ID,UTC_Timestamp,Raw_Timestamp,Epoch_Type,Event_Description,Source_Artifact
+E01,2020-03-24 00:00:00,606700800,Cocoa_Core,5951 steps recorded,healthdb_secure.sqlite
+E02,2020-03-28 00:58:36,607049916.11,Cocoa_Core,Safari Search: When does MLB start,History.db
+E03,2020-03-28 01:02:44,607050164.95,Cocoa_Core,Safari Search: Is the NHL going to resume,History.db
+E04,2020-04-11 19:01:19,608776879,Cocoa_Core,Device located at Lat 35.659 Long -78.872,Local.sqlite
+E05,2020-04-16 17:19:47,609204887,Cocoa_Core,com.apple.news.widget in focus,KnowledgeC.db
