@@ -1,0 +1,12 @@
+Evidence_ID,Source_Path,Record_ID,File_Size,SHA256
+E01,ios_13_4_1.zip,N/A,9629286492,761854a669c38da6ac0a908afe77763d54ccb83044ff123350890d408c154551
+E02,LastBuildInfo.plist,N/A,1234,Hash_Not_Calculated
+E03,Accounts3.sqlite,Z_PK_1,241700,Hash_Not_Calculated
+E04,sms.db,ROWID_48,4500000,Hash_Not_Calculated
+E05,CallHistory.storedata,Z_PK_1,8388608,Hash_Not_Calculated
+E06,History.db,id_1,98304,Hash_Not_Calculated
+E07,Photos.sqlite,Z_PK_1,2306867,Hash_Not_Calculated
+E08,KnowledgeC.db,Z_PK_22243,12582912,Hash_Not_Calculated
+E09,healthdb_secure.sqlite,Z_PK_1,1800000,Hash_Not_Calculated
+E10,Local.sqlite,Z_PK_955,524288,Hash_Not_Calculated
+E11,general.log,N/A,4096,Hash_Not_Calculated

@@ -1,0 +1,6 @@
+Date_Time,Action,Tool_Version,Notes
+2026-10-29 07:23,Received_ZIP,N/A,Downloaded from Digital Corpora
+2026-10-29 08:00,Verified_Hash,sha256sum,ZIP Hash verified as 761854a6...
+2026-10-29 08:15,Extracted_TAR,tar -xvf,Extracted to working directory
+2026-10-29 09:00,Database_Analysis,DB Browser 3.13.1,Queried SMS, Calls, Safari, Health, Location
+2026-10-29 12:00,Report_Generation,N/A,Final report drafted
