@@ -1,9 +1,55 @@
+# SBT-DF205 — Case 2: iOS Forensics Investigation of an iPhone SE
 
-# SBT-DF205_Case2_2025-FWSD-11334
+**International Cybersecurity and Digital Forensics Academy (ICDFA)**
+School of Basic Vocational Training (SVT)
 
-**Case Reference:** SBT-DF205-C2
-**Examiner:** Ibrahim Ishaku (2025/FWSD/11334)
-**Date:** 29 October, 2026
+![Course](https://img.shields.io/badge/Course-SBT--DF205-blue)
+![Case Study](https://img.shields.io/badge/Case%20Study-02%20iOS%20Forensics-red)
+![Student](https://img.shields.io/badge/Student-2025%2FFWSD%2F11334-informational)
+![Status](https://img.shields.io/badge/Status-Complete-brightgreen)
+
+---
+
+## 👤 Author
+
+| Field | Details |
+| --- | --- |
+| **Student Name** | Ibrahim Ishaku |
+| **Student ID** | 2025/FWSD/11334 |
+| **Programme** | Fellowship in Web Application Security & Digital Forensics |
+| **Course** | SBT-DF205 — Mobile and IoT Forensics Case Study |
+| **Case Title** | iOS Forensics Investigation of an iPhone SE |
+| **Instructor** | Aminu Idris, AMCPN |
+| **Date** | 29 October, 2026 |
+| **Batch** | BATCH-B2025 · L1/S2 |
+| **Case Reference** | SBT-DF205-C2 |
+| **Submission Format** | ZIP (Report.pdf, CSVs, Queries.sql, Screenshots) |
+
+---
+
+## 📌 Executive Summary
+
+This report details the forensic examination of an iPhone SE (1st Generation) running iOS 13.4.1 to investigate device usage. 
+
+**Primary Findings:** The device is registered to the user "Thisisdifir" with the iCloud account `thisisdfir@gmail.com`. Evidence of communications, Safari browsing, Health data, and Location data was successfully recovered. The Safari database confirmed searches for sports news in late March 2020. The Health database revealed recorded step counts and walking distances, while the Location database confirmed the device was in the Raleigh, North Carolina area. 
+
+**Confidence Level:** High for device identity and artefact recovery. All timestamps were converted from Apple Cocoa Core Data to UTC to ensure chronological accuracy.
+
+---
+
+## 📑 Table of Contents
+
+- [1. Evidence Handling and Integrity](#1-evidence-handling-and-integrity)
+- [2. Device Accounts and Settings](#2-device-accounts-and-settings)
+- [3. Messages, Contacts, and Calls](#3-messages-contacts-and-calls)
+- [4. Safari and Calendar](#4-safari-and-calendar)
+- [5. Media Analysis](#5-media-analysis)
+- [6. KnowledgeC Activity](#6-knowledgec-activity)
+- [7. Health and Location Evidence](#7-health-and-location-evidence)
+- [8. Timeline and Conclusions](#8-timeline-and-conclusions)
+- [Appendix A — Key SQL Queries Used](#appendix-a--key-sql-queries-used)
+- [Appendix B — Evidence Register](#appendix-b--evidence-register)
+- [Appendix C — Figure Index](#appendix-c--figure-index)
 
 ---
 
@@ -12,7 +58,7 @@
 ### 1.1 Evidence Acquisition
 - **Source:** Digital Corpora (Joshua Hickman iOS 13.4.1 dataset)
 - **Source Archives:** `ios_13_4_1.zip` and `13-4-1.tar`
-- **Working Copy Location:** `~/SBT-DF205-C2/iOS 13.4.1 Extraction/Extraction/` (Preserving Unix paths and aliases).
+- **Working Copy Location:** `~/SBT-DF205-C2/iOS 13.4.1 Extraction/Extraction/`
 
 ### 1.2 Integrity Verification
 Baseline SHA-256 hashes were calculated upon receipt of the archives.
@@ -22,9 +68,14 @@ Baseline SHA-256 hashes were calculated upon receipt of the archives.
 ![Figure 1](screenshots/figure_01_hash.png)
 *Figure 1: Terminal output showing the SHA-256 hash of the evidence archives.*
 
+### 1.3 Tool Versions
+- **OS:** Kali Linux (Rolling)
+- **Database:** SQLite 3.40.0 & DB Browser for SQLite 3.13.1
+- **Plist Reader:** plistutil (libplist-utils)
+
 ---
 
-## 2. Task 2: Device Accounts and Settings
+## 2. Device Accounts and Settings
 
 ### 2.1 Device Identification
 - **Source Path:** `~/private/var/installd/Library/MobileInstallation/LastBuildInfo.plist`
@@ -47,7 +98,7 @@ Baseline SHA-256 hashes were calculated upon receipt of the archives.
 
 ---
 
-## 3. Task 3: Messages, Contacts, and Calls
+## 3. Messages, Contacts, and Calls
 
 ### 3.1 SMS/iMessage Reconstruction
 - **Database:** `~/private/var/mobile/Library/SMS/sms.db`
@@ -67,7 +118,7 @@ Baseline SHA-256 hashes were calculated upon receipt of the archives.
 
 ---
 
-## 4. Task 4: Safari and Calendar
+## 4. Safari and Calendar
 
 ### 4.1 Safari History
 - **Database:** `~/var/mobile/Library/Safari/History.db`
@@ -84,7 +135,7 @@ Baseline SHA-256 hashes were calculated upon receipt of the archives.
 
 ---
 
-## 5. Task 5: Media Analysis
+## 5. Media Analysis
 
 - **Database:** `~/var/mobile/Media/PhotoData/Photos.sqlite`
 - **Finding:** The `ZADDITIONALASSETATTRIBUTES` table was queried to identify media. The `ZORIGINALFILENAME` column reveals the user's camera roll and saved images, including files like `IMG_0001.JPG` and `IMG_0727.JPG`.
@@ -94,7 +145,7 @@ Baseline SHA-256 hashes were calculated upon receipt of the archives.
 
 ---
 
-## 6. Task 6: KnowledgeC Activity
+## 6. KnowledgeC Activity
 
 - **Database:** `~/private/var/mobile/Library/CoreDuet/Knowledge/KnowledgeC.db`
 - **Finding:** The `ZOBJECT` table confirms active app usage. On April 16, 2020, the user had `com.apple.news.widget` and `com.apple.AppPredictionWidget` in focus. 
@@ -104,7 +155,7 @@ Baseline SHA-256 hashes were calculated upon receipt of the archives.
 
 ---
 
-## 7. Task 7: Health and Location Evidence
+## 7. Health and Location Evidence
 
 ### 7.1 Health Data
 - **Database:** `~/var/mobile/Library/Health/healthdb_secure.sqlite`
@@ -122,7 +173,7 @@ Baseline SHA-256 hashes were calculated upon receipt of the archives.
 
 ---
 
-## 8. Task 8: Timeline and Conclusions
+## 8. Timeline and Conclusions
 
 ### 8.1 Device Serial Number
 - **Source:** `~/private/var/logs/AppleSupport/general.log`
@@ -133,7 +184,7 @@ Baseline SHA-256 hashes were calculated upon receipt of the archives.
 
 ### 8.2 Reconstructed Timeline
 | Evidence ID | UTC Timestamp | Event Description | Source |
-| :--- | :--- | :--- | :--- |
+| --- | --- | --- | --- |
 | E01 | 2020-03-24 00:00:00 | 5,951 steps recorded | healthdb_secure.sqlite |
 | E02 | 2020-03-28 00:58:36 | Safari Search: "When does MLB start" | History.db |
 | E03 | 2020-03-28 01:02:44 | Safari Search: "Is the NHL going to resume" | History.db |
@@ -153,7 +204,6 @@ The forensic examination successfully reconstructed user activity from the iPhon
 
 ## Appendix A — Key SQL Queries Used
 
-```sql
 -- Task 3.1: SMS Queries
 SELECT ROWID, text, handle_id, date, is_from_me, service FROM message ORDER BY ROWID DESC LIMIT 5;
 
@@ -179,6 +229,34 @@ SELECT datetime(cache_index+978307200,'unixepoch') as "Date", steps, walk_distan
 
 -- Task 7.2: Location Data
 SELECT Z_PK, ZLOCATIONLATITUDE, ZLOCATIONLONGITUDE, datetime(ZCREATIONDATE+978307200,'UNIXEPOCH') as "CREATION_UTC" FROM ZRTLEARNEDLOCATIONOFINTERESTVISITMO LIMIT 5;
+Appendix B — Evidence Register
+(Refer to Evidence_Register.csv for the full machine-readable list).
+
+Evidence ID	Source Path	Record ID	SHA-256
+E01	ios_13_4_1.zip	N/A	761854a6...
+E02	LastBuildInfo.plist	N/A	Pending
+E03	Accounts3.sqlite	Z_PK 1	Pending
+E04	sms.db	ROWID 48	Pending
+E05	CallHistory.storedata	Z_PK 1	Pending
+E06	History.db	ID 1	Pending
+E07	Photos.sqlite	Z_PK 1	Pending
+E08	KnowledgeC.db	Z_PK 22243	Pending
+E09	healthdb_secure.sqlite	Z_PK 1	Pending
+E10	Local.sqlite	Z_PK 955	Pending
+E11	general.log	N/A	Pending
+Appendix C — Figure Index
+Figure	Filename	Cited In
+1	screenshots/figure_01_hash.png	Section 1.2
+2	screenshots/figure_02_build.png	Section 2.1
+3	screenshots/figure_03_accounts.png	Section 2.2
+4	screenshots/figure_04_sms.png	Section 3.1
+5	screenshots/figure_05_calls.png	Section 3.2
+6	screenshots/figure_06_safari.png	Section 4.1
+7	screenshots/figure_07_photos.png	Section 5
+8	screenshots/figure_08_knowledgec.png	Section 6
+9	screenshots/figure_09_health.png	Section 7.1
+10	screenshots/figure_10_location.png	Section 7.2
+11	screenshots/figure_11_serial.png	Section 8.1
 📄 End of Report
 SBT-DF205 — Case 2: iOS Forensics Investigation of an iPhone SE
 
