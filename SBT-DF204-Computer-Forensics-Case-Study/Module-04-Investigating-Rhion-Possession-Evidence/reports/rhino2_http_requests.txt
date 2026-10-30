@@ -1,0 +1,29 @@
+=========== rhino2.log HTTP requests ===========
+4	0	137.30.123.234	64.233.167.104	GET	www.google.com	/
+11	0	137.30.123.234	64.233.167.104	GET	www.google.com	/images/logo.gif
+28	1	137.30.123.234	137.30.120.37	GET	www.cs.uno.edu	/~gnome
+32	1	137.30.123.234	137.30.120.37	GET	www.cs.uno.edu	/~gnome/
+36	1	137.30.123.234	137.30.120.37	GET	www.cs.uno.edu	/icons/blank.gif
+39	1	137.30.123.234	137.30.120.37	GET	www.cs.uno.edu	/icons/image2.gif
+43	2	137.30.123.234	137.30.120.37	GET	www.cs.uno.edu	/icons/back.gif
+49	1	137.30.123.234	137.30.120.37	GET	www.cs.uno.edu	/~gnome/rhino4.jpg
+217	2	137.30.123.234	137.30.120.37	GET	www.cs.uno.edu	/~gnome/rhino5.gif
+333	4	137.30.123.234	64.233.167.104	GET	www.google.com	/
+343	5	137.30.123.234	137.30.120.37	GET	www.cs.uno.edu	/~venkata
+347	5	137.30.123.234	137.30.120.37	GET	www.cs.uno.edu	/~venkata/
+359	6	137.30.123.234	137.30.120.37	GET	www.cs.uno.edu	/~venkata/2025/index.html
+
+=========== rhino2.log HTTP responses ===========
+9	0	64.233.167.104	137.30.123.234	200	text/html	2931
+23	0	64.233.167.104	137.30.123.234	200	image/gif	8558
+30	1	137.30.120.37	137.30.123.234	301	text/html; charset=iso-8859-1	
+34	1	137.30.120.37	137.30.123.234	200	text/html	
+37	1	137.30.120.37	137.30.123.234	200	image/gif	148
+45	1	137.30.120.37	137.30.123.234	200	image/gif	309
+46	2	137.30.120.37	137.30.123.234	200	image/gif	216
+215	1	137.30.120.37	137.30.123.234	200	image/jpeg	153191
+312	2	137.30.120.37	137.30.123.234	200	image/gif	85137
+338	4	64.233.167.104	137.30.123.234	200	text/html	2931
+345	5	137.30.120.37	137.30.123.234	301	text/html; charset=iso-8859-1	
+350	5	137.30.120.37	137.30.123.234	200	text/html	1388
+362	6	137.30.120.37	137.30.123.234	200	text/html	2270

@@ -1,0 +1,6 @@
+clusters                 downloads_slices         typed_url_sync_metadata
+clusters_and_visits      downloads_url_chains     urls                   
+content_annotations      keyword_search_terms     visit_source           
+context_annotations      meta                     visits                 
+downloads                segment_usage          
+downloads_reroute_info   segments               

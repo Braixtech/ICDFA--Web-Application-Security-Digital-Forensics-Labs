@@ -1,0 +1,24 @@
+
+=========== rhino3.log HTTP requests ===========
+4	0	137.30.123.234	64.233.167.99	GET	www.google.com	/
+10	0	137.30.123.234	64.233.167.99	GET	www.google.com	/search?hl=en&ie=UTF-8&oe=UTF-8&q=rhino.exe
+30	0	137.30.123.234	64.233.167.99	GET	www.google.com	/nav_first.gif
+35	1	137.30.123.234	64.233.167.99	GET	www.google.com	/images/logo_sm.gif
+38	0	137.30.123.234	64.233.167.99	GET	www.google.com	/nav_current.gif
+46	0	137.30.123.234	64.233.167.99	GET	www.google.com	/nav_page.gif
+49	0	137.30.123.234	64.233.167.99	GET	www.google.com	/nav_next.gif
+59	2	137.30.123.234	216.239.51.99	GET	groups.google.com	/groups?q=rhino.exe&hl=en&lr=&ie=UTF-8&oe=UTF-8&sa=N&tab=wg
+73	2	137.30.123.234	216.239.51.99	GET	groups.google.com	/intl/en_ALL/images/groups_res.gif
+85	2	137.30.123.234	216.239.51.99	GET	groups.google.com	/groups?q=rhino.exe&hl=en&lr=&ie=UTF-8&oe=UTF-8&selm=MPG.159359f528ff3d2798aaca%40news.ntlworld.com&rnum=2
+101	1	137.30.123.234	64.233.167.99	GET	www.google.com	/
+110	3	137.30.123.234	137.30.120.37	GET	www.cs.uno.edu	/~gnome/rhino.exe
+
+=========== rhino3.log HTTP responses ===========
+8	0	64.233.167.99	137.30.123.234	200	text/html	2931
+28	0	64.233.167.99	137.30.123.234	200	text/html	
+31	0	64.233.167.99	137.30.123.234	200	image/gif	1033
+40	0	64.233.167.99	137.30.123.234	200	image/gif	376
+47	0	64.233.167.99	137.30.123.234	200	image/gif	373
+54	1	64.233.167.99	137.30.123.234	200	image/gif	4707
+105	1	64.233.167.99	137.30.123.234	200	text/html	2931
+274	3	137.30.120.37	137.30.123.234	200	application/octet-stream	145920

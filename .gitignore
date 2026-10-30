@@ -1,0 +1,24 @@
+# Large forensic artefacts — never commit
+*.mem
+*.raw
+*.dd
+*.img
+*.vmem
+*.vmsn
+*.vmdk
+*.vdi
+*.ova
+*.ovf
+*.qcow2
+
+# Local analysis staging
+working/
+evidence/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/
