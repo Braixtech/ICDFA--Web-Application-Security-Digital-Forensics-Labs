@@ -1,0 +1,213 @@
+source_row,context,candidate,regex_match,ipv4_valid,source_label,analyst_note
+0,	<string>1.000.000.000+</string>...,1.000.000.000,True,False,A,MISMATCH: Source Positive but INVALID IPv4
+1,	<key>1.0.0.1</key>...,1.0.0.1,True,True,A,True Positive: Source Positive & Valid IP
+2,	<string>1.0.0.1</string>...,1.0.0.1,True,True,A,True Positive: Source Positive & Valid IP
+3,	<key>1.1.1.1</key>...,1.1.1.1,True,True,A,True Positive: Source Positive & Valid IP
+4,	<string>1.1.1.1</string>...,1.1.1.1,True,True,A,True Positive: Source Positive & Valid IP
+5,	<string>3608.80.24.1.8</string>...,80.24.1.8,True,True,N,MISMATCH: Source Negative but VALID IPv4
+6,			<string>eng-USA-1.0.0.14-20170731</st...,1.0.0.14,True,True,A,True Positive: Source Positive & Valid IP
+7,			<string>cmn-CHN-1.0.0.12-20170804</st...,1.0.0.12,True,True,A,True Positive: Source Positive & Valid IP
+8,	<string>3.6.1.4</string>...,3.6.1.4,True,True,A,True Positive: Source Positive & Valid IP
+9,	<string>3608.80.24.1.8</string>...,80.24.1.8,True,True,N,MISMATCH: Source Negative but VALID IPv4
+10,		<string>12.6.0.1</string>...,12.6.0.1,True,True,A,True Positive: Source Positive & Valid IP
+11,	<string>100.73.156.224</string>...,100.73.156.224,True,True,A,True Positive: Source Positive & Valid IP
+12,	<string>obfs4 192.95.36.142:443 CDF2E85...,192.95.36.142,True,True,C,True Positive: Source Positive & Valid IP
+13,	<string>obfs4 38.229.1.78:80 C8CBDB2464...,38.229.1.78,True,True,A,True Positive: Source Positive & Valid IP
+14,	<string>obfs4 38.229.33.83:80 0BAC39417...,38.229.33.83,True,True,A,True Positive: Source Positive & Valid IP
+15,	<string>obfs4 37.218.240.34:40035 88CD3...,37.218.240.34,True,True,A,True Positive: Source Positive & Valid IP
+16,	<string>obfs4 37.218.245.14:38224 D9A82...,37.218.245.14,True,True,A,True Positive: Source Positive & Valid IP
+17,	<string>obfs4 85.31.186.98:443 011F2599...,85.31.186.98,True,True,A,True Positive: Source Positive & Valid IP
+18,	<string>obfs4 85.31.186.26:443 91A63546...,85.31.186.26,True,True,A,True Positive: Source Positive & Valid IP
+19,	<string>obfs4 216.252.162.21:46089 0DB8...,216.252.162.21,True,True,A,True Positive: Source Positive & Valid IP
+20,	<string>obfs4 144.217.20.138:80 FB70B25...,144.217.20.138,True,True,B,True Positive: Source Positive & Valid IP
+21,	<string>obfs4 193.11.166.194:27015 2D82...,193.11.166.194,True,True,C,True Positive: Source Positive & Valid IP
+22,	<string>obfs4 193.11.166.194:27020 86AC...,193.11.166.194,True,True,C,True Positive: Source Positive & Valid IP
+23,	<string>obfs4 193.11.166.194:27025 1AE2...,193.11.166.194,True,True,C,True Positive: Source Positive & Valid IP
+24,	<string>obfs4 209.148.46.65:443 74FAD13...,209.148.46.65,True,True,A,True Positive: Source Positive & Valid IP
+25,	<string>obfs4 146.57.248.225:22 10A6CD3...,146.57.248.225,True,True,B,True Positive: Source Positive & Valid IP
+26,	<string>3.3.7.0</string>...,3.3.7.0,True,True,A,True Positive: Source Positive & Valid IP
+27,					<string>https://pm-gateway.superson...,6.8.4.2,True,True,A,True Positive: Source Positive & Valid IP
+28,	<string>3.3.7.0</string>...,3.3.7.0,True,True,A,True Positive: Source Positive & Valid IP
+29,			<string>6.8.4.2</string>...,6.8.4.2,True,True,A,True Positive: Source Positive & Valid IP
+30,			<string>6.8.4.2</string>...,6.8.4.2,True,True,A,True Positive: Source Positive & Valid IP
+35,			<string>17.57.144.52</string>...,17.57.144.52,True,True,A,True Positive: Source Positive & Valid IP
+36,	<key>1.0.0.1</key>...,1.0.0.1,True,True,A,True Positive: Source Positive & Valid IP
+37,				<string>12.6.0.1</string>...,12.6.0.1,True,True,A,True Positive: Source Positive & Valid IP
+38,			<string>12.6.0.1</string>...,12.6.0.1,True,True,A,True Positive: Source Positive & Valid IP
+39,	<string>135.0.0.22.118 (206072521)</str...,135.0.0.22,True,True,B,True Positive: Source Positive & Valid IP
+40,	<string>12.6.0.1</string>...,12.6.0.1,True,True,A,True Positive: Source Positive & Valid IP
+41,		<string>3608.80.24.1.8</string>...,80.24.1.8,True,True,N,MISMATCH: Source Negative but VALID IPv4
+42,		<string>3608.80.24.1.8</string>...,80.24.1.8,True,True,N,MISMATCH: Source Negative but VALID IPv4
+43,	<string>135.0.0.22.118</string>...,135.0.0.22,True,True,B,True Positive: Source Positive & Valid IP
+44,	<string>135.0.0.22.118 (206072690)</str...,135.0.0.22,True,True,B,True Positive: Source Positive & Valid IP
+45,	<string>135.0.0.22.118 (206072521)</str...,135.0.0.22,True,True,B,True Positive: Source Positive & Valid IP
+46,			<string>http://en-us-support.belkin.c...,10.5.0.1,True,True,A,True Positive: Source Positive & Valid IP
+47,		<string>12.6.0.1</string>...,12.6.0.1,True,True,A,True Positive: Source Positive & Valid IP
+48,			<string>cmn-CHN-4.1.1.0-20160421</str...,4.1.1.0,True,True,A,True Positive: Source Positive & Valid IP
+49,			<string>eng-USA-4.1.1.5-20160919</str...,4.1.1.5,True,True,A,True Positive: Source Positive & Valid IP
+50,			<string>eng-USA-4.1.1.5-20160919</str...,4.1.1.5,True,True,A,True Positive: Source Positive & Valid IP
+51,			<string>spa-USA-4.1.0.2-20160424</str...,4.1.0.2,True,True,A,True Positive: Source Positive & Valid IP
+52,			<string>rus-RUS-4.1.0.2-20160422</str...,4.1.0.2,True,True,A,True Positive: Source Positive & Valid IP
+53,			<string>tur-TUR-4.1.0.3-20160422</str...,4.1.0.3,True,True,A,True Positive: Source Positive & Valid IP
+54,			<string>eng-USA-OfflineIOS-6.0.0.2-20...,6.0.0.2,True,True,A,True Positive: Source Positive & Valid IP
+55,			<string>cmn-CHN-4.1.1.0-20160421</str...,4.1.1.0,True,True,A,True Positive: Source Positive & Valid IP
+56,			<string>yue-HKG-4.1.0.2-20160424</str...,4.1.0.2,True,True,A,True Positive: Source Positive & Valid IP
+57,			<string>eng-USA-5.2.0.2-20170705</str...,5.2.0.2,True,True,A,True Positive: Source Positive & Valid IP
+58,			<string>spa-ESP-5.0.0.1-20170310</str...,5.0.0.1,True,True,A,True Positive: Source Positive & Valid IP
+59,			<string>eng-USA-5.3.0.3-20180129</str...,5.3.0.3,True,True,A,True Positive: Source Positive & Valid IP
+60,			<string>cmn-CHN-OfflineIOS-5.0.0.1-20...,5.0.0.1,True,True,A,True Positive: Source Positive & Valid IP
+61,			<string>eng-USA-OfflineIOS-5.3.0.1-20...,5.3.0.1,True,True,A,True Positive: Source Positive & Valid IP
+62,			<string>eng-USA-OfflineIOS-5.3.0.1-20...,5.3.0.1,True,True,A,True Positive: Source Positive & Valid IP
+63,			<string>cmn-CHN-OfflineIOS-5.0.0.1-20...,5.0.0.1,True,True,A,True Positive: Source Positive & Valid IP
+64,			<string>eng-GBR-4.1.0.1-20160422</str...,4.1.0.1,True,True,A,True Positive: Source Positive & Valid IP
+65,			<string>ita-ITA-4.1.0.1-20160422</str...,4.1.0.1,True,True,A,True Positive: Source Positive & Valid IP
+66,			<string>por-BRA-4.1.0.4-20160424</str...,4.1.0.4,True,True,A,True Positive: Source Positive & Valid IP
+67,			<string>eng-IND-4.1.0.1-20160424</str...,4.1.0.1,True,True,A,True Positive: Source Positive & Valid IP
+68,			<string>fra-FRA-OfflineIOS-6.0.0.4-20...,6.0.0.4,True,True,A,True Positive: Source Positive & Valid IP
+69,			<string>deu-DEU-OfflineIOS-6.0.0.3-20...,6.0.0.3,True,True,A,True Positive: Source Positive & Valid IP
+70,			<string>eng-AUS-OfflineIOS-6.0.0.1-20...,6.0.0.1,True,True,A,True Positive: Source Positive & Valid IP
+71,			<string>kor-KOR-OfflineIOS-5.0.0.3-20...,5.0.0.3,True,True,A,True Positive: Source Positive & Valid IP
+72,			<string>spa-ESP-OfflineIOS-6.0.0.2-20...,6.0.0.2,True,True,A,True Positive: Source Positive & Valid IP
+73,			<string>spa-USA-OfflineIOS-6.0.0.3-20...,6.0.0.3,True,True,A,True Positive: Source Positive & Valid IP
+74,			<string>cmn-CHN-OfflineIOS-6.0.0.0-20...,6.0.0.0,True,True,A,True Positive: Source Positive & Valid IP
+75,			<string>jpn-JPN-OfflineIOS-6.0.0.3-20...,6.0.0.3,True,True,A,True Positive: Source Positive & Valid IP
+76,			<string>rus-RUS-OfflineIOS-5.0.0.4-20...,5.0.0.4,True,True,A,True Positive: Source Positive & Valid IP
+77,			<string>tur-TUR-OfflineIOS-5.0.0.1-20...,5.0.0.1,True,True,A,True Positive: Source Positive & Valid IP
+78,			<string>yue-HKG-OfflineIOS-6.0.0.2-20...,6.0.0.2,True,True,A,True Positive: Source Positive & Valid IP
+79,			<string>eng-GBR-6.0.0.1-20190729</str...,6.0.0.1,True,True,A,True Positive: Source Positive & Valid IP
+80,			<string>ita-ITA-5.1.1.0-20190729</str...,5.1.1.0,True,True,A,True Positive: Source Positive & Valid IP
+81,			<string>por-BRA-5.0.0.2-20190729</str...,5.0.0.2,True,True,A,True Positive: Source Positive & Valid IP
+82,			<string>eng-IND-6.0.0.5-20190907</str...,6.0.0.5,True,True,A,True Positive: Source Positive & Valid IP
+83,			<string>ara-XWW-OfflineIOS-6.0.0.0-20...,6.0.0.0,True,True,A,True Positive: Source Positive & Valid IP
+84,			<string>tur-TUR-OfflineIOS-5.0.0.1-20...,5.0.0.1,True,True,A,True Positive: Source Positive & Valid IP
+85,			<string>deu-DEU-OfflineIOS-7.0.0.3-20...,7.0.0.3,True,True,A,True Positive: Source Positive & Valid IP
+86,			<string>eng-GBR-OfflineIOS-7.0.0.3-20...,7.0.0.3,True,True,A,True Positive: Source Positive & Valid IP
+87,			<string>eng-USA-OfflineIOS-7.0.0.4-20...,7.0.0.4,True,True,A,True Positive: Source Positive & Valid IP
+88,			<string>spa-ESP-OfflineIOS-7.0.0.3-20...,7.0.0.3,True,True,A,True Positive: Source Positive & Valid IP
+89,			<string>fra-FRA-OfflineIOS-7.0.0.3-20...,7.0.0.3,True,True,A,True Positive: Source Positive & Valid IP
+90,			<string>jpn-JPN-OfflineIOS-7.0.0.3-20...,7.0.0.3,True,True,A,True Positive: Source Positive & Valid IP
+91,			<string>cmn-CHN-OfflineIOS-7.0.0.3-20...,7.0.0.3,True,True,A,True Positive: Source Positive & Valid IP
+92,		<string>Snapchat/10.78.6.0 (iPhone8_4;...,10.78.6.0,True,True,A,True Positive: Source Positive & Valid IP
+93,		<string>10.78.6.0</string>...,10.78.6.0,True,True,A,True Positive: Source Positive & Valid IP
+94,		<string>10.22.22.1</string>...,10.22.22.1,True,True,A,True Positive: Source Positive & Valid IP
+95,		<string>10.68.68.22</string>...,10.68.68.22,True,True,A,True Positive: Source Positive & Valid IP
+96,		<string>10.22.22.1</string>...,10.22.22.1,True,True,A,True Positive: Source Positive & Valid IP
+97,			<string>216.239.36.126</string>...,216.239.36.126,True,True,A,True Positive: Source Positive & Valid IP
+98,		<string>10.78.6.0</string>...,10.78.6.0,True,True,A,True Positive: Source Positive & Valid IP
+99,		<string>Snapchat/10.78.6.0 (iPhone8_4;...,10.78.6.0,True,True,A,True Positive: Source Positive & Valid IP
+100,			<string>216.239.36.126</string>...,216.239.36.126,True,True,A,True Positive: Source Positive & Valid IP
+109,			<string>216.239.36.126</string>...,216.239.36.126,True,True,A,True Positive: Source Positive & Valid IP
+110,			<string>35.186.197.135</string>...,35.186.197.135,True,True,A,True Positive: Source Positive & Valid IP
+111,			<string>35.190.43.134</string>...,35.190.43.134,True,True,A,True Positive: Source Positive & Valid IP
+112,			<string>35.186.197.135</string>...,35.186.197.135,True,True,A,True Positive: Source Positive & Valid IP
+113,			<string>35.186.197.135</string>...,35.186.197.135,True,True,A,True Positive: Source Positive & Valid IP
+114,			<string>3.213.65.77</string>...,3.213.65.77,True,True,A,True Positive: Source Positive & Valid IP
+115,			<string>3.94.245.242</string>...,3.94.245.242,True,True,A,True Positive: Source Positive & Valid IP
+116,			<string>172.217.8.20</string>...,172.217.8.20,True,True,B,True Positive: Source Positive & Valid IP
+117,			<string>3.94.245.242</string>...,3.94.245.242,True,True,A,True Positive: Source Positive & Valid IP
+118,			<string>216.239.36.126</string>...,216.239.36.126,True,True,A,True Positive: Source Positive & Valid IP
+119,			<string>172.217.8.20</string>...,172.217.8.20,True,True,B,True Positive: Source Positive & Valid IP
+120,			<string>216.239.36.126</string>...,216.239.36.126,True,True,A,True Positive: Source Positive & Valid IP
+122,	<string>8.58.0.93</string>...,8.58.0.93,True,True,A,True Positive: Source Positive & Valid IP
+123,			<string>http://en-us-support.belkin.c...,10.5.0.1,True,True,A,True Positive: Source Positive & Valid IP
+124,	<string>8.58.0.93</string>...,8.58.0.93,True,True,A,True Positive: Source Positive & Valid IP
+125,		<string>2.20.31.4</string>...,2.20.31.4,True,True,A,True Positive: Source Positive & Valid IP
+126,	<string>10.78.6.0</string>...,10.78.6.0,True,True,A,True Positive: Source Positive & Valid IP
+127,			<string>http://en-us-support.belkin.c...,10.5.0.1,True,True,A,True Positive: Source Positive & Valid IP
+128,						<string>255.255.255.255</string>...,255.255.255.255,True,True,E,True Positive: Source Positive & Valid IP
+129,						<string>0.0.0.0</string>...,0.0.0.0,True,True,N,MISMATCH: Source Negative but VALID IPv4
+130,						<string>255.255.255.255</string>...,255.255.255.255,True,True,E,True Positive: Source Positive & Valid IP
+131,						<string>0.0.0.0</string>...,0.0.0.0,True,True,N,MISMATCH: Source Negative but VALID IPv4
+132,		<string>3.6.1.4</string>...,3.6.1.4,True,True,A,True Positive: Source Positive & Valid IP
+133,	<string>609.1.20.0.9</string>...,609.1.20.0,True,False,N,True Negative: Source Negative & Invalid IP
+134,	<string>12.6.0.1</string>...,12.6.0.1,True,True,A,True Positive: Source Positive & Valid IP
+135,	<string>12.6.0.1</string>...,12.6.0.1,True,True,A,True Positive: Source Positive & Valid IP
+136,	<string>12.6.0.1</string>...,12.6.0.1,True,True,A,True Positive: Source Positive & Valid IP
+137,		<string>MoPub-6.9.4.0</string>...,6.9.4.0,True,True,A,True Positive: Source Positive & Valid IP
+138,	<string>7.4.2.6</string>...,7.4.2.6,True,True,A,True Positive: Source Positive & Valid IP
+139,	<string>135.0.0.22.118</string>...,135.0.0.22,True,True,B,True Positive: Source Positive & Valid IP
+140,	<string>2.20.31.4</string>...,2.20.31.4,True,True,A,True Positive: Source Positive & Valid IP
+141,		<string>0.5.1.3</string>...,0.5.1.3,True,True,N,MISMATCH: Source Negative but VALID IPv4
+142,		<string>0.6.7.8</string>...,0.6.7.8,True,True,N,MISMATCH: Source Negative but VALID IPv4
+143,	<string>10.78.6.0</string>...,10.78.6.0,True,True,A,True Positive: Source Positive & Valid IP
+144,		<string>8.58.0.93</string>...,8.58.0.93,True,True,A,True Positive: Source Positive & Valid IP
+145,		<string>12.6.0.1</string>...,12.6.0.1,True,True,A,True Positive: Source Positive & Valid IP
+146,		<string>20.10.0.8</string>...,20.10.0.8,True,True,A,True Positive: Source Positive & Valid IP
+147,		<string>2.20.31.4</string>...,2.20.31.4,True,True,A,True Positive: Source Positive & Valid IP
+149,		<string>10.78.6.0</string>...,10.78.6.0,True,True,A,True Positive: Source Positive & Valid IP
+150,		<string>3.6.1.4</string>...,3.6.1.4,True,True,A,True Positive: Source Positive & Valid IP
+151,	<key>1.0.0.1</key>...,1.0.0.1,True,True,A,True Positive: Source Positive & Valid IP
+152,			<string>1.0.0.1</string>...,1.0.0.1,True,True,A,True Positive: Source Positive & Valid IP
+153,				<string>1.0.0.1</string>...,1.0.0.1,True,True,A,True Positive: Source Positive & Valid IP
+154,	<key>1.1.1.1</key>...,1.1.1.1,True,True,A,True Positive: Source Positive & Valid IP
+155,			<string>1.1.1.1</string>...,1.1.1.1,True,True,A,True Positive: Source Positive & Valid IP
+156,				<string>1.1.1.1</string>...,1.1.1.1,True,True,A,True Positive: Source Positive & Valid IP
+157,					<string>http://abuseipdb.com/check/...,208.180.231.139,True,True,A,True Positive: Source Positive & Valid IP
+158,					<string>http://www.abuseipdb.com/wh...,69.50.232.54,True,True,A,True Positive: Source Positive & Valid IP
+159,					<string>http://advantage1.checkm8.c...,4.3.0.49,True,True,A,True Positive: Source Positive & Valid IP
+160,					<string>http://d3bn78kc7qbjb6.cloud...,0.0.0.392,True,False,N,True Negative: Source Negative & Invalid IP
+161,					<string>http://fcs.dell.com/fcs/fcs...,3.2.108.2,True,True,A,True Positive: Source Positive & Valid IP
+162,				<string>http://ui1.img.digitalriverc...,1.7.0.0,True,True,A,True Positive: Source Positive & Valid IP
+163,				<string>http://fast.fonts.com/FontsC...,2.15.134.0,True,True,A,True Positive: Source Positive & Valid IP
+164,					<string>http://tva1.sinaimg.cn/crop...,0.0.798.798,True,False,N,True Negative: Source Negative & Invalid IP
+165,					<string>http://netix.dl.sourceforge...,0.9.9.3,True,True,N,MISMATCH: Source Negative but VALID IPv4
+166,					<string>http://netix.dl.sourceforge...,0.9.9.3,True,True,N,MISMATCH: Source Negative but VALID IPv4
+168,					<string>http://tvassl.weibo.cn/crop...,0.21.685.685,True,False,N,True Negative: Source Negative & Invalid IP
+169,					<string>http://novel-cdn.kuangxiang...,1.4.4.02,True,False,A,MISMATCH: Source Positive but INVALID IPv4
+170,			<string>http://en-us-support.belkin.c...,10.5.0.1,True,True,A,True Positive: Source Positive & Valid IP
+171,	<string>3608.80.24.1.8</string>...,80.24.1.8,True,True,N,MISMATCH: Source Negative but VALID IPv4
+172,	<string>2.20.31.4</string>...,2.20.31.4,True,True,A,True Positive: Source Positive & Valid IP
+174,	<string>8.5.51.877.g6cea6b5</string>...,8.5.51.877,True,False,N,True Negative: Source Negative & Invalid IP
+175,	<string>8.5.51.877</string>...,8.5.51.877,True,False,N,True Negative: Source Negative & Invalid IP
+176,	<string>1.000.000.000+</string>...,1.000.000.000,True,False,A,MISMATCH: Source Positive but INVALID IPv4
+177,	<string>2.20.31.4</string>...,2.20.31.4,True,True,A,True Positive: Source Positive & Valid IP
+178,	<string>257.0.1.38.116</string>...,257.0.1.38,True,False,N,True Negative: Source Negative & Invalid IP
+179,	<string>/private/var/MobileAsset/Assets...,7.0.0.4,True,True,A,True Positive: Source Positive & Valid IP
+180,	<string>3608.80.24.1.8</string>...,80.24.1.8,True,True,N,MISMATCH: Source Negative but VALID IPv4
+181,			<string>http://en-us-support.belkin.c...,10.5.0.1,True,True,A,True Positive: Source Positive & Valid IP
+182,	<string>10.78.6.0</string>...,10.78.6.0,True,True,A,True Positive: Source Positive & Valid IP
+183,	<string>3608.80.24.1.8</string>...,80.24.1.8,True,True,N,MISMATCH: Source Negative but VALID IPv4
+184,	<string>2.20.31.4</string>...,2.20.31.4,True,True,A,True Positive: Source Positive & Valid IP
+187,		<string>104.36.225.166</string>...,104.36.225.166,True,True,A,True Positive: Source Positive & Valid IP
+188,		<string>104.36.225.154</string>...,104.36.225.154,True,True,A,True Positive: Source Positive & Valid IP
+189,		<string>104.36.225.179</string>...,104.36.225.179,True,True,A,True Positive: Source Positive & Valid IP
+190,		<string>104.36.225.142</string>...,104.36.225.142,True,True,A,True Positive: Source Positive & Valid IP
+191,			<string>http://en-us-support.belkin.c...,10.5.0.1,True,True,A,True Positive: Source Positive & Valid IP
+192,	<string>20.10.0.8</string>...,20.10.0.8,True,True,A,True Positive: Source Positive & Valid IP
+193,	<string>135.0.0.22.118</string>...,135.0.0.22,True,True,B,True Positive: Source Positive & Valid IP
+194,		<string>34.227.164.166</string>...,34.227.164.166,True,True,A,True Positive: Source Positive & Valid IP
+195,			<string>http://en-us-support.belkin.c...,10.5.0.1,True,True,A,True Positive: Source Positive & Valid IP
+196,		<string>eng-USA-OfflineIOS-7.0.0.4-202...,7.0.0.4,True,True,A,True Positive: Source Positive & Valid IP
+197,	<string>7.4.1.2</string>...,7.4.1.2,True,True,A,True Positive: Source Positive & Valid IP
+198,	<string>64.98.122.70</string>...,64.98.122.70,True,True,A,True Positive: Source Positive & Valid IP
+199,	<string>20.10.0.8</string>...,20.10.0.8,True,True,A,True Positive: Source Positive & Valid IP
+200,	<string>12.6.0.1</string>...,12.6.0.1,True,True,A,True Positive: Source Positive & Valid IP
+201,	<string>12.6.0.1</string>...,12.6.0.1,True,True,A,True Positive: Source Positive & Valid IP
+202,	<string>257.0.1.38.116</string>...,257.0.1.38,True,False,N,True Negative: Source Negative & Invalid IP
+203,	<string>257.0.1.38.116</string>...,257.0.1.38,True,False,N,True Negative: Source Negative & Invalid IP
+204,			<string>tincan_register_device_256.0....,0.1.26.113,True,True,N,MISMATCH: Source Negative but VALID IPv4
+205,			<string>tincan_register_device_257.0....,0.1.38.116,True,True,N,MISMATCH: Source Negative but VALID IPv4
+206,	<string>257.0.1.38.116</string>...,257.0.1.38,True,False,N,True Negative: Source Negative & Invalid IP
+207,	<string>257.0.1.38.116</string>...,257.0.1.38,True,False,N,True Negative: Source Negative & Invalid IP
+208,	<string>135.0.0.22.118 (206072690)</str...,135.0.0.22,True,True,B,True Positive: Source Positive & Valid IP
+209,	<string>2.20.31.4</string>...,2.20.31.4,True,True,A,True Positive: Source Positive & Valid IP
+210,	<string>3.6.1.4</string>...,3.6.1.4,True,True,A,True Positive: Source Positive & Valid IP
+211,			<string>http://en-us-support.belkin.c...,10.5.0.1,True,True,A,True Positive: Source Positive & Valid IP
+212,	<string>12.6.0.1</string>...,12.6.0.1,True,True,A,True Positive: Source Positive & Valid IP
+213,			<string>http://en-us-support.belkin.c...,10.5.0.1,True,True,A,True Positive: Source Positive & Valid IP
+214,	<string>12.6.0.1</string>...,12.6.0.1,True,True,A,True Positive: Source Positive & Valid IP
+216,			<string>http://en-us-support.belkin.c...,10.5.0.1,True,True,A,True Positive: Source Positive & Valid IP
+217,	<string>3608.80.24.1.8</string>...,80.24.1.8,True,True,N,MISMATCH: Source Negative but VALID IPv4
+218,	<string>5.12.20.4.10.18.5.5.2</string>...,5.12.20.4,True,True,A,True Positive: Source Positive & Valid IP
+218,	<string>5.12.20.4.10.18.5.5.2</string>...,10.18.5.5,True,True,A,True Positive: Source Positive & Valid IP
+219,	<string>5.12.20.4.10.18.5.5.2</string>...,5.12.20.4,True,True,A,True Positive: Source Positive & Valid IP
+219,	<string>5.12.20.4.10.18.5.5.2</string>...,10.18.5.5,True,True,A,True Positive: Source Positive & Valid IP
+220,	<string>3608.80.24.1.8</string>...,80.24.1.8,True,True,N,MISMATCH: Source Negative but VALID IPv4
+221,	<string>12.6.0.1</string>...,12.6.0.1,True,True,A,True Positive: Source Positive & Valid IP
+222,			<string>http://en-us-support.belkin.c...,10.5.0.1,True,True,A,True Positive: Source Positive & Valid IP
+223,	<string>2.20.31.4</string>...,2.20.31.4,True,True,A,True Positive: Source Positive & Valid IP
+224,	<string>3608.80.24.1.8</string>...,80.24.1.8,True,True,N,MISMATCH: Source Negative but VALID IPv4
+225,						<string>255.255.255.255</string>...,255.255.255.255,True,True,E,True Positive: Source Positive & Valid IP
+226,						<string>0.0.0.0</string>...,0.0.0.0,True,True,N,MISMATCH: Source Negative but VALID IPv4
+227,						<string>255.255.255.255</string>...,255.255.255.255,True,True,E,True Positive: Source Positive & Valid IP
+228,						<string>0.0.0.0</string>...,0.0.0.0,True,True,N,MISMATCH: Source Negative but VALID IPv4
