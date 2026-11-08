@@ -164,3 +164,10 @@ This lab demonstrates that while machine learning can handle ambiguous text, it 
 ├── predictions.csv          # Phase C output
 ├── evidence_manifest.txt    # Phase A output
 └── README.md                # This report
+
+📄 End of Report
+SBT-DF206 — AI-Assisted IP Evidence Identification & Forensic Intelligence
+Submitted by: Ibrahim Ishaku | Student ID: 2025/FWSD/11334
+
+🎓 Academic Notice
+This case study was completed as part of the Fellowship in Web Application Security & Digital Forensics at the International Cybersecurity and Digital Forensics Academy (ICDFA). All work is the author's original submission for academic purposes. The database was used only for this authorised academic case study. No live network, host, or account was contacted. Unrelated personal data has been redacted from screenshots.
