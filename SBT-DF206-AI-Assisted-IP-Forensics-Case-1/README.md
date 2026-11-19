@@ -146,7 +146,6 @@ If 90% of a dataset is negative, a model that always predicts negative achieves 
 This lab demonstrates that while machine learning can handle ambiguous text, it does not replace strict technical validation. The presence of 77 duplicate rows and mislabelled data in the source set proves that an AI-assisted triage workflow must preserve source annotations, strictly validate IP syntax, and rely on human examiners to review borderline mismatches.
 
 ---
-
 ## Appendix A — Environment & Reproduction
 
 - **OS:** Kali Linux
@@ -156,7 +155,6 @@ This lab demonstrates that while machine learning can handle ambiguous text, it 
 - **Execution:** `source venv/bin/activate` -> `python code/train_model.py`
 
 **Repository Structure:**
-
 ├── originals/               # Hash-preserved evidence
 ├── code/                    # Python scripts (extract_ips.py, train_model.py, historical_metrics.py)
 ├── screenshots/             # Timestamped terminal outputs & plots (Figure 1-8)
@@ -165,9 +163,11 @@ This lab demonstrates that while machine learning can handle ambiguous text, it 
 ├── evidence_manifest.txt    # Phase A output
 └── README.md                # This report
 
+---
 📄 End of Report
 SBT-DF206 — AI-Assisted IP Evidence Identification & Forensic Intelligence
 Submitted by: Ibrahim Ishaku | Student ID: 2025/FWSD/11334
 
+---
 🎓 Academic Notice
 This case study was completed as part of the Fellowship in Web Application Security & Digital Forensics at the International Cybersecurity and Digital Forensics Academy (ICDFA). All work is the author's original submission for academic purposes. The database was used only for this authorised academic case study. No live network, host, or account was contacted. Unrelated personal data has been redacted from screenshots.
