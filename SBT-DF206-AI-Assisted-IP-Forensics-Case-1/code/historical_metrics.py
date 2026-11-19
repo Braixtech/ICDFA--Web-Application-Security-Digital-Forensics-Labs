@@ -21,5 +21,11 @@ print(f"Step: {final_metrics['step']}")
 print(f"Accuracy: {final_metrics['classification/accuracy']}")
 print(f"Precision: {final_metrics['classification/precision']}")
 print(f"Recall: {final_metrics['classification/recall']}")
-print(f"F1: {final_metrics['classification/f1']}")
+
+try:
+    print(f"F1: {final_metrics['classification/f1']}")
+except KeyError:
+    print("F1: [MISSING] — 'classification/f1' column absent from result.csv")
+    print("     Cannot verify F1 from historical artifacts.")
+
 print("\nNote: These are historical artifacts, NOT student-run model outputs.")
